@@ -126,10 +126,14 @@
 
   html {
     color-scheme: dark;
+    background-color: #000000;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background-color: #000000;
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 
   /**
