@@ -57,7 +57,7 @@ export default function App() {
   return (
     <>
       <Dialog open={showTelegramModal} onOpenChange={setShowTelegramModal}>
-        <DialogContent className="bg-black/95 border-neutral-800 text-white max-w-md sm:max-w-lg rounded-2xl p-6 sm:p-7">
+        <DialogContent className="bg-black/95 border-neutral-800 text-white max-w-[calc(100%-3rem)] sm:max-w-sm rounded-2xl p-7 sm:p-8">
           <DialogHeader className="space-y-3 text-center">
             <p className="inline-flex items-center justify-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-emerald-400">
               <span className="h-[1px] w-4 bg-emerald-400/60" />
@@ -72,7 +72,7 @@ export default function App() {
             </DialogDescription>
           </DialogHeader>
 
-          <ul className="mt-3 space-y-2 text-sm text-neutral-200 flex flex-col items-center">
+          <ul className="mt-4 space-y-3 text-sm text-neutral-200 flex flex-col items-center">
             <li className="flex gap-2">
               <span className="mt-0.5">📰</span>
               <span>Știri importante filtrate – doar ce contează.</span>
@@ -91,12 +91,12 @@ export default function App() {
             </li>
           </ul>
 
-          <div className="mt-5 flex flex-col gap-3 items-center">
+          <div className="mt-6 flex flex-col gap-3 items-center">
             <a
               href="https://t.me/VANDY_001_Official"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-black px-5 py-2.5 text-sm font-semibold tracking-wide hover:bg-neutral-200 transition-colors duration-200 shadow-[0_0_0_1px_rgba(255,255,255,0.12)]"
+              className="relative inline-flex items-center justify-center gap-2 rounded-full bg-white text-black px-5 py-3 text-sm font-semibold tracking-wide hover:bg-neutral-200 transition-colors duration-200 shadow-[0_0_20px_rgba(255,255,255,0.15)] animate-[pulse-glow_2s_ease-in-out_infinite]"
             >
               <Send size={16} className="text-black" />
               Intră acum gratuit pe Telegram
