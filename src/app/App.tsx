@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BentoCard } from './components/BentoCard';
 import { SocialPill } from './components/SocialPill';
 import { 
@@ -20,6 +20,13 @@ import {
   TrendingUp
 } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogDescription 
+} from './components/ui/dialog';
 import NOVA_AVATAR from '../assets/fc3f352a7826e110a4b12bca4410c3eb1830ab06.png';
 import DYNASTY_AVATAR from '../assets/03904df2942f7c80bca73f9a396f79905354fc62.png';
 import CONSULT_AVATAR from '../assets/3bbc069757dad33abd5dd680bf92c4d16fa802b5.png';
@@ -38,10 +45,74 @@ export default function App() {
   const [currentLang, setCurrentLang] = useState('EN');
   const languages = ['RO', 'EN', 'ES', 'FR', 'DE', 'RU'];
 
+  const [showTelegramModal, setShowTelegramModal] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowTelegramModal(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   const t = translations[currentLang as keyof typeof translations];
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-white/30 font-sans tracking-tight p-4 md:p-6 lg:p-8 flex justify-center">
+    <>
+      <Dialog open={showTelegramModal} onOpenChange={setShowTelegramModal}>
+        <DialogContent className="bg-black/95 border-neutral-800 text-white max-w-md sm:max-w-lg rounded-2xl p-6 sm:p-7">
+          <DialogHeader className="space-y-3 text-center">
+            <p className="inline-flex items-center justify-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-emerald-400">
+              <span className="h-[1px] w-4 bg-emerald-400/60" />
+              Free Telegram Community
+              <span className="h-[1px] w-4 bg-emerald-400/60" />
+            </p>
+            <DialogTitle className="text-2xl sm:text-3xl font-bold leading-snug text-center">
+              Intră în comunitatea mea gratuită de pe Telegram.
+            </DialogTitle>
+            <DialogDescription className="text-neutral-300 text-sm leading-relaxed text-center">
+              Aici găsești clar, fără zgomot:
+            </DialogDescription>
+          </DialogHeader>
+
+          <ul className="mt-3 space-y-2 text-sm text-neutral-200 flex flex-col items-center">
+            <li className="flex gap-2">
+              <span className="mt-0.5">📰</span>
+              <span>Știri importante filtrate – doar ce contează.</span>
+            </li>
+            <li className="flex gap-2">
+              <span className="mt-0.5">📊</span>
+              <span>Analize de piață, sentiment & context.</span>
+            </li>
+            <li className="flex gap-2">
+              <span className="mt-0.5">📈</span>
+              <span>Idei de trading & oportunități cu explicații.</span>
+            </li>
+            <li className="flex gap-2">
+              <span className="mt-0.5">💡</span>
+              <span>Educație, mindset & strategie pe termen lung.</span>
+            </li>
+          </ul>
+
+          <div className="mt-5 flex flex-col gap-3 items-center">
+            <a
+              href="https://t.me/VANDY_001_Official"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-black px-5 py-2.5 text-sm font-semibold tracking-wide hover:bg-neutral-200 transition-colors duration-200 shadow-[0_0_0_1px_rgba(255,255,255,0.12)]"
+            >
+              <Send size={16} className="text-black" />
+              Intră acum gratuit pe Telegram
+            </a>
+            <button
+              type="button"
+              onClick={() => setShowTelegramModal(false)}
+              className="text-xs text-neutral-500 hover:text-neutral-300 transition-colors self-center"
+            >
+              Nu acum, mai târziu
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <div className="min-h-screen bg-black text-white selection:bg-white/30 font-sans tracking-tight p-4 md:p-6 lg:p-8 flex justify-center">
       
       {/* Background Gradient - Minimal Grey */}
       <div className="fixed inset-0 z-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-neutral-900 via-black to-black pointer-events-none" />
@@ -282,5 +353,6 @@ export default function App() {
         </footer>
       </div>
     </div>
+    </>
   );
 }
