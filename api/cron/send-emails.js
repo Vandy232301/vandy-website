@@ -1,11 +1,11 @@
-const { getEmail, EMAIL_SCHEDULE } = require('../_lib/emails');
+import { getEmail, EMAIL_SCHEDULE } from '../_lib/emails.js';
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://najyetpmxjqgjrppuytn.supabase.co';
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || '';
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
 const CRON_SECRET = process.env.CRON_SECRET || '';
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'GET' && req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -120,4 +120,4 @@ module.exports = async function handler(req, res) {
     console.error('Cron error:', err);
     return res.status(500).json({ error: 'Internal server error' });
   }
-};
+}

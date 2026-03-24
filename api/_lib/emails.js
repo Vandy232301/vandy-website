@@ -232,4 +232,4 @@ function getEmail(step, firstName) {
   }
 }
 
-module.exports = { getEmail, EMAIL_SCHEDULE };
+export { getEmail, EMAIL_SCHEDULE };
