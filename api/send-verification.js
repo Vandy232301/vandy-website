@@ -1,5 +1,5 @@
-const SUPABASE_URL = process.env.SUPABASE_URL || 'https://najyetpmxjqgjrppuytn.supabase.co';
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || '';
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://cxamezffjphbbbswvhcw.supabase.co';
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN4YW1lemZmanBoYmJic3d2aGN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyMjgwOTIsImV4cCI6MjA4ODgwNDA5Mn0.4aN_ZJv4DB9ckCxdJoHQarw0mwl_ff8WSLI1xdbRpM4';
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
 
 function verificationEmailHtml(code, firstName) {
