@@ -4,38 +4,56 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
 
 function verificationEmailHtml(code, firstName) {
   return `<!DOCTYPE html>
-<html lang="ro">
+<html lang="ro" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="color-scheme" content="dark"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <title>Verificare Email - VANDY</title>
-<style>
-  body{margin:0;padding:0;background:#000;color:#e5e5e5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
-  .wrapper{max-width:480px;margin:0 auto;padding:40px 24px;text-align:center}
-  .logo{font-size:20px;font-weight:800;color:#fff;letter-spacing:2px;text-decoration:none}
-  .divider{height:1px;background:linear-gradient(90deg,transparent,#333,transparent);margin:28px 0}
-  h1{color:#fff;font-size:22px;font-weight:700;margin:0 0 12px}
-  p{color:#a3a3a3;font-size:15px;line-height:1.7;margin:0 0 16px}
-  .code-box{display:inline-block;background:#111;border:2px solid #34d399;border-radius:16px;padding:20px 40px;margin:24px 0;letter-spacing:12px;font-size:36px;font-weight:800;color:#fff;font-family:'SF Mono',Monaco,Menlo,monospace}
-  .expire{color:#737373;font-size:13px}
-  .footer{text-align:center;padding-top:24px;color:#525252;font-size:12px}
-</style>
 </head>
-<body>
-<div class="wrapper">
-  <a href="https://vandy.ro" class="logo">VANDY</a>
-  <div class="divider"></div>
-  <h1>Ești la un pas distanță.</h1>
-  <p>Salut${firstName ? ', ' + firstName : ''}! Confirmă-ți adresa de email cu codul de mai jos și obține acces la cele mai bune oportunități:</p>
-  <div class="code-box">${code}</div>
-  <p class="expire">Codul expiră în <strong style="color:#fff">10 minute</strong>.</p>
-  <p style="color:#525252;font-size:13px">Dacă nu ai solicitat acest cod, ignoră acest email.</p>
-  <div class="divider"></div>
-  <div class="footer">
-    <p>&copy; 2026 VANDY. Toate drepturile rezervate.</p>
-  </div>
-</div>
+<body style="margin:0;padding:0;background-color:#000000;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#000000" style="background-color:#000000;">
+  <tr>
+    <td align="center" bgcolor="#000000" style="background-color:#000000;padding:40px 16px;">
+      <table width="480" cellpadding="0" cellspacing="0" border="0" style="max-width:480px;width:100%;">
+        <tr>
+          <td align="center" bgcolor="#000000" style="background-color:#000000;padding:0;">
+
+            <!-- Logo -->
+            <a href="https://vandy.ro" style="font-size:20px;font-weight:800;color:#ffffff;letter-spacing:3px;text-decoration:none;font-family:Arial,sans-serif;">VANDY</a>
+
+            <!-- Divider -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0;"><tr><td style="height:1px;background-color:#333333;font-size:1px;line-height:1px;">&nbsp;</td></tr></table>
+
+            <!-- Headline -->
+            <p style="margin:0 0 12px;color:#ffffff;font-size:22px;font-weight:700;font-family:Arial,sans-serif;text-align:center;">Ești la un pas distanță.</p>
+            <p style="margin:0 0 24px;color:#a3a3a3;font-size:15px;line-height:1.7;font-family:Arial,sans-serif;text-align:center;">Salut${firstName ? ', <strong style="color:#ffffff">' + firstName + '</strong>' : ''}! Confirmă-ți adresa de email cu codul de mai jos și obține acces la cele mai bune oportunități:</p>
+
+            <!-- Code box -->
+            <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 24px;">
+              <tr>
+                <td align="center" bgcolor="#111111" style="background-color:#111111;border:2px solid #34d399;border-radius:16px;padding:20px 40px;">
+                  <span style="letter-spacing:10px;font-size:36px;font-weight:800;color:#ffffff;font-family:'Courier New',Courier,monospace;">${code}</span>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin:0 0 8px;color:#737373;font-size:13px;font-family:Arial,sans-serif;text-align:center;">Codul expiră în <strong style="color:#ffffff;">10 minute</strong>.</p>
+            <p style="margin:0 0 24px;color:#525252;font-size:13px;font-family:Arial,sans-serif;text-align:center;">Dacă nu ai solicitat acest cod, ignoră acest email.</p>
+
+            <!-- Divider -->
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px;"><tr><td style="height:1px;background-color:#333333;font-size:1px;line-height:1px;">&nbsp;</td></tr></table>
+
+            <!-- Footer -->
+            <p style="margin:0;color:#525252;font-size:12px;line-height:1.6;font-family:Arial,sans-serif;text-align:center;">&copy; 2026 VANDY. Toate drepturile rezervate.</p>
+            <p style="margin:6px 0 0;color:#525252;font-size:12px;line-height:1.6;font-family:Arial,sans-serif;text-align:center;">Primești acest email pentru că te-ai înscris pe <a href="https://vandy.ro" style="color:#525252;text-decoration:underline;">vandy.ro</a>.</p>
+
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
 </body>
 </html>`;
 }
