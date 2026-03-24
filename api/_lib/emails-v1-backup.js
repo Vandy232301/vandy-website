@@ -1,0 +1,499 @@
+const DYNASTY_URL = 'https://dynasty.vandy.ro/';
+const TELEGRAM_URL = 'https://t.me/VANDY_001_Official';
+
+function baseTemplate(content, preheader) {
+  return `<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="color-scheme" content="dark"/>
+<meta name="supported-color-schemes" content="dark"/>
+<title>VANDY</title>
+<style>
+  body{margin:0;padding:0;background:#000;color:#e5e5e5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrapper{max-width:560px;margin:0 auto;padding:40px 24px}
+  .logo{font-size:20px;font-weight:800;color:#fff;letter-spacing:2px;text-decoration:none}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,#333,transparent);margin:28px 0}
+  h1{color:#fff;font-size:26px;font-weight:700;line-height:1.3;margin:0 0 16px}
+  h2{color:#fff;font-size:20px;font-weight:700;line-height:1.3;margin:0 0 12px}
+  h3{color:#fff;font-size:17px;font-weight:700;line-height:1.3;margin:0 0 8px}
+  p{color:#a3a3a3;font-size:15px;line-height:1.7;margin:0 0 16px}
+  .highlight{color:#fff;font-weight:600}
+  .green{color:#34d399}
+  .gold{color:#fbbf24}
+  .cta-btn{display:inline-block;background:#fff;color:#000;font-size:15px;font-weight:700;padding:14px 32px;border-radius:50px;text-decoration:none;letter-spacing:0.3px;margin:8px 0}
+  .secondary-btn{display:inline-block;background:transparent;color:#fff;font-size:14px;font-weight:600;padding:12px 28px;border-radius:50px;text-decoration:none;border:1px solid #333}
+  .card{background:#111;border:1px solid #222;border-radius:16px;padding:24px;margin:20px 0}
+  .pill{display:inline-block;background:#111;border:1px solid #333;border-radius:50px;padding:6px 14px;font-size:11px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
+  .pill-gold{display:inline-block;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.25);border-radius:50px;padding:6px 14px;font-size:11px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
+  .footer{text-align:center;padding-top:32px;color:#525252;font-size:12px;line-height:1.6}
+  .footer a{color:#525252;text-decoration:underline}
+  .preheader{display:none!important;max-height:0;overflow:hidden;mso-hide:all}
+  ul{padding-left:0;list-style:none;margin:0}
+  ul li{padding:8px 0;font-size:15px;color:#a3a3a3;line-height:1.6}
+  ul li::before{content:'\\2192';color:#34d399;font-weight:700;margin-right:10px}
+  .stat{text-align:center;padding:16px}
+  .stat-num{font-size:32px;font-weight:800;color:#34d399;display:block}
+  .stat-label{font-size:13px;color:#737373;text-transform:uppercase;letter-spacing:1px}
+  .quote{border-left:3px solid #34d399;padding:16px 20px;margin:20px 0;background:rgba(52,211,153,0.03)}
+  .quote p{margin:0;font-style:italic;color:#d4d4d4}
+  .quote .author{font-style:normal;color:#34d399;font-weight:600;font-size:13px;margin-top:8px;display:block}
+  .quote-gold{border-left:3px solid #fbbf24;padding:16px 20px;margin:20px 0;background:rgba(251,191,36,0.03)}
+  .quote-gold p{margin:0;font-style:italic;color:#d4d4d4}
+  .step{display:flex;gap:16px;margin:16px 0;align-items:flex-start}
+  .step-num{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:#111;border:2px solid #34d399;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#34d399}
+  .step-content{flex:1}
+  .stage{text-align:center;padding:20px 16px;margin:8px 0}
+  .stage-label{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:8px}
+  .stage-title{font-size:18px;font-weight:800;color:#fff;margin-bottom:6px}
+  .stage-desc{font-size:13px;color:#737373;line-height:1.5}
+  .emoji-big{font-size:28px;display:block;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="preheader">${preheader}</div>
+<div class="wrapper">
+  <a href="https://vandy.ro" class="logo">VANDY</a>
+  <div class="divider"></div>
+  ${content}
+  <div class="divider"></div>
+  <div class="footer">
+    <p>&copy; 2026 VANDY. Toate drepturile rezervate.</p>
+    <p>Primești acest email pentru că te-ai înscris pe <a href="https://vandy.ro">vandy.ro</a>.</p>
+  </div>
+</div>
+</body>
+</html>`;
+}
+
+function email1Welcome(name) {
+  return {
+    subject: `${name}, în care dintre cele 3 stadii te afli?`,
+    html: baseTemplate(`
+      <h1>Există doar 3 stadii în viața financiară, ${name}.</h1>
+      <p>Și tot ce faci &mdash; sau nu faci &mdash; te ține într-unul dintre ele.</p>
+
+      <div class="card">
+        <div class="stage">
+          <span class="emoji-big">&#x23F3;</span>
+          <div class="stage-label" style="color:#ef4444">Stadiul 1</div>
+          <div class="stage-title">Nu ai BANI și nu ai TIMP.</div>
+          <div class="stage-desc">Muncești mult, câștigi puțin. Trăiești de la lună la lună. Nu ai libertate, nu ai opțiuni, nu ai un plan. Majoritatea oamenilor rămân aici toată viața.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="stage">
+          <span class="emoji-big">&#x1F4B0;</span>
+          <div class="stage-label" style="color:#fbbf24">Stadiul 2</div>
+          <div class="stage-title">Ai BANI dar nu ai TIMP.</div>
+          <div class="stage-desc">Ai un salariu decent sau o afacere, dar ești prins în ea. Faci bani, dar nu te bucuri de viață. Ești sclavul propriului succes.</div>
+        </div>
+      </div>
+      <div class="card" style="border-color:#34d399">
+        <div class="stage">
+          <span class="emoji-big">&#x1F451;</span>
+          <div class="stage-label" style="color:#34d399">Stadiul 3</div>
+          <div class="stage-title">Ai și BANI și TIMP.</div>
+          <div class="stage-desc">Banii lucrează pentru tine. Ai libertate totală. Îți alegi cum îți petreci fiecare zi. Construiești abundență pentru generațiile viitoare. Acesta e obiectivul.</div>
+        </div>
+      </div>
+
+      <p>Eu sunt <span class="highlight">VANDY</span> &mdash; antreprenor în serie, trader și investitor cu peste <span class="highlight">11 ani de experiență</span>. Am fost în fiecare din cele 3 stadii. Și am construit un <span class="green">sistem clar</span> care te duce din stadiul în care ești acum în Stadiul 3.</p>
+
+      <div class="quote">
+        <p>&ldquo;Nu contează câți bani faci. Contează <span class="green">câți bani păstrezi, cum îi pui la muncă</span>, și câte generații vor beneficia de deciziile tale de azi.&rdquo;</p>
+      </div>
+
+      <p>În următoarele email-uri îți voi arăta <span class="highlight">exact cum funcționează acest sistem</span>:</p>
+      <ul>
+        <li><span class="highlight">Email 2:</span> Cum faci bani rapid prin Trading &mdash; Memecoins &amp; Futures</li>
+        <li><span class="highlight">Email 3:</span> Cum investești profitul pentru avere generațională + AI ca Gold Rush</li>
+        <li><span class="highlight">Email 4:</span> Dovezi reale de la oameni care au aplicat deja</li>
+        <li><span class="highlight">Email 5:</span> Cum începi &mdash; pasul concret de astăzi</li>
+      </ul>
+
+      <p>Între timp, intră în comunitatea mea <span class="green">100% gratuită</span> de pe Telegram pentru oportunități zilnice:</p>
+      <div style="text-align:center;margin:24px 0">
+        <a href="${TELEGRAM_URL}" class="cta-btn">Intră pe Telegram gratuit &rarr;</a>
+      </div>
+
+      <p>Următorul email vine mâine. E despre <span class="highlight">cum faci bani rapid</span> &mdash; metoda prin care cei mai mulți membri ai comunității au generat primii lor bani serioși.</p>
+      <p style="color:#fff;font-weight:600">See you on the other side,<br/>VANDY</p>
+    `, `${name}, în care din cele 3 stadii financiare te afli? Iată sistemul care te duce în Stadiul 3...`)
+  };
+}
+
+function email2Value(name) {
+  return {
+    subject: `${name}, cea mai rapidă metodă să faci bani în 2026.`,
+    html: baseTemplate(`
+      <span class="pill">Pasul 1 din 3: Generează capital</span>
+      <h1>Înainte să investești, trebuie să ai CE investi.</h1>
+      <p>Salut, ${name}.</p>
+      <p>În ultimul email ți-am arătat cele 3 stadii ale vieții financiare. Azi îți arăt <span class="highlight">primul pas concret</span> ca să ieși din stadiul în care ești: <span class="green">cum faci bani rapid.</span></p>
+      <p>Și cea mai rapidă metodă legală și accesibilă de a face bani în 2026 este <span class="highlight">Trading-ul</span>.</p>
+
+      <div class="quote-gold">
+        <p>&ldquo;Nu ai nevoie de 10.000&euro; ca să începi. Ai nevoie de <span class="gold">un skill, o strategie și disciplină</span> să le aplici zilnic.&rdquo;</p>
+      </div>
+
+      <p>Hai să-ți explic concret:</p>
+
+      <div class="card">
+        <h2>&#x1F4B9; Memecoin Trading</h2>
+        <p><span class="highlight">Memecoins</span> sunt monedele cu cea mai mare volatilitate din crypto. Asta înseamnă risc mai mare, dar și <span class="green">oportunități uriașe</span> pentru cei care știu ce fac.</p>
+        <p>Uite ce face Memecoin Trading-ul diferit:</p>
+        <ul>
+          <li><span class="highlight">Mișcările sunt rapide</span> &mdash; poți vedea +50%, +100%, chiar +500% în zile sau ore</li>
+          <li><span class="highlight">Capital mic de start</span> &mdash; 50-200&euro; sunt suficienți să începi să înveți</li>
+          <li><span class="highlight">Oportunități zilnice</span> &mdash; piața nu doarme, apar mereu monede noi</li>
+        </ul>
+        <p style="margin-bottom:0">Cheia: <span class="green">nu ghicești</span>. Înveți să citești narrativele, să identifici early trends și să intri și ieși disciplinat. Exact asta facem în Dynasty.</p>
+      </div>
+
+      <div class="card">
+        <h2>&#x1F525; Futures Trading</h2>
+        <p><span class="highlight">Futures</span> îți permit să faci bani atât când piața crește, cât și când scade. E ca și cum ai avea două direcții din care să profiți în loc de una.</p>
+        <p>Ce trebuie să știi:</p>
+        <ul>
+          <li><span class="highlight">Leverage</span> &mdash; cu 100&euro; poți controla o poziție de 1,000&euro; (dar cu riscul aferent)</li>
+          <li><span class="highlight">Short selling</span> &mdash; profiți și când prețul scade, nu doar când crește</li>
+          <li><span class="highlight">Risk management</span> &mdash; stop loss-ul e cel mai bun prieten al tău. NICIODATĂ nu tranzacționa fără el</li>
+        </ul>
+        <p style="margin-bottom:0">Regula mea de aur: <span class="green">nu risca mai mult de 1-2% din capital pe un singur trade</span>. Așa protejezi ce ai construit și trăiești să tranzacționezi mâine.</p>
+      </div>
+
+      <div class="card" style="text-align:center">
+        <span class="pill">De ce trading-ul e pasul 1</span>
+        <p style="text-align:left">Ai nevoie de <span class="highlight">cashflow</span> înainte de orice. Nu poți investi dacă nu ai ce. Trading-ul e cel mai rapid mod de a genera capital inițial pe care apoi îl pui la muncă prin investiții pe termen lung.</p>
+        <p style="text-align:left;margin-bottom:0">E exact ca în business: <span class="green">întâi generezi venituri, apoi reinvestești profitul</span>. Diferența e că aici nu ai nevoie de angajați, birou sau capital mare de start.</p>
+      </div>
+
+      <div class="card" style="background:rgba(52,211,153,0.03);border-color:rgba(52,211,153,0.15)">
+        <h3 style="color:#34d399">Ce primești în Dynasty pe partea de Trading:</h3>
+        <ul>
+          <li><span class="highlight">Call-uri zilnice</span> cu entry point, stop loss, take profit &mdash; executabile în 30 de secunde</li>
+          <li><span class="highlight">Analize tehnice</span> în timp real &mdash; nu după ce a trecut trendul</li>
+          <li><span class="highlight">Educație pas cu pas</span> &mdash; de la începător la avansat</li>
+          <li><span class="highlight">Risk management framework</span> &mdash; ca să nu-ți pierzi capitalul</li>
+          <li><span class="highlight">Comunitate activă</span> &mdash; înveți de la alții, nu doar de la mine</li>
+        </ul>
+      </div>
+
+      <p>Ăsta e Pasul 1: <span class="highlight">învață să faci bani</span>. Mâine îți arăt <span class="highlight">Pasul 2</span>: cum iei profitul din trading și îl transformi în <span class="green">avere care durează generații</span>.</p>
+      <p style="color:#fff;font-weight:600">Stay sharp,<br/>VANDY</p>
+    `, `${name}, cea mai rapidă metodă să faci bani în 2026 — și cum aplici concret...`)
+  };
+}
+
+function email3SocialProof(name) {
+  return {
+    subject: `${name}, cum transformi banii în avere generațională.`,
+    html: baseTemplate(`
+      <span class="pill">Pasul 2 din 3: Investește și multiplică</span>
+      <h1>Faci bani din trading. Acum ce faci cu ei?</h1>
+      <p>Salut, ${name}.</p>
+      <p>Dacă ai citit emailul anterior, înțelegi deja cum generezi capital prin trading. Dar asta e doar începutul.</p>
+      <p>Cel mai mare secret al oamenilor bogați nu e cât câștigă. E <span class="highlight">ce fac cu banii după ce îi câștigă</span>.</p>
+
+      <div class="quote">
+        <p>&ldquo;Trading-ul îți generează capital. Investițiile îl multiplică. Asta e diferența dintre a fi <span class="green">bogat</span> și a fi <span class="green">cu adevărat liber</span>.&rdquo;</p>
+      </div>
+
+      <p>Bogăția se pierde într-o generație. <span class="highlight">Abundența se construiește pentru generații.</span> Iată cum:</p>
+
+      <div class="card">
+        <h2>&#x1F4CA; Crypto &mdash; Portofoliul de creștere</h2>
+        <p><span class="highlight">Bitcoin, Ethereum și proiecte fundamentale</span> nu sunt pentru trading zilnic. Sunt pentru <span class="green">acumulare pe termen lung</span>.</p>
+        <ul>
+          <li>Bitcoin a crescut de la $1 la $100,000+ în 15 ani &mdash; cine a ținut, a câștigat</li>
+          <li>DCA (Dollar Cost Averaging) &mdash; investești constant, indiferent de preț</li>
+          <li>70% din profitul din trading îl aloc în crypto pe termen lung</li>
+        </ul>
+        <p style="margin-bottom:0">În Dynasty am un <span class="highlight">portofoliu transparent de crypto</span> pe care îl poți urmări și replica.</p>
+      </div>
+
+      <div class="card">
+        <h2>&#x1F4C8; Stocks &mdash; Portofoliul de stabilitate</h2>
+        <p><span class="highlight">Acțiunile</span> sunt coloana vertebrală a oricărui portofoliu serios. Mai puțin sexy decât crypto, dar <span class="green">consistent și predictibil</span>.</p>
+        <ul>
+          <li>S&amp;P 500 a generat ~10% pe an în ultimii 90 de ani</li>
+          <li>Dividend stocks &mdash; bani care vin lunar fără să faci nimic</li>
+          <li>Growth stocks &mdash; companii care definesc viitorul (AI, biotech, clean energy)</li>
+        </ul>
+        <p style="margin-bottom:0">Nu trebuie să fii expert. Trebuie să ai <span class="highlight">un plan și disciplină să-l urmezi</span>.</p>
+      </div>
+
+      <div class="card">
+        <h2>&#x1F3E0; Real Estate &mdash; Portofoliul de securitate</h2>
+        <p><span class="highlight">Imobiliarele</span> sunt cel mai vechi și cel mai sigur mod de a construi avere. De ce?</p>
+        <ul>
+          <li>Valoarea crește în timp &mdash; terenul e o resursă finită</li>
+          <li>Cash flow lunar din chirii &mdash; venit pasiv real</li>
+          <li>Leverage prin credite &mdash; cumperi cu banii băncii, profitul e al tău</li>
+        </ul>
+        <p style="margin-bottom:0">Real estate e temelia pe care se construiesc imperiile financiare. <span class="green">Îl introducem în strategie din momentul în care ai construit primii tăi 10-20K&euro; din trading și crypto.</span></p>
+      </div>
+
+      <div class="divider"></div>
+
+      <span class="pill-gold">&#x1F916; Oportunitatea erei noastre</span>
+      <h1 style="font-size:24px">Artificial Intelligence &mdash; următorul Gold Rush.</h1>
+      <p>Știu că ai auzit despre AI. Toată lumea vorbește despre el. Dar <span class="highlight">aproape nimeni nu îl folosește să facă bani</span>. Încă.</p>
+      <p>Exact ca internetul în anii &rsquo;90, exact ca crypto în 2015 &mdash; <span class="gold">AI-ul e fereastra de oportunitate care se deschide O SINGURĂ DATĂ.</span></p>
+
+      <div class="card" style="border-color:rgba(251,191,36,0.3)">
+        <h3>Cum folosesc EU AI-ul să fac bani:</h3>
+        <ul>
+          <li><span class="highlight">Analiza piețelor</span> &mdash; AI procesează mii de date în secunde, identifică pattern-uri pe care ochiul uman le ratează</li>
+          <li><span class="highlight">Automatizare</span> &mdash; ce făceam în 8 ore, acum fac în 30 de minute</li>
+          <li><span class="highlight">Crearea de afaceri</span> &mdash; AI-ul reduce costul de start al unui business de la mii de euro la aproape zero</li>
+          <li><span class="highlight">Content &amp; Marketing</span> &mdash; branduri personale construite în săptămâni, nu ani</li>
+          <li><span class="highlight">Edge competitiv</span> &mdash; cei care adoptă AI acum vor domina piața în 2-3 ani</li>
+        </ul>
+      </div>
+
+      <div class="quote-gold">
+        <p>&ldquo;În fiecare eră există un Gold Rush. În anii 1800 a fost aurul. În anii 2000 a fost internetul. În 2010 a fost crypto. În 2025-2030, <span class="gold">Gold Rush-ul se numește Artificial Intelligence</span>. Întrebarea nu e dacă va fi mare &mdash; ci dacă vei fi acolo.&rdquo;</p>
+      </div>
+
+      <div class="card" style="text-align:center;border-color:rgba(52,211,153,0.3)">
+        <span class="pill">Tabloul complet</span>
+        <div style="text-align:left">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h3>Fă bani prin Trading</h3>
+              <p style="margin-bottom:0;font-size:14px">Memecoins &amp; Futures &rarr; generează cashflow rapid</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h3>Investește profitul</h3>
+              <p style="margin-bottom:0;font-size:14px">Crypto + Stocks + Real Estate &rarr; construiește avere</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h3>Accelerează cu AI</h3>
+              <p style="margin-bottom:0;font-size:14px">Dezvoltă afaceri &amp; avantaj competitiv &rarr; Gold Rush</p>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <p style="text-align:center;margin-bottom:0;font-size:14px"><span class="highlight">Rezultatul:</span> <span class="green">Bani ȘI Timp. Abundență pentru generații.</span></p>
+      </div>
+
+      <p>Tot acest parcurs &mdash; de la primul trade până la portofoliu de investiții și business-uri cu AI &mdash; există într-un singur loc: <span class="highlight">comunitatea VANDY</span>.</p>
+      <p>Mâine îți arăt <span class="highlight">dovezi concrete</span> de la oameni care au urmat exact acest parcurs.</p>
+      <p style="color:#fff;font-weight:600">VANDY</p>
+    `, `${name}, cum transformi profitul din trading în avere care durează generații + AI Gold Rush...`)
+  };
+}
+
+function email4Objections(name) {
+  return {
+    subject: `${name}, ei au fost exact unde ești tu acum.`,
+    html: baseTemplate(`
+      <span class="pill">Dovezi și răspunsuri</span>
+      <h1>Rezultatele vorbesc. Temerile se demontează.</h1>
+      <p>Salut, ${name}.</p>
+      <p>În ultimele email-uri ți-am arătat <span class="highlight">sistemul complet</span>: Trading &rarr; Investiții &rarr; AI. Dar știu la ce te gândești: <em>&ldquo;Funcționează și pentru mine?&rdquo;</em></p>
+      <p>Hai să răspundă oamenii care au fost <span class="highlight">exact unde ești tu acum</span>:</p>
+
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#34d399,#059669);display:flex;align-items:center;justify-content:center;font-weight:800;color:#000;font-size:16px">A</div>
+          <div>
+            <p style="margin:0;color:#fff;font-weight:600;font-size:14px">Andrei, 27 ani</p>
+            <p style="margin:0;font-size:12px;color:#525252">Job 9-5 &rarr; Trader + Investitor</p>
+          </div>
+        </div>
+        <p><em>&ldquo;Lucram într-un corporate, 9-5, salariu decent dar zero libertate. Am intrat în Dynasty cu 400&euro; și zero cunoștințe. În 4 luni am învățat să tranzacționez, am făcut <span class="highlight">primii 2,800&euro; din trading</span>, și acum am un portofoliu de crypto și acțiuni pe care îl cresc lunar. Cel mai valoros lucru? <span class="green">Am un plan clar pentru primii 100K&euro;.</span>&rdquo;</em></p>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#d97706);display:flex;align-items:center;justify-content:center;font-weight:800;color:#000;font-size:16px">M</div>
+          <div>
+            <p style="margin:0;color:#fff;font-weight:600;font-size:14px">Mihai, 31 ani</p>
+            <p style="margin:0;font-size:12px;color:#525252">Programator &rarr; Trader + AI Business</p>
+          </div>
+        </div>
+        <p><em>&ldquo;Ca developer, știam de AI dar nu știam cum să-l monetizez. Dynasty mi-a dat framework-ul complet: am început cu futures trading, am generat capital, și acum am un side business cu AI care îmi aduce <span class="highlight">1,500&euro;/lună extra</span>. Portofoliul de investiții crește frumos. <span class="green">Sistemul chiar funcționează.</span>&rdquo;</em></p>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:16px">D</div>
+          <div>
+            <p style="margin:0;color:#fff;font-weight:600;font-size:14px">Diana, 24 ani</p>
+            <p style="margin:0;font-size:12px;color:#525252">Studentă &rarr; Memecoin Trader</p>
+          </div>
+        </div>
+        <p><em>&ldquo;Am început cu 150&euro; pe care i-am strâns din bursă. Toată lumea îmi spunea că e gambling. Dar în Dynasty am învățat că <span class="highlight">trading-ul e un skill</span>, nu noroc. După 3 luni am trecut de 2,200&euro;. Acum investesc 50% din profit în crypto pe termen lung. <span class="green">La 24 de ani construiesc deja avere.</span>&rdquo;</em></p>
+      </div>
+
+      <div style="text-align:center;margin:24px 0">
+        <div class="card" style="display:inline-block;min-width:130px;margin:8px">
+          <div class="stat"><span class="stat-num">1,200+</span><span class="stat-label">Membri activi</span></div>
+        </div>
+        <div class="card" style="display:inline-block;min-width:130px;margin:8px">
+          <div class="stat"><span class="stat-num">85%</span><span class="stat-label">Win rate call-uri</span></div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <h2>Răspunsuri la temerile tale</h2>
+      <p>Știu exact ce gândești. Am primit aceste întrebări de sute de ori:</p>
+
+      <div class="card">
+        <h3>&#x1F4AC; &ldquo;Nu am bani să încep.&rdquo;</h3>
+        <p style="margin-bottom:0">Diana a început cu 150&euro;. Andrei cu 400&euro;. <span class="highlight">Nu ai nevoie de capital mare &mdash; ai nevoie de educație și un plan.</span> Trading-ul e un skill care se construiește progresiv.</p>
+      </div>
+
+      <div class="card">
+        <h3>&#x1F4AC; &ldquo;Nu știu nimic despre trading.&rdquo;</h3>
+        <p style="margin-bottom:0"><span class="highlight">70% din membrii Dynasty au început de la zero.</span> Primești educație structurată, call-uri cu explicații complete, și suport de la comunitate la fiecare pas.</p>
+      </div>
+
+      <div class="card">
+        <h3>&#x1F4AC; &ldquo;Am mai fost păcălit.&rdquo;</h3>
+        <p style="margin-bottom:0">Înțeleg perfect. De asta Dynasty are <span class="green">track record public și verificabil</span>. Nu promit x100. Arăt un sistem real, cu riscuri reale, și rezultate documentate.</p>
+      </div>
+
+      <div class="card">
+        <h3>&#x1F4AC; &ldquo;Nu am timp.&rdquo;</h3>
+        <p style="margin-bottom:0">Call-urile Dynasty au entry, SL, TP &mdash; executabile în 30 de secunde. <span class="green">15 minute pe zi sunt suficiente.</span> Mai puțin decât scrollezi pe Instagram.</p>
+      </div>
+
+      <p>Singurul lucru care te separă de rezultate nu e capitalul, experiența sau timpul. E <span class="highlight">decizia de a începe</span>.</p>
+      <p>Mâine îți trimit <span class="highlight">ultimul email</span> din această serie. Va fi cel mai important.</p>
+      <p style="color:#fff;font-weight:600">VANDY</p>
+    `, `${name}, oameni reali, rezultate reale — și răspunsuri la temerile tale...`)
+  };
+}
+
+function email5CTA(name) {
+  return {
+    subject: `${name}, tot parcursul începe cu un singur pas.`,
+    html: baseTemplate(`
+      <span class="pill">Ultimul email din serie</span>
+      <h1>Ai informația. Ai dovezile. Acum ai nevoie de decizie.</h1>
+      <p>Salut, ${name}.</p>
+      <p>În ultimele zile ți-am arătat:</p>
+
+      <div class="card" style="background:transparent;border:none;padding:0 0 0 16px;border-left:2px solid #222">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <p style="margin-bottom:0"><span class="highlight">Cele 3 stadii</span> ale vieții financiare &mdash; și cum ajungi să ai și BANI și TIMP</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <p style="margin-bottom:0"><span class="highlight">Cum faci bani</span> rapid prin Memecoin Trading &amp; Futures</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <p style="margin-bottom:0"><span class="highlight">Cum investești</span> profitul în Crypto, Stocks &amp; Real Estate pentru avere generațională</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <p style="margin-bottom:0"><span class="highlight">AI ca Gold Rush</span> &mdash; cum dezvolți afaceri și obții avantaj competitiv</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <p style="margin-bottom:0"><span class="highlight">Dovezi reale</span> de la oameni care au aplicat exact acest parcurs</p>
+          </div>
+        </div>
+      </div>
+
+      <p>Acum, totul se reduce la o singură întrebare:</p>
+      <h2 style="text-align:center;font-size:22px;margin:20px 0"><span class="green">Vrei să rămâi unde ești? Sau vrei să începi?</span></h2>
+
+      <p>Tot parcursul pe care ți l-am prezentat &mdash; de la primul trade până la portofoliu de investiții, AI și avere generațională &mdash; există într-un singur loc.</p>
+
+      <div class="card" style="border-color:#34d399;background:linear-gradient(135deg,#0a0a0a,#111)">
+        <div style="text-align:center">
+          <h2 style="margin-bottom:4px;font-size:24px">DYNASTY</h2>
+          <p style="color:#34d399;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px">Comunitate de Trading, Investiții &amp; Construirea Averii</p>
+        </div>
+
+        <h3 style="color:#34d399;font-size:14px;margin-bottom:12px">&#x1F4B9; TRADING &mdash; Generează capital</h3>
+        <ul>
+          <li>Call-uri zilnice pe <span class="highlight">Memecoin &amp; Futures</span> cu 85% win rate</li>
+          <li>Analize tehnice în timp real</li>
+          <li>Risk management framework complet</li>
+          <li>Educație de la zero la avansat</li>
+        </ul>
+
+        <div style="height:1px;background:#222;margin:16px 0"></div>
+
+        <h3 style="color:#fbbf24;font-size:14px;margin-bottom:12px">&#x1F4CA; INVESTIȚII &mdash; Construiește avere</h3>
+        <ul>
+          <li>Portofoliu transparent de <span class="highlight">Crypto pe termen lung</span></li>
+          <li>Portofoliu de <span class="highlight">Stocks &amp; Dividend Investing</span></li>
+          <li>Framework de <span class="highlight">Real Estate</span> investing</li>
+          <li>Strategii de diversificare și protecție</li>
+        </ul>
+
+        <div style="height:1px;background:#222;margin:16px 0"></div>
+
+        <h3 style="color:#a78bfa;font-size:14px;margin-bottom:12px">&#x1F916; AI &mdash; Accelerează totul</h3>
+        <ul>
+          <li>Tool-uri AI pentru <span class="highlight">analiza piețelor</span></li>
+          <li>Cum să construiești <span class="highlight">afaceri cu AI</span></li>
+          <li>Automatizare și eficiență 10x</li>
+          <li>Accesul la <span class="highlight">VANDY</span> și echipă 24/7</li>
+        </ul>
+      </div>
+
+      <div style="text-align:center;margin:32px 0">
+        <a href="${DYNASTY_URL}" class="cta-btn" style="font-size:16px;padding:16px 40px">Intră în Dynasty acum &rarr;</a>
+        <p style="font-size:12px;color:#525252;margin-top:12px">Locurile sunt limitate pentru a menține calitatea comunității.</p>
+      </div>
+
+      <div class="quote">
+        <p>&ldquo;Cel mai scump lucru din lume nu e un Lamborghini sau o vilă. E <span class="green">timpul pierdut pe oportunități ratate</span>. Fiecare zi în care amâni e o zi în care altcineva construiește averea pe care tu o visezi.&rdquo;</p>
+        <span class="author">&mdash; VANDY</span>
+      </div>
+
+      <p>Nu există <em>&ldquo;o să încep mâine&rdquo;</em>. Există doar <span class="highlight">acum</span> sau <span class="highlight">niciodată</span>.</p>
+      <p>Dynasty e primul pas. Restul parcursului vine natural.</p>
+      <p>Ne vedem înăuntru.</p>
+      <p style="color:#fff;font-weight:600;font-size:18px">VANDY &#x1F5A4;</p>
+    `, `${name}, tot parcursul — Trading, Investiții, AI, Abundență — începe cu un singur pas. Dynasty te așteaptă.`)
+  };
+}
+
+const EMAIL_SCHEDULE = {
+  1: 0,
+  2: 1,
+  3: 2,
+  4: 3,
+  5: 4,
+};
+
+function getEmail(step, firstName) {
+  switch (step) {
+    case 1: return email1Welcome(firstName);
+    case 2: return email2Value(firstName);
+    case 3: return email3SocialProof(firstName);
+    case 4: return email4Objections(firstName);
+    case 5: return email5CTA(firstName);
+    default: return null;
+  }
+}
+
+export { getEmail, EMAIL_SCHEDULE };
