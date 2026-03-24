@@ -45,6 +45,23 @@ export function LeadCapturePopup() {
     setLoading(true);
     setError('');
 
+    try {
+      const apiRes = await fetch('/api/submit-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      if (apiRes.ok) {
+        localStorage.setItem('vandy_lead_submitted', 'true');
+        setSubmitted(true);
+        setLoading(false);
+        return;
+      }
+    } catch {
+      // API not available (local dev), fall back to direct Supabase insert
+    }
+
     const { error: dbError } = await supabase.from('leads').insert({
       first_name: form.firstName.trim(),
       last_name: form.lastName.trim(),
@@ -89,9 +106,9 @@ export function LeadCapturePopup() {
                   <span className="h-[1px] w-4 bg-emerald-400/60" />
                 </p>
                 <DialogTitle className="text-xl sm:text-2xl font-bold leading-snug text-center">
-                  Intră în{' '}
-                  <span className="text-emerald-400">COMUNITATEA</span> mea{' '}
-                  <span className="text-emerald-400">GRATUITĂ</span>
+                  Intră în <span className="text-emerald-400">COMUNITATEA</span>
+                  <br />
+                  mea 100% <span className="text-emerald-400">GRATUITĂ</span>
                 </DialogTitle>
                 <p className="text-neutral-300 text-sm leading-relaxed text-center">
                   și poți afla cele mai tari{' '}
