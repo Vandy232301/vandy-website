@@ -1,17 +1,77 @@
-const DYNASTY_URL = 'https://dynasty.vandy.ro/';
-const WHOP_URL = 'https://whop.com/dynasty001/dynasty-trades-premium-99/';
-const TELEGRAM_URL = 'https://t.me/VANDY_001_Official';
-
-function baseTemplate(content, preheader) {
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ro">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="color-scheme" content="dark"/>
-<meta name="supported-color-schemes" content="dark"/>
-<title>VANDY</title>
+<title>VANDY PLF Email Preview</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@400;600;800&display=swap');
+  :root{--bg:#0a0a0a;--surface:#111;--border:#222;--green:#34d399;--text:#a3a3a3;--heading:#fff}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;min-height:100vh}
+  .header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;gap:16px}
+  .header h1{font-size:18px;font-weight:800;color:var(--heading);letter-spacing:2px}
+  .header span{font-size:13px;color:var(--green);font-weight:600;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.2);padding:4px 12px;border-radius:50px}
+  .tabs{display:flex;gap:0;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:67px;z-index:99;overflow-x:auto}
+  .tab{padding:14px 24px;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s}
+  .tab:hover{color:var(--heading);background:rgba(255,255,255,0.03)}
+  .tab.active{color:var(--green);border-bottom-color:var(--green);background:rgba(52,211,153,0.05)}
+  .tab .day{font-size:10px;font-weight:700;color:#525252;text-transform:uppercase;letter-spacing:1px;display:block;margin-top:2px}
+  .preview-frame{max-width:640px;margin:32px auto;border-radius:16px;overflow:hidden;border:1px solid var(--border);background:#000}
+  .preview-meta{display:flex;align-items:center;gap:12px;padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--border)}
+  .preview-meta .from{font-size:13px;color:var(--heading);font-weight:600}
+  .preview-meta .subject{font-size:12px;color:var(--text)}
+  .preview-meta .badge{font-size:10px;font-weight:700;background:var(--green);color:#000;padding:3px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:0.5px}
+  .email-frame{width:100%;border:none;min-height:900px;background:#000}
+  .info-bar{max-width:640px;margin:0 auto 32px;padding:0 8px}
+  .info-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;display:flex;gap:16px;align-items:flex-start}
+  .info-card .icon{font-size:20px;flex-shrink:0;margin-top:2px}
+  .info-card .label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#525252;font-weight:700;margin-bottom:4px}
+  .info-card .value{font-size:14px;color:var(--heading);font-weight:600;line-height:1.4}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>VANDY</h1>
+  <span>PLF Email Sequence Preview — v2</span>
+</div>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" onclick="showEmail(0)">
+    <span>🔐 Email 0: Verificare</span>
+    <span class="day">Instant</span>
+  </div>
+  <div class="tab" onclick="showEmail(1)">
+    <span>🚀 Email 1: Welcome</span>
+    <span class="day">Ziua 0</span>
+  </div>
+  <div class="tab" onclick="showEmail(2)">
+    <span>🐸 Email 2: Memecoin Trading</span>
+    <span class="day">Ziua 1</span>
+  </div>
+  <div class="tab" onclick="showEmail(3)">
+    <span>🔥 Email 3: Futures + Compus</span>
+    <span class="day">Ziua 2</span>
+  </div>
+  <div class="tab" onclick="showEmail(4)">
+    <span>📊 Email 4: Portofoliu</span>
+    <span class="day">Ziua 3</span>
+  </div>
+  <div class="tab" onclick="showEmail(5)">
+    <span>🎯 Email 5: Dynasty CTA</span>
+    <span class="day">Ziua 4</span>
+  </div>
+</div>
+
+<div id="email-panels"></div>
+
+<script>
+const NAME = 'Alex';
+const DYNASTY_URL = 'https://dynasty.vandy.ro/';
+const TELEGRAM_URL = 'https://t.me/VANDY_001_Official';
+
+const CSS = `
   body{margin:0;padding:0;background:#000;color:#e5e5e5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
   .wrapper{max-width:560px;margin:0 auto;padding:40px 24px}
   .logo{font-size:20px;font-weight:800;color:#fff;letter-spacing:2px;text-decoration:none}
@@ -24,13 +84,11 @@ function baseTemplate(content, preheader) {
   .green{color:#34d399}
   .gold{color:#fbbf24}
   .cta-btn{display:inline-block;background:#fff;color:#000;font-size:15px;font-weight:700;padding:14px 32px;border-radius:50px;text-decoration:none;letter-spacing:0.3px;margin:8px 0}
-  .secondary-btn{display:inline-block;background:transparent;color:#fff;font-size:14px;font-weight:600;padding:12px 28px;border-radius:50px;text-decoration:none;border:1px solid #333}
   .card{background:#111;border:1px solid #222;border-radius:16px;padding:24px;margin:20px 0}
   .pill{display:inline-block;background:#111;border:1px solid #333;border-radius:50px;padding:6px 14px;font-size:11px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
   .pill-gold{display:inline-block;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.25);border-radius:50px;padding:6px 14px;font-size:11px;font-weight:700;color:#fbbf24;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
   .footer{text-align:center;padding-top:32px;color:#525252;font-size:12px;line-height:1.6}
   .footer a{color:#525252;text-decoration:underline}
-  .preheader{display:none!important;max-height:0;overflow:hidden;mso-hide:all}
   ul{padding-left:0;list-style:none;margin:0}
   ul li{padding:8px 0;font-size:15px;color:#a3a3a3;line-height:1.6}
   ul li::before{content:'\\2192';color:#34d399;font-weight:700;margin-right:10px}
@@ -45,35 +103,35 @@ function baseTemplate(content, preheader) {
   .step{display:flex;gap:16px;margin:16px 0;align-items:flex-start}
   .step-num{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:#111;border:2px solid #34d399;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#34d399}
   .step-content{flex:1}
-  .stage{text-align:center;padding:20px 16px;margin:8px 0}
-  .stage-label{font-size:12px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:8px}
-  .stage-title{font-size:18px;font-weight:800;color:#fff;margin-bottom:6px}
-  .stage-desc{font-size:13px;color:#737373;line-height:1.5}
   .emoji-big{font-size:28px;display:block;margin-bottom:8px}
-</style>
-</head>
-<body>
-<div class="preheader">${preheader}</div>
-<div class="wrapper">
-  <a href="https://vandy.ro" class="logo">VANDY</a>
-  <div class="divider"></div>
-  ${content}
-  <div class="divider"></div>
-  <div class="footer">
-    <p>&copy; 2026 VANDY. Toate drepturile rezervate.</p>
-    <p>Primești acest email pentru că te-ai înscris pe <a href="https://vandy.ro">vandy.ro</a>.</p>
-    <p style="margin-top:16px;padding-top:16px;border-top:1px solid #1a1a1a;font-size:11px;color:#404040;line-height:1.7;text-align:left"><strong style="color:#525252">Disclaimer:</strong> Trading-ul și investițiile în active financiare implică riscuri semnificative și pot duce la pierderea parțială sau totală a capitalului investit. Performanțele trecute nu garantează rezultate viitoare. Informațiile prezentate în acest email au caracter exclusiv educațional și informativ și nu reprezintă sfaturi financiare, recomandări de investiții sau îndemnuri de a cumpăra sau vinde active financiare. Înainte de a lua orice decizie financiară, consultați un consilier financiar autorizat și investiți doar sumele pe care vă puteți permite să le pierdeți.</p>
-  </div>
-</div>
-</body>
-</html>`;
+  .code-box{display:inline-block;background:#111;border:2px solid #34d399;border-radius:16px;padding:20px 40px;margin:24px 0;letter-spacing:12px;font-size:36px;font-weight:800;color:#fff;font-family:'SF Mono',Monaco,Menlo,monospace}
+  .expire{color:#737373;font-size:13px}
+`;
+
+function wrap(content) {
+  return `<!DOCTYPE html><html lang="ro"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="color-scheme" content="dark"/><title>VANDY</title><style>${CSS}</style></head><body><div class="wrapper"><a href="https://vandy.ro" class="logo">VANDY</a><div class="divider"></div>${content}<div class="divider"></div><div class="footer"><p>&copy; 2026 VANDY. Toate drepturile rezervate.</p><p>Primești acest email pentru că te-ai înscris pe <a href="https://vandy.ro">vandy.ro</a>.</p><p style="margin-top:16px;padding-top:16px;border-top:1px solid #1a1a1a;font-size:11px;color:#404040;line-height:1.7;text-align:left"><strong style="color:#525252">Disclaimer:</strong> Trading-ul și investițiile în active financiare implică riscuri semnificative și pot duce la pierderea parțială sau totală a capitalului investit. Performanțele trecute nu garantează rezultate viitoare. Informațiile prezentate în acest email au caracter exclusiv educațional și informativ și nu reprezintă sfaturi financiare, recomandări de investiții sau îndemnuri de a cumpăra sau vinde active financiare. Înainte de a lua orice decizie financiară, consultați un consilier financiar autorizat și investiți doar sumele pe care vă puteți permite să le pierdeți.</p></div></div></body></html>`;
 }
 
-function email1Welcome(name) {
-  return {
-    subject: `${name}, îți arăt cele 3 oportunități care îți pot schimba viața financiară.`,
-    html: baseTemplate(`
-      <h1>${name}, bun venit în comunitatea VANDY.</h1>
+const emails = [
+  /* ── 0: VERIFICARE ─────────────────────────────────────── */
+  {
+    subject: '483927 - Codul tău de verificare VANDY',
+    from: 'VANDY <noreply@vandy.ro>',
+    badge: 'Verificare',
+    purpose: 'OTP + confirmare adresă',
+    desc: 'Trimis instant la completarea formularului. Cod OTP 6 cifre, expiră în 10 minute. Fără verificare, lead-ul nu se salvează.',
+    html: `<!DOCTYPE html><html lang="ro"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="color-scheme" content="dark"/><title>Verificare - VANDY</title><style>body{margin:0;padding:0;background:#000;color:#e5e5e5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}.wrapper{max-width:480px;margin:0 auto;padding:40px 24px;text-align:center}.logo{font-size:20px;font-weight:800;color:#fff;letter-spacing:2px;text-decoration:none}.divider{height:1px;background:linear-gradient(90deg,transparent,#333,transparent);margin:28px 0}h1{color:#fff;font-size:22px;font-weight:700;margin:0 0 12px}p{color:#a3a3a3;font-size:15px;line-height:1.7;margin:0 0 16px}.code-box{display:inline-block;background:#111;border:2px solid #34d399;border-radius:16px;padding:20px 40px;margin:24px 0;letter-spacing:12px;font-size:36px;font-weight:800;color:#fff;font-family:'SF Mono',Monaco,Menlo,monospace}.expire{color:#737373;font-size:13px}.footer{text-align:center;padding-top:24px;color:#525252;font-size:12px}</style></head><body><div class="wrapper"><a href="https://vandy.ro" class="logo">VANDY</a><div class="divider"></div><h1>Ești la un pas distanță.</h1><p>Salut, ${NAME}! Confirmă-ți adresa de email cu codul de mai jos și obține acces la cele mai bune oportunități:</p><div class="code-box">483927</div><p class="expire">Codul expiră în <strong style="color:#fff">10 minute</strong>.</p><p style="color:#525252;font-size:13px">Dacă nu ai solicitat acest cod, ignoră acest email.</p><div class="divider"></div><div class="footer"><p>&copy; 2026 VANDY. Toate drepturile rezervate.</p></div></div></body></html>`
+  },
+
+  /* ── 1: WELCOME ─────────────────────────────────────────── */
+  {
+    subject: `${NAME}, îți arăt cele 3 oportunități care îți pot schimba viața financiară.`,
+    from: 'VANDY <noreply@vandy.ro>',
+    badge: 'Welcome',
+    purpose: 'Intro + preview cele 3 oportunități',
+    desc: 'Ziua 0: Bun venit, prezentare VANDY, teaser pentru cele 3 emailuri, CTA Telegram gratuit.',
+    html: wrap(`
+      <h1>${NAME}, bun venit în comunitatea VANDY.</h1>
       <p>Mă bucur că ești aici. În următoarele 4 zile îți voi arăta <span class="highlight">3 oportunități concrete</span> prin care oameni obișnuiți fac bani reali în 2026 &mdash; indiferent de punctul de start.</p>
 
       <div class="quote">
@@ -118,17 +176,20 @@ function email1Welcome(name) {
       </div>
 
       <p style="color:#fff;font-weight:600">Ne vedem mâine,<br/>VANDY</p>
-    `, `${name}, bun venit! Iată cele 3 oportunități care îți vor schimba perspectiva despre bani...`)
-  };
-}
+    `)
+  },
 
-function email2Value(name) {
-  return {
-    subject: `${name}, cum faci 100$-300$ pe zi cu Memecoin Trading.`,
-    html: baseTemplate(`
+  /* ── 2: MEMECOIN TRADING ────────────────────────────────── */
+  {
+    subject: `${NAME}, cum faci 100$-300$ pe zi cu Memecoin Trading.`,
+    from: 'VANDY <noreply@vandy.ro>',
+    badge: 'Memecoin',
+    purpose: 'Oportunitatea #1 — 100$-300$/zi',
+    desc: 'Ziua 1: Ce sunt memecoins, cum identifici oportunitatea, matematica 100$-300$/zi, ce primești în Dynasty.',
+    html: wrap(`
       <span class="pill">Oportunitatea #1 — Memecoin Trading</span>
       <h1>Cea mai mare oportunitate a momentului. Și aproape nimeni nu o înțelege.</h1>
-      <p>Salut, ${name}.</p>
+      <p>Salut, ${NAME}.</p>
       <p>Înainte să îți explic cum funcționează, lasă-mă să îți arăt <span class="highlight">ce e posibil</span>:</p>
 
       <div class="card" style="border-color:rgba(52,211,153,0.3);text-align:center">
@@ -164,7 +225,7 @@ function email2Value(name) {
       <div class="card">
         <h2>&#x1F50D; Cum identifici oportunitatea înainte să explodeze?</h2>
         <ul>
-          <li><span class="highlight">Narrativele</span> &mdash; ce tema domină piața: AI coins, gaming, meme culture? Banii urmează narrativul</li>
+          <li><span class="highlight">Narrativele</span> &mdash; ce temă domină piața: AI coins, gaming, meme culture? Banii urmează narrativul</li>
           <li><span class="highlight">Volumul</span> &mdash; o creștere bruscă de volum înainte de mișcare e semnalul cel mai clar</li>
           <li><span class="highlight">Comunitatea</span> &mdash; activitate organică pe Twitter/Telegram e combustibilul prețului</li>
           <li><span class="highlight">Early entry</span> &mdash; intri la începutul mișcării, nu după ce toată lumea știe</li>
@@ -178,7 +239,7 @@ function email2Value(name) {
           <li><span class="highlight">Analiză de narrative</span> &mdash; ce monede urmărim și de ce, înainte să explodeze</li>
           <li><span class="highlight">Alertă în timp real</span> când apare oportunitatea &mdash; nu după ce trendul a trecut</li>
           <li><span class="highlight">Educație completă</span> &mdash; de la cum cumperi prima monedă la strategii avansate</li>
-          <li><span class="highlight">Risk management</span> &mdash; niciodată nu intri fără știi exact cât poți pierde</li>
+          <li><span class="highlight">Risk management</span> &mdash; știi exact cât poți pierde înainte să intri</li>
         </ul>
       </div>
 
@@ -189,27 +250,29 @@ function email2Value(name) {
 
       <p>Mâine îți arăt a doua oportunitate: cum poți transforma <span class="highlight">100$ în 1 milion de dolari</span> prin Futures Trading și strategia de profit compus. E emailul care schimbă complet modul în care te uiți la bani.</p>
       <p style="color:#fff;font-weight:600">Stay sharp,<br/>VANDY</p>
-    `, `${name}, cum faci 100$-300$/zi cu Memecoin Trading — sistemul concret...`)
-  };
-}
+    `)
+  },
 
-function email3SocialProof(name) {
-  return {
-    subject: `${name}, cum transformi 100$ în 1.000.000$ cu Futures Trading.`,
-    html: baseTemplate(`
+  /* ── 3: FUTURES + PROFIT COMPUS ─────────────────────────── */
+  {
+    subject: `${NAME}, cum transformi 100$ în 1.000.000$ cu Futures Trading.`,
+    from: 'VANDY <noreply@vandy.ro>',
+    badge: 'Futures',
+    purpose: 'Oportunitatea #2 — Profit compus',
+    desc: 'Ziua 2: Ce e Futures Trading, matematica profitului compus 100$→1M$, strategia pas cu pas, Dynasty.',
+    html: wrap(`
       <span class="pill">Oportunitatea #2 — Futures Trading</span>
       <h1>Einstein a numit-o &ldquo;a opta minune a lumii&rdquo;. Noi o aplicăm zilnic.</h1>
-      <p>Salut, ${name}.</p>
+      <p>Salut, ${NAME}.</p>
       <p>Vorbim despre <span class="highlight">dobânda compusă</span> &mdash; cel mai puternic concept financiar din lume. Și în Futures Trading, combinată cu disciplina corectă, <span class="green">produce rezultate care par imposibile.</span></p>
 
       <div class="card" style="border-color:rgba(251,191,36,0.3);text-align:center">
         <p style="margin-bottom:12px;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:#525252">Matematica profitului compus în Futures</p>
-        <p style="color:#fff;font-size:15px;line-height:1.8;margin-bottom:0">
-          Start: <span class="gold" style="font-weight:800">100$</span><br/>
-          +10% profit/săptămână reinvestit compus<br/>
-          <span style="font-size:13px;color:#737373">Lună 3 &rarr; <span style="color:#fff">133$</span> &nbsp;|&nbsp; Lună 6 &rarr; <span style="color:#fff">177$</span> &nbsp;|&nbsp; Lună 12 &rarr; <span style="color:#fff">315$</span></span><br/>
+        <p style="color:#fff;font-size:15px;line-height:2;margin-bottom:0">
+          Start: <span class="gold" style="font-weight:800;font-size:20px">100$</span> &nbsp;&bull;&nbsp; +10% profit/săptămână reinvestit<br/>
+          <span style="font-size:13px;color:#737373">Lună 3 &rarr; <span style="color:#fff">133$</span> &nbsp;|&nbsp; Lună 6 &rarr; <span style="color:#fff">177$</span> &nbsp;|&nbsp; An 1 &rarr; <span style="color:#fff">315$</span></span><br/>
           <span style="font-size:13px;color:#737373">An 2 &rarr; <span style="color:#fff">1,000$</span> &nbsp;|&nbsp; An 3 &rarr; <span style="color:#fff">3,200$</span> &nbsp;|&nbsp; An 5 &rarr; <span class="green" style="font-weight:800">32,000$</span></span><br/>
-          <span style="font-size:13px;color:#737373">An 7 &rarr; <span class="gold" style="font-weight:800">320,000$</span> &nbsp;|&nbsp; An 10 &rarr; <span class="gold" style="font-weight:800">1,000,000$+</span></span>
+          <span style="font-size:13px;color:#737373">An 7 &rarr; <span class="gold" style="font-weight:800">320,000$</span> &nbsp;|&nbsp; An 10 &rarr; <span class="gold" style="font-weight:800;font-size:17px">1.000.000$+</span></span>
         </p>
       </div>
 
@@ -276,17 +339,20 @@ function email3SocialProof(name) {
 
       <p>Mâine închei seria cu a treia oportunitate: cum îți construiești un <span class="highlight">Portofoliu de Investiții</span> în Crypto, Stocks, Companii în trend și Real Estate &mdash; pentru Abundență și Libertate Financiară pe termen lung.</p>
       <p style="color:#fff;font-weight:600">VANDY</p>
-    `, `${name}, cum transformi 100$ în 1.000.000$ cu Futures Trading și profit compus...`)
-  };
-}
+    `)
+  },
 
-function email4Objections(name) {
-  return {
-    subject: `${name}, cum îți construiești Abundența și Libertatea Financiară.`,
-    html: baseTemplate(`
+  /* ── 4: PORTOFOLIU DE INVESTIȚII ────────────────────────── */
+  {
+    subject: `${NAME}, cum îți construiești Abundența și Libertatea Financiară.`,
+    from: 'VANDY <noreply@vandy.ro>',
+    badge: 'Investiții',
+    purpose: 'Oportunitatea #3 — Portofoliu',
+    desc: 'Ziua 3: Cei 4 piloni (Crypto, Stocks, Companii în trend, Real Estate), alocarea portofoliului, Dynasty.',
+    html: wrap(`
       <span class="pill">Oportunitatea #3 — Portofoliu de Investiții</span>
       <h1>Trading-ul generează banii. Investițiile generează libertatea.</h1>
-      <p>Salut, ${name}.</p>
+      <p>Salut, ${NAME}.</p>
       <p>În ultimele două emailuri ți-am arătat cum să faci bani prin Memecoin Trading și cum să îi multiplici prin Futures și profit compus. Acum îți arăt <span class="highlight">ce faci cu banii după ce i-ai câștigat.</span></p>
 
       <div class="quote">
@@ -313,7 +379,7 @@ function email4Objections(name) {
         <ul>
           <li><span class="highlight">S&amp;P 500</span> &mdash; ~10% anual în ultimii 90 de ani. Bate 95% din fondurile de investiții</li>
           <li><span class="highlight">Dividend stocks</span> &mdash; bani care îți intră în cont lunar fără să faci nimic</li>
-          <li><span class="highlight">Companii în trend</span> &mdash; NVIDIA, Microsoft, Meta &mdash; AI, tech, viitorul economiei globale</li>
+          <li><span class="highlight">Growth stocks</span> &mdash; NVIDIA, Microsoft, Meta &mdash; companiile care definesc viitorul economiei</li>
         </ul>
         <p style="margin-bottom:0">Target: <span class="highlight">30% din portofoliu în stocks</span> pentru stabilitate și income pasiv.</p>
       </div>
@@ -322,8 +388,8 @@ function email4Objections(name) {
         <h2>&#x1F916; Pilonul 3: Companii în trend &mdash; Avantajul primului val</h2>
         <p>Există momente în istorie când o industrie explodează și <span class="highlight">primii care intră câștigă de 10x-100x</span> față de cei care intră mai târziu.</p>
         <ul>
-          <li><span class="highlight">Artificial Intelligence</span> &mdash; cel mai mare Gold Rush al deceniului. Infrastructure, applications, models</li>
-          <li><span class="highlight">Clean Energy</span> &mdash; tranziția globală energetică creează companii de trilioane</li>
+          <li><span class="highlight">Artificial Intelligence</span> &mdash; cel mai mare Gold Rush al deceniului. Infrastructure, applications, modele de limbaj</li>
+          <li><span class="highlight">Clean Energy</span> &mdash; tranziția globală energetică creează companii de trilioane de dolari</li>
           <li><span class="highlight">Biotech &amp; Longevity</span> &mdash; medicina viitorului, finanțată de cei mai mari investitori din lume</li>
         </ul>
         <p style="margin-bottom:0">În Dynasty urmărim <span class="green">companiile emergente cu cel mai mare potențial</span> înainte să devină mainstream.</p>
@@ -341,31 +407,31 @@ function email4Objections(name) {
       </div>
 
       <div class="card" style="border-color:rgba(52,211,153,0.3);text-align:center">
-        <span class="pill">Portofoliul complet VANDY</span>
+        <span class="pill">Alocarea portofoliului VANDY</span>
         <div style="text-align:left">
           <div class="step">
-            <div class="step-num" style="font-size:12px">30%</div>
+            <div class="step-num" style="font-size:12px;border-color:#34d399;color:#34d399">30%</div>
             <div class="step-content">
               <h3>Crypto pe termen lung</h3>
               <p style="margin-bottom:0;font-size:14px">BTC, ETH + proiecte fundamentale în trend</p>
             </div>
           </div>
           <div class="step">
-            <div class="step-num" style="font-size:12px">30%</div>
+            <div class="step-num" style="font-size:12px;border-color:#fbbf24;color:#fbbf24">30%</div>
             <div class="step-content">
               <h3>Stocks &amp; ETF-uri</h3>
               <p style="margin-bottom:0;font-size:14px">S&amp;P 500, dividend stocks, growth tech</p>
             </div>
           </div>
           <div class="step">
-            <div class="step-num" style="font-size:12px">20%</div>
+            <div class="step-num" style="font-size:12px;border-color:#a78bfa;color:#a78bfa">20%</div>
             <div class="step-content">
               <h3>Companii în trend</h3>
               <p style="margin-bottom:0;font-size:14px">AI, clean energy, biotech &mdash; primii în val</p>
             </div>
           </div>
           <div class="step">
-            <div class="step-num" style="font-size:12px">20%</div>
+            <div class="step-num" style="font-size:12px;border-color:#f97316;color:#f97316">20%</div>
             <div class="step-content">
               <h3>Real Estate</h3>
               <p style="margin-bottom:0;font-size:14px">Proprietăți fizice sau REIT-uri &mdash; cash flow lunar</p>
@@ -378,17 +444,20 @@ function email4Objections(name) {
 
       <p>Mâine îți trimit <span class="highlight">ultimul email</span> din această serie &mdash; unde îți arăt cum ai acces la toate cele 3 oportunități într-un singur loc. Va fi cel mai important email pe care îl primești de la mine.</p>
       <p style="color:#fff;font-weight:600">VANDY</p>
-    `, `${name}, cum îți construiești portofoliul de investiții pentru Abundență și Libertate Financiară...`)
-  };
-}
+    `)
+  },
 
-function email5CTA(name) {
-  return {
-    subject: `${name}, cele 3 oportunități. Un singur loc. Decizia ta.`,
-    html: baseTemplate(`
+  /* ── 5: DYNASTY CTA ─────────────────────────────────────── */
+  {
+    subject: `${NAME}, cele 3 oportunități. Un singur loc. Decizia ta.`,
+    from: 'VANDY <noreply@vandy.ro>',
+    badge: 'Dynasty',
+    purpose: 'CTA final — Dynasty',
+    desc: 'Ziua 4: Recapitulare cele 3 oportunități, prezentare Dynasty, CTA principal, citat final.',
+    html: wrap(`
       <span class="pill">Ziua 4 — Ultimul email</span>
       <h1>Ai văzut ce e posibil. Acum e rândul tău.</h1>
-      <p>Salut, ${name}.</p>
+      <p>Salut, ${NAME}.</p>
       <p>În ultimele 4 zile ți-am arătat 3 oportunități concrete prin care oameni obișnuiți fac bani reali în 2026:</p>
 
       <div class="card" style="background:transparent;border:none;padding:0">
@@ -426,7 +495,7 @@ function email5CTA(name) {
           <p style="color:#34d399;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:0">Comunitate de Trading, Investiții &amp; Libertate Financiară</p>
         </div>
 
-        <h3 style="color:#34d399;font-size:14px;margin-bottom:12px">&#x1F4B9; MEMECOIN TRADING &mdash; 100$-300$/zi</h3>
+        <h3 style="color:#34d399;font-size:14px;margin-bottom:12px">&#x1F438; MEMECOIN TRADING &mdash; 100$-300$/zi</h3>
         <ul>
           <li>Call-uri zilnice cu <span class="highlight">entry, stop loss și target</span> &mdash; executabile în 60 de secunde</li>
           <li>Analiză de narrative &mdash; identificăm oportunitatea <span class="highlight">înainte să explodeze</span></li>
@@ -454,14 +523,25 @@ function email5CTA(name) {
 
       <div class="card" style="border-color:rgba(239,68,68,0.4);background:rgba(239,68,68,0.04);text-align:center;padding:20px">
         <p style="margin:0 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#ef4444;font-weight:700">&#x23F0; Ofertă cu acces limitat</p>
-        <p style="margin:0;color:#fff;font-size:15px;line-height:1.6">Locurile în Dynasty sunt limitate pentru a menține calitatea comunității.<br/>Odată ce capacitatea e atinsă, accesul se închide.</p>
+        <p style="margin:0 0 14px;color:#fff;font-size:15px;line-height:1.6">Locurile în Dynasty sunt limitate pentru a menține calitatea comunității.<br/>Odată ce capacitatea e atinsă, accesul se închide.</p>
+        <div id="countdown-e5" style="display:inline-flex;gap:12px;justify-content:center;margin-top:4px">
+          <div style="text-align:center">
+            <div id="cd-min" style="font-size:32px;font-weight:800;color:#ef4444;font-family:monospace;line-height:1">10</div>
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#737373;margin-top:4px">min</div>
+          </div>
+          <div style="font-size:32px;font-weight:800;color:#ef4444;padding-top:2px">:</div>
+          <div style="text-align:center">
+            <div id="cd-sec" style="font-size:32px;font-weight:800;color:#ef4444;font-family:monospace;line-height:1">00</div>
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#737373;margin-top:4px">sec</div>
+          </div>
+        </div>
       </div>
 
       <div style="text-align:center;margin:28px 0 8px">
         <p style="margin:0 0 4px;font-size:13px;color:#525252;text-transform:uppercase;letter-spacing:1px">Acces complet Dynasty</p>
         <p style="margin:0 0 4px"><span style="font-size:15px;color:#525252;text-decoration:line-through">149€ / lună</span></p>
         <p style="margin:0 0 16px"><span style="font-size:36px;font-weight:800;color:#fff">99€</span><span style="color:#737373;font-size:15px"> / lună</span> &nbsp;<span style="background:#34d399;color:#000;font-size:11px;font-weight:800;padding:3px 8px;border-radius:50px;text-transform:uppercase;letter-spacing:0.5px">-34%</span></p>
-        <a href="${WHOP_URL}" class="cta-btn" style="font-size:16px;padding:18px 48px;display:inline-block">Intră în Dynasty acum &rarr;</a>
+        <a href="https://whop.com/dynasty001/dynasty-trades-premium-99/" class="cta-btn" style="font-size:16px;padding:18px 48px;display:inline-block">Intră în Dynasty acum &rarr;</a>
         <p style="font-size:12px;color:#525252;margin-top:12px">Anulezi oricând. Fără contracte.</p>
       </div>
 
@@ -509,27 +589,64 @@ function email5CTA(name) {
       <p>Dynasty e primul pas. Restul parcursului vine natural.</p>
       <p>Ne vedem înăuntru.</p>
       <p style="color:#fff;font-weight:600;font-size:18px">VANDY &#x1F5A4;</p>
-    `, `${name}, cele 3 oportunități — Memecoin, Futures, Investiții — toate într-un singur loc. Dynasty te așteaptă.`)
-  };
-}
-
-const EMAIL_SCHEDULE = {
-  1: 0,
-  2: 1,
-  3: 2,
-  4: 3,
-  5: 4,
-};
-
-function getEmail(step, firstName) {
-  switch (step) {
-    case 1: return email1Welcome(firstName);
-    case 2: return email2Value(firstName);
-    case 3: return email3SocialProof(firstName);
-    case 4: return email4Objections(firstName);
-    case 5: return email5CTA(firstName);
-    default: return null;
+    `)
   }
+];
+
+const container = document.getElementById('email-panels');
+const icons = ['🔐','🚀','🐸','🔥','📊','🎯'];
+emails.forEach((email, i) => {
+  const panel = document.createElement('div');
+  panel.className = i === 0 ? 'email-panel' : 'email-panel hidden';
+  panel.id = 'panel-' + i;
+  panel.innerHTML = `
+    <div class="info-bar" style="margin-top:24px">
+      <div class="info-card">
+        <div class="icon">${icons[i]}</div>
+        <div>
+          <div class="label">${email.badge} — ${email.purpose}</div>
+          <div class="value">${email.desc}</div>
+        </div>
+      </div>
+    </div>
+    <div class="preview-frame">
+      <div class="preview-meta">
+        <span class="badge">${email.badge}</span>
+        <div style="flex:1">
+          <div class="from">${email.from}</div>
+          <div class="subject">${email.subject}</div>
+        </div>
+      </div>
+      <iframe class="email-frame" srcdoc="${email.html.replace(/"/g,'&quot;')}"></iframe>
+    </div>
+  `;
+  container.appendChild(panel);
+});
+
+function showEmail(idx) {
+  document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', i === idx));
+  document.querySelectorAll('.email-panel').forEach((p, i) => p.classList.toggle('hidden', i !== idx));
+  if (idx === 5) startCountdown();
 }
 
-export { getEmail, EMAIL_SCHEDULE };
+let countdownInterval = null;
+function startCountdown() {
+  if (countdownInterval) return;
+  let total = 10 * 60;
+  function tick() {
+    const m = Math.floor(total / 60);
+    const s = total % 60;
+    const iframe = document.querySelector('#panel-5 iframe');
+    if (!iframe || !iframe.contentDocument) return;
+    const min = iframe.contentDocument.getElementById('cd-min');
+    const sec = iframe.contentDocument.getElementById('cd-sec');
+    if (min) min.textContent = String(m).padStart(2,'0');
+    if (sec) sec.textContent = String(s).padStart(2,'0');
+    if (total <= 0) { clearInterval(countdownInterval); return; }
+    total--;
+  }
+  setTimeout(() => { tick(); countdownInterval = setInterval(tick, 1000); }, 800);
+}
+</script>
+</body>
+</html>

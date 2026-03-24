@@ -12,13 +12,53 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { firstName, lastName, email, phone } = req.body || {};
+  const { firstName, lastName, email, phone, verificationCode } = req.body || {};
 
-  if (!firstName || !lastName || !email || !phone) {
+  if (!firstName || !lastName || !email || !phone || !verificationCode) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
+  const emailNorm = email.trim().toLowerCase();
+
   try {
+    const verifyRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/email_verifications?email=eq.${encodeURIComponent(emailNorm)}&code=eq.${verificationCode}&verified=eq.false&order=created_at.desc&limit=1`,
+      {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+      }
+    );
+
+    if (!verifyRes.ok) {
+      console.error('Verification check error:', await verifyRes.text());
+      return res.status(500).json({ error: 'Verification check failed' });
+    }
+
+    const verifications = await verifyRes.json();
+    if (!verifications.length) {
+      return res.status(400).json({ error: 'Cod de verificare invalid sau expirat' });
+    }
+
+    const verification = verifications[0];
+    if (new Date(verification.expires_at) < new Date()) {
+      return res.status(400).json({ error: 'Codul a expirat. Solicită un cod nou.' });
+    }
+
+    await fetch(
+      `${SUPABASE_URL}/rest/v1/email_verifications?id=eq.${verification.id}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({ verified: true }),
+      }
+    );
+
     const supaRes = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
       method: 'POST',
       headers: {
@@ -30,7 +70,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         first_name: firstName.trim(),
         last_name: lastName.trim(),
-        email: email.trim(),
+        email: emailNorm,
         phone: phone.trim(),
         email_step: 1,
         last_email_sent_at: new Date().toISOString(),
@@ -40,6 +80,9 @@ export default async function handler(req, res) {
     if (!supaRes.ok) {
       const err = await supaRes.text();
       console.error('Supabase insert error:', err);
+      if (err.includes('leads_email_unique')) {
+        return res.status(409).json({ error: 'Acest email este deja înregistrat.' });
+      }
       return res.status(500).json({ error: 'Failed to save lead' });
     }
 
@@ -53,7 +96,7 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
           from: 'VANDY <noreply@vandy.ro>',
-          to: [email.trim()],
+          to: [emailNorm],
           subject: welcomeEmail.subject,
           html: welcomeEmail.html,
         }),
