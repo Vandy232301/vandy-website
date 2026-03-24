@@ -1,12 +1,11 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getEmail, EMAIL_SCHEDULE } from '../_lib/emails';
+const { getEmail, EMAIL_SCHEDULE } = require('../_lib/emails');
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://najyetpmxjqgjrppuytn.supabase.co';
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || '';
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
 const CRON_SECRET = process.env.CRON_SECRET || '';
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'GET' && req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -121,4 +120,4 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.error('Cron error:', err);
     return res.status(500).json({ error: 'Internal server error' });
   }
-}
+};
