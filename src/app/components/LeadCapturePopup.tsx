@@ -216,8 +216,9 @@ export function LeadCapturePopup() {
                   mea 100% <span className="text-emerald-400">GRATUITĂ</span>
                 </DialogTitle>
                 <p className="text-neutral-300 text-sm leading-relaxed text-center">
-                  și poți afla cele mai tari{' '}
-                  <span className="text-white font-semibold">OPORTUNITĂȚI</span> ale momentului.
+                  și vezi cum poți face{' '}
+                  <span className="text-emerald-400 font-semibold">100$-300$ pe zi</span> cu cea mai tare{' '}
+                  <span className="text-white font-semibold">OPORTUNITATE</span> a momentului.
                 </p>
               </DialogHeader>
 
@@ -250,13 +251,6 @@ export function LeadCapturePopup() {
                 </button>
               </form>
 
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="mt-3 text-xs text-neutral-500 hover:text-neutral-300 transition-colors w-full text-center"
-              >
-                Nu acum, mai târziu
-              </button>
             </motion.div>
           )}
 
