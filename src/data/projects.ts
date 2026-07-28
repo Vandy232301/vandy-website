@@ -115,6 +115,9 @@ export const PROJECTS: Project[] = [
     id: 'izzy',
     title: 'IZZY',
     category: 'Real Estate',
+    // TODO: switch to https://izzy.estate/ once DNS resolves. The domain is
+    // registered and its nameservers already point at Vercel, but the
+    // delegation has not propagated yet, so the host does not resolve.
     href: 'https://izzy-seven.vercel.app/',
     avatar: IZZY_LOGO,
     descKey: 'izzyDesc',
@@ -145,7 +148,7 @@ export const PROJECTS: Project[] = [
     id: 'dozain',
     title: 'DOZAIN',
     category: 'Design',
-    href: 'https://dozainsubscription.vercel.app/',
+    href: 'https://dozain.com/',
     avatar: DOZAIN_LOGO,
     descKey: 'dozainDesc',
   },
