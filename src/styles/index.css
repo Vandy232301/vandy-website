@@ -2,6 +2,28 @@
 @import './tailwind.css';
 @import './theme.css';
 
+/* Promo flags marquee: the track holds the list twice, so translating by
+   exactly -50% lands on the identical copy and loops with no visible seam. */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee-scroll var(--marquee-duration, 45s) linear infinite;
+  width: max-content;
+}
+
+/* Pause while the visitor is reading / about to click a flag. */
+.marquee-viewport:hover .marquee-track,
+.marquee-viewport:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
 @keyframes pulse-glow {
   0%, 100% {
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.1), 0 0 0 0 rgba(255, 255, 255, 0);

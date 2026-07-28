@@ -2,6 +2,9 @@ import { getEmail, EMAIL_SCHEDULE } from '../_lib/emails.js';
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://cxamezffjphbbbswvhcw.supabase.co';
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN4YW1lemZmanBoYmJic3d2aGN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyMjgwOTIsImV4cCI6MjA4ODgwNDA5Mn0.4aN_ZJv4DB9ckCxdJoHQarw0mwl_ff8WSLI1xdbRpM4';
+// Prefer the server-only service key: public.leads and public.email_verifications
+// are RLS-protected, so the anon key can only INSERT. Reads/updates need this.
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || SUPABASE_ANON_KEY;
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
 const CRON_SECRET = process.env.CRON_SECRET || '';
 
@@ -15,7 +18,7 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  if (!RESEND_API_KEY || !SUPABASE_ANON_KEY) {
+  if (!RESEND_API_KEY || !SUPABASE_KEY) {
     return res.status(500).json({ error: 'Missing environment variables' });
   }
 
@@ -24,8 +27,8 @@ export default async function handler(req, res) {
       `${SUPABASE_URL}/rest/v1/leads?email_step=lt.5&select=*`,
       {
         headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
         },
       }
     );
@@ -93,8 +96,8 @@ export default async function handler(req, res) {
             method: 'PATCH',
             headers: {
               'Content-Type': 'application/json',
-              'apikey': SUPABASE_ANON_KEY,
-              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`,
             },
             body: JSON.stringify({
               email_step: nextStep,

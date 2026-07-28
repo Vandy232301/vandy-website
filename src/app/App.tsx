@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { BentoCard } from './components/BentoCard';
 import { SocialPill } from './components/SocialPill';
-import { LeadCapturePopup } from './components/LeadCapturePopup';
 import { 
   Instagram, 
   Youtube, 
@@ -9,7 +8,6 @@ import {
   Send, 
   Gamepad2,
   Twitter,
-  ArrowUpRight,
   Code2,
   Palette,
   ChevronDown,
@@ -18,9 +16,10 @@ import {
   TrendingUp
 } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
-import NOVA_AVATAR from '../assets/fc3f352a7826e110a4b12bca4410c3eb1830ab06.png';
-import DYNASTY_AVATAR from '../assets/03904df2942f7c80bca73f9a396f79905354fc62.png';
-import CONSULT_AVATAR from '../assets/3bbc069757dad33abd5dd680bf92c4d16fa802b5.png';
+import { ProjectCard } from './components/ProjectCard';
+import { PromoFlags } from './components/PromoFlags';
+import { PROJECTS } from '../data/projects';
+import { useLoves } from './hooks/useLoves';
 import AVATAR_IMG from '../assets/280a05b4e7cffd644dd36f6c7453213920fff3ac.png';
 import HERO_IMG from '../assets/280a05b4e7cffd644dd36f6c7453213920fff3ac.png';
 
@@ -37,11 +36,10 @@ export default function App() {
   const languages = ['RO', 'EN', 'ES', 'FR', 'DE', 'RU'];
 
   const t = translations[currentLang as keyof typeof translations];
+  const { loves, lovedIds, love } = useLoves();
 
   return (
     <>
-      <LeadCapturePopup />
-
       <div className="min-h-screen bg-black text-white selection:bg-white/30 font-sans tracking-tight p-4 md:p-6 lg:p-8 flex justify-center">
       
       {/* Background Gradient - Minimal Grey */}
@@ -165,6 +163,11 @@ export default function App() {
 
         </div>
 
+        {/* Live offers — one coloured flag per project with an active promo */}
+        <div className="pt-6">
+          <PromoFlags />
+        </div>
+
         {/* Projects Section Header */}
         <div className="flex items-center gap-3 py-6">
             <h2 className="text-2xl font-bold text-white tracking-wide">
@@ -175,106 +178,17 @@ export default function App() {
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-
-          {/* Project 1: Dynasty Trades */}
-          <BentoCard 
-            colSpan="col-span-1" 
-            href="https://dynasty.vandy.ro/"
-            className="group relative min-h-[400px] md:min-h-[450px] bg-neutral-950 border-neutral-900 hover:bg-neutral-950 hover:border-neutral-900 flex flex-col overflow-hidden"
-          >
-             {/* Top Section */}
-             <div className="relative z-10 p-6 flex justify-between items-start">
-                <div className="px-3 py-1 rounded-full bg-neutral-900/50 backdrop-blur-sm text-neutral-300 text-[10px] font-bold tracking-wider uppercase">
-                   Trading
-                </div>
-                <ArrowUpRight className="text-neutral-500 group-hover:text-white transition-colors" size={20} />
-             </div>
-
-             {/* Dynasty Avatar */}
-             <div className="absolute top-16 left-6 w-20 h-20 rounded-2xl overflow-hidden border border-neutral-800 shadow-xl z-20 grayscale group-hover:grayscale-0 transition-all duration-500">
-                <ImageWithFallback src={DYNASTY_AVATAR} alt="Dynasty Avatar" loading="lazy" className="w-full h-full object-cover" />
-             </div>
-
-             {/* Bottom Content */}
-             <div className="relative z-10 p-6 mt-auto">
-                <h3 className="text-2xl font-bold text-white mb-2 group-hover:translate-x-1 transition-transform duration-300">
-                   DYNASTY
-                </h3>
-                <p className="text-neutral-500 text-xs font-medium leading-relaxed">
-                   {t.projects.dynastyDesc}
-                </p>
-                <div className="mt-6">
-                  <span className="inline-flex items-center justify-center px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-full text-xs font-bold text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
-                     {t.projects.discover}
-                  </span>
-                </div>
-             </div>
-          </BentoCard>
-
-          {/* Project 2: Nova AI */}
-          <BentoCard colSpan="col-span-1" href="https://nova.vandy.ro/" className="group relative min-h-[400px] md:min-h-[450px] bg-neutral-950 border-neutral-900 hover:bg-neutral-950 hover:border-neutral-900 flex flex-col overflow-hidden">
-             {/* Top Section */}
-             <div className="relative z-10 p-6 flex justify-between items-start">
-                <div className="px-3 py-1 rounded-full bg-neutral-900/50 backdrop-blur-sm text-neutral-300 text-[10px] font-bold tracking-wider uppercase">
-                   Technology
-                </div>
-                <ArrowUpRight className="text-neutral-500 group-hover:text-white transition-colors" size={20} />
-             </div>
-
-             {/* Nova Avatar */}
-             <div className="absolute top-16 left-6 w-20 h-20 rounded-2xl overflow-hidden border border-neutral-800 shadow-xl z-20 grayscale group-hover:grayscale-0 transition-all duration-500">
-                <ImageWithFallback src={NOVA_AVATAR} alt="Nova AI Avatar" loading="lazy" className="w-full h-full object-cover" />
-             </div>
-
-             {/* Bottom Content */}
-             <div className="relative z-10 p-6 mt-auto w-full">
-                <h3 className="text-2xl font-bold text-white mb-2">
-                   NOVA
-                </h3>
-                <p className="text-neutral-500 text-xs font-medium leading-relaxed">
-                   {t.projects.novaDesc}
-                </p>
-                <div className="mt-6">
-                  <span className="inline-flex items-center justify-center px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-full text-xs font-bold text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
-                     {t.projects.discover}
-                  </span>
-                </div>
-             </div>
-          </BentoCard>
-
-          {/* Project 3: Founders */}
-          <BentoCard colSpan="col-span-1" href="https://calendar.app.google/VCpnWRt8HGQLPJATA" className="group relative min-h-[400px] md:min-h-[450px] bg-neutral-950 border-neutral-900 hover:bg-neutral-950 hover:border-neutral-900 flex flex-col overflow-hidden">
-             {/* Top Section */}
-             <div className="relative z-10 p-6 flex justify-between items-start">
-                <div className="px-3 py-1 rounded-full bg-neutral-900/50 backdrop-blur-sm text-neutral-300 text-[10px] font-bold tracking-wider uppercase">
-                   Services
-                </div>
-                <ArrowUpRight className="text-neutral-500 group-hover:text-white transition-colors" size={20} />
-             </div>
-
-             {/* Consult Avatar */}
-             <div className="absolute top-16 left-6 w-20 h-20 rounded-2xl overflow-hidden border border-neutral-800 shadow-xl z-20 grayscale group-hover:grayscale-0 transition-all duration-500">
-                <ImageWithFallback src={CONSULT_AVATAR} alt="Consult Avatar" loading="lazy" className="w-full h-full object-cover" />
-             </div>
-
-             {/* Bottom Content */}
-             <div className="relative z-10 p-6 mt-auto">
-                <h3 className="text-2xl font-bold text-white mb-2 group-hover:translate-x-1 transition-transform duration-300">
-                   CONSULT
-                </h3>
-                <p className="text-neutral-500 text-xs font-medium leading-relaxed">
-                   {t.projects.foundersDesc}
-                </p>
-                <div className="mt-6">
-                  <span className="inline-flex items-center justify-center px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-full text-xs font-bold text-white group-hover:bg-white group-hover:text-black transition-all duration-300">
-                     {t.projects.discover}
-                  </span>
-                </div>
-             </div>
-          </BentoCard>
-
-
-
+          {PROJECTS.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              description={t.projects[project.descKey]}
+              discoverLabel={t.projects.discover}
+              loves={loves[project.id] ?? 0}
+              hasLoved={lovedIds.has(project.id)}
+              onLove={love}
+            />
+          ))}
         </div>
 
         {/* Footer */}
