@@ -1,4 +1,3 @@
 {
-  "$comment": "Lead-nurture cron disabled. Its only lead source was the signup popup, which was removed from the site, so the sequence had nothing new to feed it. public.leads is now RLS-protected and this route reads with the anon key, so it would fail anyway. To re-enable: restore lead capture, set SUPABASE_SERVICE_KEY in Vercel (the API routes already prefer it), then restore the crons entry: { \"path\": \"/api/cron/send-emails\", \"schedule\": \"0 9 * * *\" }",
   "crons": []
 }

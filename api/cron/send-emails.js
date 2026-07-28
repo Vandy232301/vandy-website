@@ -1,3 +1,14 @@
+// DISABLED — not scheduled in vercel.json (crons: []).
+//
+// This nurture sequence was fed exclusively by the signup popup, which was
+// removed from the site, so no new leads arrive. It also reads and updates
+// public.leads, which is now RLS-protected: the anon key can only INSERT, so
+// this route needs SUPABASE_SERVICE_KEY set in Vercel to work at all.
+//
+// To re-enable: restore lead capture, set SUPABASE_SERVICE_KEY in Vercel, then
+// add back to vercel.json:
+//   "crons": [{ "path": "/api/cron/send-emails", "schedule": "0 9 * * *" }]
+
 import { getEmail, EMAIL_SCHEDULE } from '../_lib/emails.js';
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://cxamezffjphbbbswvhcw.supabase.co';
