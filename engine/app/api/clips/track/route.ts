@@ -156,19 +156,47 @@ async function run(request: Request) {
       const rules = rulesFor(clip.campaign_id ? campaigns.get(clip.campaign_id) ?? null : null);
       const prevViews = clip.current_views ?? 0;
 
-      // Velocity check against the previous poll.
+      // Velocity check: compare this window against the clip's own past pace,
+      // which is what catches drip-fed bought views.
       if (s.views > prevViews) {
         const hours = clip.last_polled_at
           ? (now.getTime() - new Date(clip.last_polled_at).getTime()) / 3_600_000
           : 6;
-        const { spike, perHour } = looksLikeViewSpike(prevViews, s.views, hours);
+
+        const { data: history } = await db
+          .from('clip_view_snapshots')
+          .select('views, captured_at')
+          .eq('clip_id', clip.id)
+          .order('id', { ascending: false })
+          .limit(4);
+
+        let trailing: number | undefined;
+        if (history && history.length >= 2) {
+          const newest = history[0];
+          const oldest = history[history.length - 1];
+          trailing = ratePerHour(
+            oldest.views as number,
+            newest.views as number,
+            oldest.captured_at as string,
+            newest.captured_at as string,
+          );
+        }
+
+        const { spike, perHour, reason } = looksLikeViewSpike(prevViews, s.views, hours, trailing);
         if (spike) {
           await db.from('fraud_flags').insert({
             clipper_id: clipperId,
             clip_id: clip.id,
             kind: 'view_spike',
             score: Math.round(perHour),
-            detail: { from: prevViews, to: s.views, hours: Number(hours.toFixed(2)) },
+            detail: {
+              from: prevViews,
+              to: s.views,
+              hours: Number(hours.toFixed(2)),
+              per_hour: Math.round(perHour),
+              trailing_per_hour: trailing != null ? Math.round(trailing) : null,
+              reason,
+            },
           });
           report.flagged++;
         }

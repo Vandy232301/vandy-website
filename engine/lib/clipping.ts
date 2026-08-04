@@ -116,21 +116,62 @@ export function nextBonus(payable: number, tiers: BonusTier[] = CLIPPING_CONFIG.
 }
 
 /**
- * A sudden implausible jump usually means bought views. We do not block the
- * clip automatically — we raise it for review and let the hold window do its
- * job, because a genuinely viral clip looks similar for a few hours.
+ * Spot view growth that does not look organic.
+ *
+ * Bought views are sold drip-fed precisely to slip under a single big-jump
+ * rule, so an absolute "more than N views per hour" test is close to useless:
+ * at a 6-hour poll it would need over a million views in one window to fire.
+ * The signal that actually survives drip-feeding is the *shape* — a clip that
+ * suddenly runs many times faster than its own established pace, or that
+ * sustains a rate a normal account never reaches.
+ *
+ * Nothing is blocked automatically. This raises the clip for review, and the
+ * hold window is what stops money leaving in the meantime.
  */
 export function looksLikeViewSpike(
   prevViews: number,
   nextViews: number,
   hoursBetween: number,
-): { spike: boolean; perHour: number } {
+  /** The clip's own views/hour before this window, when we have enough history. */
+  trailingPerHour?: number,
+): { spike: boolean; perHour: number; reason: string | null } {
   const gained = nextViews - prevViews;
   const hours = Math.max(hoursBetween, 0.25);
   const perHour = gained / hours;
-  // 250k views/hour sustained from a standing start is the threshold for a look.
-  const spike = gained > 50_000 && perHour > 250_000 && prevViews < gained * 0.2;
-  return { spike, perHour };
+
+  // Too small to be worth anyone's fraud, whatever the shape.
+  if (gained < 5_000) return { spike: false, perHour, reason: null };
+
+  // A rate essentially no organic clip sustains across a whole polling window.
+  if (perHour > 60_000) {
+    return { spike: true, perHour, reason: 'sustained rate far above organic' };
+  }
+
+  // Ran away from its own pace. Needs real history, else every clip's first
+  // hours look like a multiplier off ~zero.
+  if (trailingPerHour != null && trailingPerHour > 50 && perHour > trailingPerHour * 8) {
+    return { spike: true, perHour, reason: 'growth 8x the clip\'s own trailing rate' };
+  }
+
+  // Dead clip that suddenly wakes up long after posting — the classic pattern
+  // of views bought days later.
+  if (trailingPerHour != null && trailingPerHour < 20 && perHour > 3_000) {
+    return { spike: true, perHour, reason: 'dormant clip suddenly accelerating' };
+  }
+
+  return { spike: false, perHour, reason: null };
+}
+
+/** Views per hour between two snapshots, for the trailing-rate comparison. */
+export function ratePerHour(
+  fromViews: number,
+  toViews: number,
+  fromAt: string | Date,
+  toAt: string | Date,
+): number {
+  const ms = new Date(toAt).getTime() - new Date(fromAt).getTime();
+  const hours = Math.max(ms / 3_600_000, 0.25);
+  return Math.max(0, toViews - fromViews) / hours;
 }
 
 /**
@@ -189,7 +230,67 @@ export async function reconcileClipEarnings(clipId: string): Promise<number> {
   const credited = (prior ?? []).reduce((s, r) => s + (r.amount_cents as number), 0);
 
   let delta = payout.grossCents - credited;
-  if (delta <= 0) return 0;
+
+  // Platforms retroactively scrub fake views, so a clip's count can fall. When
+  // it does, what we already credited is no longer earned and has to come back
+  // — otherwise buying views that get removed a week later is free money.
+  // A small wobble is normal recounting, so only material drops are clawed back.
+  if (delta < 0) {
+    const shortfall = -delta;
+    const material = shortfall > 100 && shortfall > credited * 0.02; // >$1 and >2%
+    if (!material) return 0;
+
+    await addEarning({
+      clipperId: clip.clipper_id,
+      type: 'clawback',
+      amountCents: delta, // negative
+      currency: campaign?.currency ?? 'usd',
+      holdDays: 0,
+      status: 'available', // nets against the balance immediately
+      clipId: clip.id,
+      campaignId: clip.campaign_id ?? undefined,
+      meta: {
+        reason: 'view count fell — platform scrubbed views',
+        credited_before: credited,
+        now_worth: payout.grossCents,
+        payable_views: payout.payable,
+      },
+    });
+
+    // Hand the budget back so the campaign can spend it on real views.
+    if (campaign) {
+      await db
+        .from('campaigns')
+        .update({ spent_cents: Math.max(0, campaign.spent_cents + delta) })
+        .eq('id', campaign.id);
+    }
+
+    await db.from('fraud_flags').insert({
+      clipper_id: clip.clipper_id,
+      clip_id: clip.id,
+      kind: 'views_removed',
+      score: shortfall,
+      detail: { credited_before: credited, now_worth: payout.grossCents },
+    });
+
+    return delta;
+  }
+
+  if (delta === 0) return 0;
+
+  // One clip must not be able to swallow a whole campaign. Expressed as a share
+  // of the budget so a genuine breakout on a big campaign is still paid in
+  // full, while no single submission can drain the pot.
+  const caps: number[] = [];
+  if (CLIPPING_CONFIG.perClipCapCents != null) caps.push(CLIPPING_CONFIG.perClipCapCents);
+  if (campaign && CLIPPING_CONFIG.maxClipShareOfBudget != null) {
+    caps.push(Math.floor(campaign.budget_cents * CLIPPING_CONFIG.maxClipShareOfBudget));
+  }
+  if (caps.length) {
+    const room = Math.max(0, Math.min(...caps) - credited);
+    delta = Math.min(delta, room);
+    if (delta <= 0) return 0;
+  }
 
   // Never spend past the campaign budget.
   if (campaign) {

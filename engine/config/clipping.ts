@@ -14,7 +14,15 @@ export const CLIPPING_CONFIG = {
     { views: 500_000, bonusCents: 15_000 }, // +$150 at 500k
     { views: 1_000_000, bonusCents: 40_000 }, // +$400 at 1M
   ] as BonusTier[],
-  perClipCapCents: null as number | null, // optional hard cap per clip
+  // Optional absolute ceiling per clip. Left off by default because a flat cap
+  // punishes genuine hits as hard as it punishes fraud.
+  perClipCapCents: null as number | null,
+
+  // The real guard: no single clip may take more than this share of a
+  // campaign's budget. It scales with the campaign, so a real breakout on a
+  // large budget still gets paid properly, while one actor can never drain the
+  // whole pot in a single submission.
+  maxClipShareOfBudget: 0.25,
   holdDays: 14, // hold before clip earnings become payable
   pollIntervalHours: 6, // how often the worker refreshes view counts
   platforms: ['tiktok', 'instagram', 'youtube', 'x'] as const,
