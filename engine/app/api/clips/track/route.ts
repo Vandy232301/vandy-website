@@ -13,6 +13,7 @@ import { ensureFreshAccessToken, fetchYoutubeVideoStats, packTokens } from '@/li
 import {
   isWindowOpen,
   looksLikeViewSpike,
+  ratePerHour,
   reconcileClipEarnings,
   rulesFor,
   type CampaignRules,
