@@ -1,6 +1,6 @@
 import { translations } from './translations';
 
-import DYNASTY_AVATAR from '../assets/03904df2942f7c80bca73f9a396f79905354fc62.png';
+import TRINY_AVATAR from '../assets/triny-trades.png';
 import NOWWWA_AVATAR from '../assets/fc3f352a7826e110a4b12bca4410c3eb1830ab06.png';
 import WIZZY_AVATAR from '../assets/fe8a4eb34aef5ff85ebcd67eb7acb7a566d3d469.png';
 import CONSULT_AVATAR from '../assets/3bbc069757dad33abd5dd680bf92c4d16fa802b5.png';
@@ -22,7 +22,7 @@ export type ProjectDescKey = Exclude<keyof typeof translations.EN.projects, 'dis
 export interface ProjectPromo {
   /** Small uppercase kicker, e.g. "LIMITED OFFER". */
   tag: string;
-  /** The offer itself, e.g. "3 days PREMIUM — €29". Keep it short: one line. */
+  /** The offer itself, e.g. "€29/month locked — normally €99". One short line. */
   label: string;
   /** The product's own brand colour, as #rrggbb. Drives the whole flag. */
   brand: string;
@@ -54,15 +54,18 @@ export interface Project {
  */
 export const PROJECTS: Project[] = [
   {
+    // Renamed from DYNASTY to TRINY TRADES. The id stays 'dynasty' on purpose:
+    // it is the key the shared love counter is stored under, so renaming it
+    // would orphan the count. Nothing user-facing uses it.
     id: 'dynasty',
-    title: 'DYNASTY',
+    title: 'TRINY TRADES',
     category: 'Trading',
-    href: 'https://dynasty.vandy.ro/',
-    avatar: DYNASTY_AVATAR,
+    href: 'https://triny.trade/',
+    avatar: TRINY_AVATAR,
     descKey: 'dynastyDesc',
     promo: {
       tag: 'Limited offer',
-      label: '3 days PREMIUM — €29',
+      label: '€29/month locked — normally €99',
       brand: '#9333ea',
       order: 1,
     },
