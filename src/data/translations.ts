@@ -29,6 +29,9 @@ export const translations = {
         izzyDesc: "Agentul tău imobiliar AI pentru toată România. Fără agent, fără comision. Anunț, poze, preț, contract.",
         blurDesc: "Pay-per-view pentru creatori. Postezi liber ca să fii văzut, blurat ca să fii plătit. Creatorii păstrează 80%.",
         dozainDesc: "Design grafic premium cu un singur abonament lunar. Livrat în ~48 de ore. Poți face pauză sau anula oricând.",
+        elyaDesc: "Asistenți AI, automatizare și follow-up comercial. Transformă prospecții în întâlniri și clienți. Live în 72 de ore.",
+        pwasDesc: "Piața autonomă de software. Caută în date publice oportunități, le punctează pe dovezi, iar comunitatea decide ce se construiește.",
+        chinaDesc: "Agentul tău AI de achiziții din China. Spui ce vrei, găsim cel mai bun mod să-l cumperi. De la idee până la ușa ta.",
         discover: "Descoperă mai mult"
       },
       tech: "Tehnologii",
@@ -69,6 +72,9 @@ export const translations = {
         izzyDesc: "Your AI real estate agent for all of Romania. No agent, no commission. Listing, photos, price, contract.",
         blurDesc: "Pay-per-view for creators. Post free to get seen, blurred to get paid. Creators keep 80% of every unlock.",
         dozainDesc: "Premium graphic design on one flat monthly subscription. Delivered in ~48 hours. Pause or cancel anytime.",
+        elyaDesc: "AI assistants, automation and commercial follow-up. Turns prospects into appointments and repeat customers. Live in 72 hours.",
+        pwasDesc: "The autonomous software market. Scouts public data for software opportunities, scores them on evidence, and lets the community decide what gets built.",
+        chinaDesc: "Your AI buying agent for sourcing directly from China. Tell us what you want and we find the best way to buy it.",
         discover: "Discover more"
       },
       tech: "Technologies",
@@ -109,6 +115,9 @@ export const translations = {
         izzyDesc: "Tu agente inmobiliario con IA para toda Rumanía. Sin agente, sin comisión. Anuncio, fotos, precio, contrato.",
         blurDesc: "Pago por visualización para creadores. Publica libre para que te vean, borroso para cobrar. Se quedan el 80%.",
         dozainDesc: "Diseño gráfico premium con una sola suscripción mensual. Entregado en ~48 horas. Pausa o cancela cuando quieras.",
+        elyaDesc: "Asistentes de IA, automatización y seguimiento comercial. Convierte prospectos en citas y clientes. En línea en 72 horas.",
+        pwasDesc: "El mercado autónomo de software. Rastrea datos públicos en busca de oportunidades, las puntúa con evidencia y la comunidad decide qué se construye.",
+        chinaDesc: "Tu agente de compras con IA para abastecerte directamente desde China. Dinos qué quieres y encontramos la mejor forma de comprarlo.",
         discover: "Descubre más"
       },
       tech: "Tecnologías",
@@ -149,6 +158,9 @@ export const translations = {
         izzyDesc: "Votre agent immobilier IA pour toute la Roumanie. Sans agent, sans commission. Annonce, photos, prix, contrat.",
         blurDesc: "Paiement à la vue pour créateurs. Publiez librement pour être vu, flouté pour être payé. Ils gardent 80%.",
         dozainDesc: "Design graphique premium avec un seul abonnement mensuel. Livré en ~48 heures. Pause ou annulation à tout moment.",
+        elyaDesc: "Assistants IA, automatisation et relance commerciale. Transforme les prospects en rendez-vous et en clients. En ligne en 72 heures.",
+        pwasDesc: "Le marché autonome du logiciel. Il explore les données publiques, note chaque opportunité sur preuves, et la communauté décide ce qui est construit.",
+        chinaDesc: "Votre agent d'achat IA pour sourcer directement en Chine. Dites-nous ce que vous voulez, nous trouvons la meilleure façon de l'acheter.",
         discover: "Découvrir plus"
       },
       tech: "Technologies",
@@ -189,6 +201,9 @@ export const translations = {
         izzyDesc: "Dein KI-Immobilienmakler für ganz Rumänien. Kein Makler, keine Provision. Inserat, Fotos, Preis, Vertrag.",
         blurDesc: "Pay-per-View für Creator. Frei posten für Reichweite, verschwommen für Umsatz. Creator behalten 80%.",
         dozainDesc: "Premium-Grafikdesign mit einem festen Monatsabo. Lieferung in ~48 Stunden. Jederzeit pausieren oder kündigen.",
+        elyaDesc: "KI-Assistenten, Automatisierung und kommerzielles Follow-up. Macht aus Interessenten Termine und Kunden. In 72 Stunden live.",
+        pwasDesc: "Der autonome Software-Markt. Durchsucht öffentliche Daten nach Chancen, bewertet sie anhand von Belegen — die Community entscheidet, was gebaut wird.",
+        chinaDesc: "Dein KI-Einkaufsagent für die Beschaffung direkt aus China. Sag uns, was du willst — wir finden den besten Weg, es zu kaufen.",
         discover: "Mehr entdecken"
       },
       tech: "Technologien",
@@ -229,6 +244,9 @@ export const translations = {
         izzyDesc: "Ваш ИИ-риелтор для всей Румынии. Без агента и комиссии. Объявление, фото, цена, договор.",
         blurDesc: "Оплата за просмотр для авторов. Публикуй открыто ради охвата, размыто ради дохода. Авторы получают 80%.",
         dozainDesc: "Премиальный графический дизайн по одной месячной подписке. Готово за ~48 часов. Пауза или отмена в любой момент.",
+        elyaDesc: "ИИ-ассистенты, автоматизация и коммерческие follow-up. Превращает лиды во встречи и клиентов. Запуск за 72 часа.",
+        pwasDesc: "Автономный рынок программного обеспечения. Ищет возможности в публичных данных, оценивает их по фактам, а сообщество решает, что строить.",
+        chinaDesc: "Ваш ИИ-агент по закупкам напрямую из Китая. Скажите, что вам нужно, и мы найдём лучший способ это купить.",
         discover: "Узнать больше"
       },
       tech: "Технологии",

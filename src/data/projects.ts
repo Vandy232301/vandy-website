@@ -11,6 +11,9 @@ import SWAGG_LOGO from '../assets/logos/swagg.png';
 import IZZY_LOGO from '../assets/logos/izzy.png';
 import BLUR_LOGO from '../assets/logos/blur.png';
 import DOZAIN_LOGO from '../assets/logos/dozain.svg';
+import ELYA_LOGO from '../assets/logos/elya.png';
+import PWAS_LOGO from '../assets/logos/pwas.png';
+import CHINA_LOGO from '../assets/logos/chinadirect.png';
 
 /** Keys of translations[lang].projects that hold a card description. */
 export type ProjectDescKey = Exclude<keyof typeof translations.EN.projects, 'discover'>;
@@ -151,6 +154,32 @@ export const PROJECTS: Project[] = [
     href: 'https://dozain.com/',
     avatar: DOZAIN_LOGO,
     descKey: 'dozainDesc',
+  },
+  {
+    id: 'elya',
+    title: 'ELYA',
+    category: 'AI Sales',
+    href: 'https://elya.app/',
+    avatar: ELYA_LOGO,
+    descKey: 'elyaDesc',
+  },
+  {
+    id: 'pwas',
+    title: 'PWAS',
+    category: 'Web Apps',
+    href: 'https://pwas.dev/',
+    avatar: PWAS_LOGO,
+    descKey: 'pwasDesc',
+  },
+  {
+    id: 'chinadirect',
+    title: 'CHINA DIRECT',
+    category: 'Sourcing',
+    // Brand de lucru, poate sa se schimbe inainte de lansare (packages/config/src/brand.ts).
+    // Deploy-ul public e inca pe Vercel — de inlocuit cand are domeniu propriu.
+    href: 'https://china-direct-app.vercel.app/',
+    avatar: CHINA_LOGO,
+    descKey: 'chinaDesc',
   },
   {
     id: 'consult',
