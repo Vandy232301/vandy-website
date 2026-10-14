@@ -11,7 +11,7 @@ import SWAGG_LOGO from '../assets/logos/swagg.png';
 import IZZY_LOGO from '../assets/logos/izzy.png';
 import BLUR_LOGO from '../assets/logos/blur.png';
 import DOZAIN_LOGO from '../assets/logos/dozain.svg';
-import ELYA_LOGO from '../assets/logos/elya.png';
+import ELYA_LOGO from '../assets/logos/elya.svg';
 import PWAS_LOGO from '../assets/logos/pwas.png';
 import CHINA_LOGO from '../assets/logos/chinadirect.png';
 
