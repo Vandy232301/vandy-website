@@ -34,18 +34,13 @@ export const OFERTA = {
 
 export const locuriLibere = OFERTA.locuriTotal - OFERTA.locuriLuate;
 
-/** Cele 10 aplicații live. Dovada centrală a paginii — fiecare are URL public. */
-export const DOVEZI = [
-  { nume: 'NOWWWA',       ce: 'Platformă de development',   href: 'https://nowwwa.ai/' },
-  { nume: 'IZZY',         ce: 'Agent imobiliar AI',         href: 'https://izzy.estate/' },
-  { nume: 'ELYA',         ce: 'Asistenți AI de vânzări',    href: 'https://elya.app/' },
-  { nume: 'BLUR',         ce: 'Pay-per-view pentru creatori', href: 'https://blur.fan/' },
-  { nume: 'NEO TRADER',   ce: 'Indicatori din limbaj natural', href: 'https://neotrader.app/' },
-  { nume: 'DOZAIN',       ce: 'Design pe abonament',        href: 'https://dozain.com/' },
-  { nume: 'PWAS',         ce: 'Piață autonomă de software', href: 'https://pwas.dev/' },
-  { nume: 'SWAGG',        ce: 'Studio pe abonament',        href: 'https://swagg.studio/' },
-  { nume: 'WIZZYWAZZA',   ce: 'DJ AI audio-reactiv',        href: 'https://wizzywazza.vandy.ro/#catalog' },
-  { nume: 'CHINA DIRECT', ce: 'Agent de achiziții din China', href: 'https://china-direct-app.vercel.app/' },
+/**
+ * Cele două produse live care nu apar în galeria de capturi.
+ * Restul au captură proprie — vezi CAPTURI mai jos.
+ */
+export const FARA_CAPTURA = [
+  { nume: 'DOZAIN', href: 'https://dozain.com/' },
+  { nume: 'CHINA DIRECT', href: 'https://china-direct-app.vercel.app/' },
 ] as const;
 
 /** Cele trei direcții. Primești toate trei, execuți una. */
@@ -161,4 +156,147 @@ export const OPTIUNI_STADIU = [
   { value: 'incercat', label: 'Am încercat singur, m-am blocat' },
   { value: 'clienti', label: 'Am deja clienți, vreau să livrez cu AI' },
   { value: 'firma',   label: 'Am firmă și echipă' },
+] as const;
+
+/* ────────────────────────────────────────────────────────────────────────
+   PREȚURILE PIEȚEI
+
+   Regula care face secțiunea asta legală ȘI mai convingătoare decât o
+   promisiune: afișăm CÂT SE VINDE PE PIAȚĂ, cu sursă, niciodată cât va
+   câștiga cititorul. Un preț verificabil e mai greu de respins decât o
+   cifră inventată, iar „vei face X pe lună" ar fi afirmație comercială
+   reglementată (Legea 363/2007).
+
+   Dacă schimbi cifrele, schimbă și sursa. Niciun număr fără sursă.
+   Verificate pe 28.10.2026.
+   ──────────────────────────────────────────────────────────────────────── */
+
+export interface RandPiata {
+  ce: string;
+  pret: string;
+  detaliu: string;
+}
+
+export interface PiataDirectie {
+  /** Trebuie să coincidă cu un id din DIRECTII. */
+  id: string;
+  nume: string;
+  randuri: RandPiata[];
+  /** Aritmetică pe prețurile de mai sus. Niciodată o estimare de venit. */
+  acopera: string;
+  sursa: { text: string; href: string };
+}
+
+export const PIATA: PiataDirectie[] = [
+  {
+    id: 'agentie',
+    nume: 'AGENȚIA',
+    randuri: [
+      { ce: 'Site de prezentare', pret: '500 – 2.500 €', detaliu: 'mediana pieței: ~1.000 €' },
+      { ce: 'Magazin online', pret: '4.000 – 10.000 €', detaliu: '20.000 – 50.000 lei' },
+      { ce: 'Oră de development în România', pret: '30 – 50 €', detaliu: 'tarif profesionist curent' },
+    ],
+    acopera: 'Un singur site de prezentare, vândut la mediana pieței, acoperă atelierul.',
+    sursa: { text: 'webforge.org.ro — cât costă un site web', href: 'https://webforge.org.ro/blog/cat-costa-un-site-web' },
+  },
+  {
+    id: 'produs',
+    nume: 'PRODUSUL',
+    randuri: [
+      { ce: 'MVP: autentificare + un flux principal', pret: '3.000 – 7.000 €', detaliu: 'livrat în 4 – 8 săptămâni' },
+      { ce: 'Aplicație cu roluri, integrări și plăți', pret: '10.000 – 30.000 €', detaliu: 'livrată în 2 – 5 luni' },
+      { ce: 'Aplicație enterprise', pret: 'peste 30.000 €', detaliu: 'microservicii, conformitate, SLA' },
+    ],
+    acopera: 'Cel mai ieftin MVP din piață costă de trei ori cât atelierul. Aici nu cumperi unul — înveți să îl construiești.',
+    sursa: { text: 'webforge.org.ro — cât costă o aplicație web', href: 'https://webforge.org.ro/blog/cat-costa-o-aplicatie-web' },
+  },
+  {
+    id: 'creativ',
+    nume: 'CREATIVUL',
+    randuri: [
+      { ce: 'Reclame UGC făcute cu AI', pret: 'de la 450 lei', detaliu: 'pentru un set de 3' },
+      { ce: 'Pachet lunar de 12 clipuri', pret: '1.800 lei / lună', detaliu: '4 clipuri: 800 lei · 8 clipuri: 1.500 lei' },
+      { ce: 'Editare pe materialul clientului', pret: 'de la 600 lei', detaliu: 'pentru 10 clipuri' },
+    ],
+    acopera: 'Trei clienți pe pachetul lunar de 12 clipuri înseamnă 5.400 lei pe lună, la prețurile afișate azi în piață.',
+    sursa: { text: 'tezeumedia.ro — marketing video', href: 'https://tezeumedia.ro/marketing-video' },
+  },
+];
+
+/** Apare sub tabele. Nu o șterge — ea e diferența dintre preț de piață și promisiune de câștig. */
+export const PIATA_AVERTISMENT =
+  'Cifrele de mai sus sunt prețuri publicate de furnizori din piață în octombrie 2026, nu veniturile mele și nu o estimare a veniturilor tale. Câți clienți închizi, la ce preț și în cât timp depinde de tine, de piața ta și de cât muncești. Nimeni nu îți poate promite un termen, și nu ar trebui să crezi pe cineva care o face.';
+
+/* ────────────────────────────────────────────────────────────────────────
+   CAPTURI — dovada vizuală. Fiecare e un ecran real, luat de pe site-ul
+   live al produsului pe 28.10.2026, nu un mockup și nu o imagine de stoc.
+   ──────────────────────────────────────────────────────────────────────── */
+
+import CAP_NOWWWA from '../assets/capturi/nowwwa.jpg';
+import CAP_IZZY from '../assets/capturi/izzy.jpg';
+import CAP_ELYA from '../assets/capturi/elya.jpg';
+import CAP_BLUR from '../assets/capturi/blur.jpg';
+import CAP_NEOTRADER from '../assets/capturi/neotrader.jpg';
+import CAP_SWAGG from '../assets/capturi/swagg.jpg';
+import CAP_PWAS from '../assets/capturi/pwas.jpg';
+import CAP_WIZZY from '../assets/capturi/wizzywazza.jpg';
+
+export const CAPTURI = [
+  { nume: 'NOWWWA',     ce: 'Platformă de development',        src: CAP_NOWWWA,    href: 'https://nowwwa.ai/' },
+  { nume: 'NEO TRADER', ce: 'Indicatori din limbaj natural',   src: CAP_NEOTRADER, href: 'https://neotrader.app/' },
+  { nume: 'IZZY',       ce: 'Agent imobiliar AI',              src: CAP_IZZY,      href: 'https://izzy.estate/' },
+  { nume: 'PWAS',       ce: 'Piață autonomă de software',      src: CAP_PWAS,      href: 'https://pwas.dev/' },
+  { nume: 'ELYA',       ce: 'Asistenți AI de vânzări',         src: CAP_ELYA,      href: 'https://elya.app/' },
+  { nume: 'BLUR',       ce: 'Pay-per-view pentru creatori',    src: CAP_BLUR,      href: 'https://blur.fan/' },
+  { nume: 'SWAGG',      ce: 'Studio pe abonament',             src: CAP_SWAGG,     href: 'https://swagg.studio/' },
+  { nume: 'WIZZYWAZZA', ce: 'DJ AI audio-reactiv',             src: CAP_WIZZY,     href: 'https://wizzywazza.com/' },
+] as const;
+
+/* ────────────────────────────────────────────────────────────────────────
+   RECENZII
+
+   ⚠️ NUMAI RECENZII REALE, de la clienți reali, cu acordul lor.
+   Lista e goală intenționat: pagina nu afișează secțiunea până nu pui
+   recenzii adevărate aici. O recenzie inventată pusă ca reală nu se scrie
+   și nu se publică — e fraudă, nu copywriting, și e exact genul de lucru
+   pe care publicul românesc îl caută ([[vandy-reactia-ro-la-bogatie]]:
+   60,1% presupun deja că e ceva necurat la mijloc).
+
+   Ca să o completezi, un obiect per client:
+     {
+       nume: 'Andrei Popescu',
+       rol: 'fondator, Firma SRL',          // rolul real, nu „antreprenor"
+       text: 'textul lor, cuvintele lor',   // nerescris de tine
+       lucrare: 'ce i-ai construit',
+       href: 'https://link-ul-firmei.ro',   // opțional, dar cel mai puternic
+     }
+
+   Cel mai puternic element de încredere din tot setul e linkul: o recenzie
+   cu nume, firmă și adresă verificabilă valorează cât zece anonime.
+   ──────────────────────────────────────────────────────────────────────── */
+
+export interface Recenzie {
+  nume: string;
+  rol: string;
+  text: string;
+  lucrare: string;
+  href?: string;
+}
+
+export const RECENZII: Recenzie[] = [];
+
+/* ────────────────────────────────────────────────────────────────────────
+   ÎNCREDERE — numai lucruri verificabile sau pe care le controlezi tu.
+   ──────────────────────────────────────────────────────────────────────── */
+
+/** Completeaz-o și apare în subsol. În România, datele firmei pe pagină cântăresc mult. */
+export const FIRMA: { denumire: string; cui: string; sediu: string } | null = null;
+
+export const INCREDERE = [
+  { titlu: 'Nu plătești până nu vorbim', text: 'Aplici, te sun, și abia după ce îți confirm locul se discută plata.' },
+  { titlu: 'Returnare integrală', text: 'Dacă la finalul zilei 3 nu ai construit și publicat lucrul tău, primești toți banii înapoi.' },
+  { titlu: 'Factură fiscală', text: 'Pe firmă sau pe persoană fizică. Plata integral sau în două tranșe.' },
+  { titlu: 'Răspund eu, nu un chatbot', text: 'Pe Instagram și pe Telegram, la aceleași conturi de pe care postez.' },
+  { titlu: '10 aplicații cu adresă publică', text: 'Nu capturi de ecran: adrese pe care le poți deschide acum și verifica.' },
+  { titlu: '11 ani în branding', text: 'Nu am început cu AI. AI-ul e unealta din urmă, nu meseria.' },
 ] as const;

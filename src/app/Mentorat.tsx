@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Minus } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Minus, Quote, ShieldCheck } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { Caseta, Secventa, Eticheta, TitluSecvenca, Buton } from './components/mentorat/Bucati';
 import { Formular } from './components/mentorat/Formular';
 import {
-  OFERTA, DOVEZI, DIRECTII, PLECI_CU, ZILE, NU_E_PENTRU, INTREBARI, locuriLibere,
+  OFERTA, DIRECTII, PLECI_CU, ZILE, NU_E_PENTRU, INTREBARI, locuriLibere,
+  CAPTURI, FARA_CAPTURA, PIATA, PIATA_AVERTISMENT, RECENZII, INCREDERE, FIRMA,
 } from '../data/mentorat';
 import AVATAR_IMG from '../assets/280a05b4e7cffd644dd36f6c7453213920fff3ac.png';
 
@@ -165,33 +166,59 @@ export default function Mentorat() {
           </Caseta>
         </Secventa>
 
-        {/* ——— DOVADA ——— */}
+        {/* ——— DOVADA: capturi reale ——— */}
         <Secventa className="pt-10">
           <TitluSecvenca
             eticheta="Dovada"
-            titlu={<>Zece aplicații construite și publicate. Click pe oricare.</>}
+            titlu={<>Zece aplicații construite și publicate. Astea sunt ecranele lor, acum.</>}
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {DOVEZI.map((d) => (
+            {CAPTURI.map((c) => (
               <a
-                key={d.nume}
-                href={d.href}
+                key={c.nume}
+                href={c.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group rounded-2xl bg-neutral-900/40 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900/80 transition-colors p-5 flex items-center justify-between gap-3"
+                className="group rounded-2xl overflow-hidden bg-neutral-900/40 border border-neutral-800 hover:border-neutral-600 transition-colors"
               >
-                <div className="min-w-0">
-                  <p className="text-white text-sm font-bold tracking-wide truncate">{d.nume}</p>
-                  <p className="text-neutral-500 text-xs truncate">{d.ce}</p>
+                <div className="relative aspect-[8/5] overflow-hidden bg-black">
+                  <ImageWithFallback
+                    src={c.src}
+                    alt={`Ecran din ${c.nume}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
                 </div>
-                <ArrowUpRight size={16} className="text-neutral-600 group-hover:text-white transition-colors shrink-0" />
+                <div className="p-4 flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-white text-sm font-bold tracking-wide truncate">{c.nume}</p>
+                    <p className="text-neutral-500 text-xs truncate">{c.ce}</p>
+                  </div>
+                  <ArrowUpRight size={16} className="text-neutral-600 group-hover:text-white transition-colors shrink-0" />
+                </div>
               </a>
             ))}
           </div>
-          <p className="text-neutral-500 text-sm leading-relaxed mt-4 max-w-2xl">
-            Nu îți vorbesc din teorie și nu îți arăt capturi de ecran. Fiecare lucru din lista asta e
-            online acum și a fost construit cu exact metoda pe care o predau în cele trei zile.
-          </p>
+
+          <div className="mt-4 space-y-3">
+            <p className="text-neutral-500 text-sm leading-relaxed max-w-3xl">
+              Capturile sunt luate de pe site-urile live, nu sunt machete. Și încă două pe care le poți
+              deschide la fel:{' '}
+              {FARA_CAPTURA.map((x, i) => (
+                <span key={x.nume}>
+                  {i > 0 && ' și '}
+                  <a href={x.href} target="_blank" rel="noopener noreferrer" className="text-white hover:text-neutral-400 transition-colors">
+                    {x.nume}
+                  </a>
+                </span>
+              ))}.
+            </p>
+            <p className="text-neutral-500 text-sm leading-relaxed max-w-3xl">
+              Nu îți vorbesc din teorie. Fiecare lucru de mai sus e online acum și a fost construit cu
+              exact metoda pe care o predau în cele trei zile.
+            </p>
+          </div>
         </Secventa>
 
         {/* ——— MOTORUL ——— */}
@@ -256,6 +283,55 @@ export default function Mentorat() {
               Materialele le ai pe toate trei, dar execuți o singură direcție — ăsta e singurul motiv
               pentru care oamenii termină ce încep. Pe care o alegi o stabilim la apel, împreună,
               în funcție de ce ai deja în mână.
+            </p>
+          </Caseta>
+        </Secventa>
+
+        {/* ——— CÂT SE VINDE PE PIAȚĂ ——— */}
+        <Secventa className="pt-10">
+          <TitluSecvenca
+            eticheta="Cât se vinde pe piață"
+            titlu={<>Prețurile sunt publice. Uite-le, ca să știi ce vinzi.</>}
+          />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+            {PIATA.map((d) => (
+              <Caseta key={d.id} className="p-6 flex flex-col">
+                <Eticheta>{d.nume}</Eticheta>
+                <div className="mt-5 space-y-4 flex-1">
+                  {d.randuri.map((r) => (
+                    <div key={r.ce} className="pb-4 border-b border-neutral-800/60 last:border-0 last:pb-0">
+                      <p className="text-neutral-400 text-xs leading-snug mb-1.5">{r.ce}</p>
+                      <p className="text-white text-lg font-bold tracking-tight leading-none">{r.pret}</p>
+                      <p className="text-neutral-600 text-[11px] mt-1.5">{r.detaliu}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 pt-5 border-t border-neutral-800/60 space-y-3">
+                  <p className="text-neutral-300 text-sm leading-relaxed">{d.acopera}</p>
+                  <a
+                    href={d.sursa.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-neutral-600 hover:text-neutral-400 transition-colors text-[11px]"
+                  >
+                    sursă: {d.sursa.text} <ArrowUpRight size={11} />
+                  </a>
+                </div>
+              </Caseta>
+            ))}
+          </div>
+
+          <Caseta className="p-6 md:p-8 mt-3">
+            <Eticheta>Când îți acoperi investiția</Eticheta>
+            <p className="text-neutral-300 text-base leading-relaxed max-w-3xl mt-3 mb-5">
+              Din ziua 3 ai deja ce să vinzi: lucrul construit, oferta scrisă, prețul și primii zece
+              clienți pe nume. La prețurile de mai sus,{' '}
+              <span className="text-white font-semibold">un singur proiect livrat pe oricare din cele
+              trei direcții acoperă cei {OFERTA.pret} €</span> — un site de prezentare, o treime dintr-un
+              MVP, sau trei luni cu un client pe pachetul de clipuri.
+            </p>
+            <p className="text-neutral-500 text-xs leading-relaxed max-w-3xl">
+              {PIATA_AVERTISMENT}
             </p>
           </Caseta>
         </Secventa>
@@ -335,26 +411,59 @@ export default function Mentorat() {
           </Caseta>
         </Secventa>
 
+        {/* ——— RECENZII ——— */}
+        {RECENZII.length > 0 && (
+          <Secventa className="pt-10">
+            <TitluSecvenca
+              eticheta="Clienții mei"
+              titlu={<>Ce spun oamenii pentru care am construit.</>}
+            />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {RECENZII.map((r) => (
+                <Caseta key={r.nume + r.lucrare} className="p-6 flex flex-col">
+                  <Quote size={18} className="text-neutral-700 mb-4 shrink-0" />
+                  <p className="text-neutral-300 text-sm leading-relaxed flex-1">{r.text}</p>
+                  <div className="mt-6 pt-5 border-t border-neutral-800/60">
+                    <p className="text-white text-sm font-bold">{r.nume}</p>
+                    <p className="text-neutral-500 text-xs mt-0.5">{r.rol}</p>
+                    <p className="text-neutral-600 text-[11px] mt-2">{r.lucrare}</p>
+                    {r.href && (
+                      <a
+                        href={r.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-neutral-500 hover:text-white transition-colors text-[11px] mt-2"
+                      >
+                        vezi lucrarea <ArrowUpRight size={11} />
+                      </a>
+                    )}
+                  </div>
+                </Caseta>
+              ))}
+            </div>
+          </Secventa>
+        )}
+
         {/* ——— PREȚ ——— */}
         <Secventa className="pt-10">
           <TitluSecvenca eticheta="Investiția" titlu={<>{OFERTA.pret} €, și de ce atât.</>} />
           <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-            <Caseta className="md:col-span-2 p-6 md:p-8 flex flex-col justify-between">
-              <div>
-                <p className="text-5xl md:text-6xl font-bold text-white tracking-tight leading-none mb-2">
-                  {OFERTA.pret} €
+            <Caseta className="md:col-span-2 p-6 md:p-8">
+              <p className="text-5xl md:text-6xl font-bold text-white tracking-tight leading-none mb-2">
+                {OFERTA.pret} €
+              </p>
+              <p className="text-neutral-500 text-sm mb-6">plată integrală</p>
+
+              <div className="pt-5 border-t border-neutral-800/60">
+                <p className="text-white text-sm font-semibold">
+                  sau {OFERTA.rate.numar} × {OFERTA.rate.suma} €
                 </p>
-                <p className="text-neutral-500 text-sm mb-6">plată integrală</p>
-                <div className="pt-5 border-t border-neutral-800/60">
-                  <p className="text-white text-sm font-semibold">
-                    sau {OFERTA.rate.numar} × {OFERTA.rate.suma} €
-                  </p>
-                  <p className="text-neutral-500 text-xs mt-1">
-                    prima tranșă înainte de ziua 1, a doua la 30 de zile
-                  </p>
-                </div>
+                <p className="text-neutral-500 text-xs mt-1">
+                  prima tranșă înainte de ziua 1, a doua la 30 de zile
+                </p>
               </div>
-              <div className="mt-8 space-y-2">
+
+              <div className="mt-6 pt-5 border-t border-neutral-800/60 space-y-2">
                 <Locuri />
                 <p className="text-neutral-500 text-xs">
                   {locuriLibere} din {OFERTA.locuriTotal} locuri libere · {OFERTA.seria}
@@ -386,6 +495,21 @@ export default function Mentorat() {
                 </Buton>
               </div>
             </Caseta>
+          </div>
+        </Secventa>
+
+        {/* ——— ÎNCREDERE ——— */}
+        <Secventa className="pt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {INCREDERE.map((x) => (
+              <Caseta key={x.titlu} className="p-5 flex items-start gap-3.5">
+                <ShieldCheck size={17} className="text-neutral-500 mt-0.5 shrink-0" strokeWidth={1.75} />
+                <div>
+                  <p className="text-white text-sm font-bold mb-1">{x.titlu}</p>
+                  <p className="text-neutral-400 text-[13px] leading-relaxed">{x.text}</p>
+                </div>
+              </Caseta>
+            ))}
           </div>
         </Secventa>
 
@@ -482,6 +606,11 @@ export default function Mentorat() {
               munca, piața și deciziile fiecărui participant.
             </p>
           </div>
+          {FIRMA && (
+            <p className="text-center text-neutral-600 text-xs">
+              {FIRMA.denumire} · CUI {FIRMA.cui} · {FIRMA.sediu}
+            </p>
+          )}
           <p className="text-center text-neutral-700 text-xs">
             © 2026 VANDY. Făcut cu 🖤 în alt Univers Paralel.
           </p>
