@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Minus, Quote, ShieldCheck } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { Caseta, Secventa, Eticheta, TitluSecvenca, Buton } from './components/mentorat/Bucati';
-import { ProjectCard } from './components/ProjectCard';
+import { CardProdus } from './components/mentorat/CardProdus';
 import { PROJECTS } from '../data/projects';
 import { translations } from '../data/translations';
 import { useLoves } from './hooks/useLoves';
 import { Formular } from './components/mentorat/Formular';
 import {
   OFERTA, DIRECTII, PLECI_CU, ZILE, NU_E_PENTRU, INTREBARI, locuriLibere,
-  CAPTURI, CARDURI_CU_CAPTURA, PRODUSE_DOVADA, PIATA, PIATA_AVERTISMENT,
-  RECENZII, INCREDERE, FIRMA,
+  CAPTURI, PRODUSE_DOVADA, PIATA, PIATA_AVERTISMENT, RECENZII, INCREDERE, FIRMA,
+  COMUNITATE,
 } from '../data/mentorat';
 import AVATAR_IMG from '../assets/280a05b4e7cffd644dd36f6c7453213920fff3ac.png';
 
@@ -81,7 +81,7 @@ export default function Mentorat() {
             <ArrowLeft size={16} className="text-neutral-600 group-hover:text-white transition-colors" />
             <h1 className="text-2xl font-bold text-white tracking-wide">VANDY</h1>
           </a>
-          <Eticheta>{OFERTA.numeProgram} · {OFERTA.seria}</Eticheta>
+          <Eticheta>{OFERTA.numeProgram}</Eticheta>
         </header>
 
         {/* ——— HERO ——— */}
@@ -120,13 +120,14 @@ export default function Mentorat() {
                 <span className="text-white font-bold">{OFERTA.pret} €</span>
                 <span>sau {OFERTA.rate.numar} × {OFERTA.rate.suma} €</span>
                 <span>{OFERTA.durata}</span>
+                <span className="text-neutral-400">comunitate pe viață</span>
                 <span>{OFERTA.dateText}</span>
               </div>
             </div>
 
             <div className="w-full md:w-[34%] border-t md:border-t-0 md:border-l border-neutral-800/50 p-6 md:p-8 flex flex-col justify-between gap-8 bg-black/20">
               <div className="space-y-4">
-                <Eticheta>Seria 1 · locuri</Eticheta>
+                <Eticheta>Locuri</Eticheta>
                 <p className="text-5xl font-bold text-white tracking-tight leading-none">
                   {locuriLibere}<span className="text-neutral-700 text-2xl">/{OFERTA.locuriTotal}</span>
                 </p>
@@ -182,30 +183,29 @@ export default function Mentorat() {
             eticheta="Dovada"
             titlu={<>Zece aplicații construite și publicate. Click pe oricare.</>}
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
-            {PRODUSE_DOVADA.map((id) => {
+          <div className="flex flex-col gap-3">
+            {PRODUSE_DOVADA.map((id, i) => {
               const produs = PROJECTS.find((x) => x.id === id);
               if (!produs) return null;
               return (
-                <ProjectCard
+                <CardProdus
                   key={produs.id}
+                  index={i}
                   project={produs}
                   description={textRO.projects[produs.descKey]}
                   discoverLabel={textRO.projects.discover}
                   loves={loves[produs.id] ?? 0}
                   hasLoved={lovedIds.has(produs.id)}
                   onLove={love}
-                  backdrop={CARDURI_CU_CAPTURA ? CAPTURI[produs.id] : undefined}
+                  captura={CAPTURI[produs.id]}
                 />
               );
             })}
           </div>
           <p className="text-neutral-500 text-sm leading-relaxed mt-4 max-w-3xl">
-            {CARDURI_CU_CAPTURA
-              ? 'În spatele fiecărui card stă ecranul real al produsului, luat de pe site-ul lui live — treci cu mouse-ul peste ca să îl vezi. '
-              : ''}
-            Nu îți vorbesc din teorie: deschide oricare și verifică. Fiecare a fost construit cu exact
-            metoda pe care o predau în cele trei zile.
+            Fiecare ecran de mai sus e luat de pe site-ul live al produsului, nu e machetă. Nu îți
+            vorbesc din teorie: deschide oricare și verifică. Toate au fost construite cu exact metoda
+            pe care o predau în cele trei zile.
           </p>
         </Secventa>
 
@@ -374,25 +374,32 @@ export default function Mentorat() {
         {/* ——— COMUNITATEA ——— */}
         <Secventa className="pt-10">
           <Caseta className="p-6 md:p-10">
-            <Eticheta>Inclus, permanent</Eticheta>
-            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-snug mt-3 mb-5 max-w-2xl">
-              Atelierul se termină în trei zile. Problemele apar în săptămâna patru.
+            <div className="flex flex-wrap items-center gap-3 mb-4">
+              <Eticheta ton="alb">Acces {COMUNITATE.acces}</Eticheta>
+              <span className="px-3 py-1 rounded-full bg-white text-black text-[10px] font-bold tracking-wider uppercase">
+                pe {COMUNITATE.platforma}
+              </span>
+            </div>
+
+            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-snug mb-5 max-w-2xl">
+              Atelierul se termină în trei zile. Comunitatea {COMUNITATE.nume} nu se termină niciodată.
             </h2>
-            <p className="text-neutral-400 text-sm leading-relaxed max-w-3xl mb-8">
-              De asta accesul la comunitate nu e un bonus și nu e un abonament — e parte din ce
-              cumperi, și rămâne. Acolo se întâmplă partea grea: primul client care cere o modificare
-              imposibilă, prețul pe care nu știi dacă să-l dublezi, lucrul care se strică în
-              producție.
+
+            <p className="text-neutral-400 text-sm leading-relaxed max-w-3xl mb-9">
+              Problemele nu apar în ziua 2, apar în săptămâna 4. De asta accesul la comunitate nu e
+              bonus și nu e abonament: îl cumperi o dată, odată cu atelierul, și rămâne al tău. Fără
+              reînnoire, fără taxă lunară, fără să-ți mai cer vreodată bani pentru el. Acolo găsești
+              tot ce îți trebuie ca să construiești și să vinzi în era AI.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                { t: 'Canalul direcției tale', d: 'Agenție, produs sau creativ. Întrebări punctuale, răspunsuri de la mine.' },
-                { t: 'Sesiune la două săptămâni', d: 'Live, pe ecran, cu problemele reale ale celor din serie.' },
-                { t: 'Oamenii din seria ta', d: 'Nouă oameni care au început în aceeași zi cu tine. Din experiență, asta cântărește cel mai mult.' },
-              ].map((x) => (
-                <div key={x.t} className="space-y-2">
-                  <p className="text-white text-sm font-bold">{x.t}</p>
-                  <p className="text-neutral-400 text-sm leading-relaxed">{x.d}</p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-7">
+              {COMUNITATE.lucruri.map((x) => (
+                <div key={x.titlu} className="flex items-start gap-3">
+                  <Check size={15} className="text-white mt-0.5 shrink-0" strokeWidth={2.5} />
+                  <div>
+                    <p className="text-white text-sm font-bold mb-1.5">{x.titlu}</p>
+                    <p className="text-neutral-400 text-sm leading-relaxed">{x.text}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -454,7 +461,7 @@ export default function Mentorat() {
               <div className="mt-6 pt-5 border-t border-neutral-800/60 space-y-2">
                 <Locuri />
                 <p className="text-neutral-500 text-xs">
-                  {locuriLibere} din {OFERTA.locuriTotal} locuri libere · {OFERTA.seria}
+                  {locuriLibere} din {OFERTA.locuriTotal} locuri libere
                 </p>
               </div>
             </Caseta>
@@ -464,9 +471,10 @@ export default function Mentorat() {
                 <Eticheta>De ce {OFERTA.pret} €</Eticheta>
                 <p className="text-neutral-300 text-sm leading-relaxed mt-3">
                   Pentru că nu îți vând acces la niște înregistrări — îți vând trei zile din timpul
-                  meu, împărțite la zece oameni, plus comunitatea de după. Un singur proiect livrat
-                  corect pe oricare din cele trei direcții acoperă suma. Cât de repede ajungi acolo
-                  depinde de tine, și nu îți promit un termen.
+                  meu, împărțite la zece oameni, plus acces pe viață la comunitatea {COMUNITATE.nume}
+                  de pe {COMUNITATE.platforma}, pe care o plătești o singură dată, acum. Un singur
+                  proiect livrat corect pe oricare din cele trei direcții acoperă suma. Cât de repede
+                  ajungi acolo depinde de tine, și nu îți promit un termen.
                 </p>
               </div>
               <div className="pt-6 border-t border-neutral-800/60">

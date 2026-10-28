@@ -41,7 +41,7 @@ export const translations = {
         btn: "Contactează-mă"
       },
       mentorat: {
-        tag: "ATELIER AI · SERIA 1",
+        tag: "ATELIER AI",
         title: "3 zile live, 10 locuri. Construiești cu AI un lucru pe care îl poți vinde.",
         meta: "990 € · 10 locuri · noiembrie 2026",
         cta: "Vezi atelierul",
@@ -91,7 +91,7 @@ export const translations = {
         btn: "Contact Me"
       },
       mentorat: {
-        tag: "ATELIER AI · SERIES 1",
+        tag: "ATELIER AI",
         title: "3 live days, 10 seats. You build something with AI that you can actually sell.",
         meta: "€990 · 10 seats · November 2026",
         cta: "See the workshop",
@@ -141,7 +141,7 @@ export const translations = {
         btn: "Contáctame"
       },
       mentorat: {
-        tag: "ATELIER AI · SERIE 1",
+        tag: "ATELIER AI",
         title: "3 días en directo, 10 plazas. Construyes con IA algo que puedes vender.",
         meta: "990 € · 10 plazas · noviembre 2026",
         cta: "Ver el taller",
@@ -191,7 +191,7 @@ export const translations = {
         btn: "Contactez-moi"
       },
       mentorat: {
-        tag: "ATELIER AI · SÉRIE 1",
+        tag: "ATELIER AI",
         title: "3 jours en direct, 10 places. Tu construis avec l’IA quelque chose que tu peux vendre.",
         meta: "990 € · 10 places · novembre 2026",
         cta: "Voir l’atelier",
@@ -241,7 +241,7 @@ export const translations = {
         btn: "Kontaktiere mich"
       },
       mentorat: {
-        tag: "ATELIER AI · SERIE 1",
+        tag: "ATELIER AI",
         title: "3 Tage live, 10 Plätze. Du baust mit KI etwas, das du verkaufen kannst.",
         meta: "990 € · 10 Plätze · November 2026",
         cta: "Workshop ansehen",
@@ -291,7 +291,7 @@ export const translations = {
         btn: "Свяжитесь со мной"
       },
       mentorat: {
-        tag: "ATELIER AI · СЕРИЯ 1",
+        tag: "ATELIER AI",
         title: "3 дня в прямом эфире, 10 мест. Вы создаёте с ИИ то, что можно продать.",
         meta: "990 € · 10 мест · ноябрь 2026",
         cta: "Смотреть воркшоп",

@@ -15,7 +15,6 @@
 
 export const OFERTA = {
   numeProgram: 'ATELIER AI',
-  seria: 'SERIA 1',
 
   /** Preț integral, în euro. */
   pret: 990,
@@ -26,7 +25,7 @@ export const OFERTA = {
   /** Crește-l pe măsură ce se ocupă locurile. */
   locuriLuate: 0,
 
-  dateText: 'Seria 1 pornește în noiembrie 2026',
+  dateText: 'Pornește în noiembrie 2026',
   dateNota: 'Datele exacte se stabilesc la apel, cu cei 10 înscriși.',
 
   durata: '3 zile live',
@@ -80,8 +79,47 @@ export const PLECI_CU = [
   { titlu: 'Oferta scrisă și prețul',            text: 'Ce vinzi, cu ce cuvinte, și cât ceri. Pe hârtie, nu în cap.' },
   { titlu: 'Primii 10 clienți, pe nume',         text: 'Nu „publicul țintă". Zece oameni sau firme, cu nume și contact.' },
   { titlu: 'Tot ce folosesc eu',                 text: 'Prompturile, șabloanele și fluxurile mele de lucru, așa cum sunt.' },
-  { titlu: 'Comunitatea, permanent',             text: 'Canalul direcției tale și oamenii din seria ta. Fără abonament.' },
+  { titlu: 'Comunitatea ATELIER AI, pe viață',    text: 'Acces lifetime pe Discord. Fără abonament, fără reînnoire, fără să-ți mai cer vreodată bani pentru ea.' },
 ] as const;
+
+/**
+ * Comunitatea. E livrabilul care rămâne după cele trei zile, deci merită
+ * spus explicit: numele ei, platforma, și că accesul nu expiră.
+ *
+ * Atenție la formulare: comunitatea OFERĂ lucrurile de mai jos, nu
+ * GARANTEAZĂ un venit — vezi PIATA_AVERTISMENT pentru același motiv.
+ */
+export const COMUNITATE = {
+  nume: 'ATELIER AI',
+  platforma: 'Discord',
+  acces: 'LIFETIME',
+  lucruri: [
+    {
+      titlu: 'Noutățile din lumea AI',
+      text: 'Ce a apărut, ce s-a schimbat și ce înseamnă pentru ce construiești tu. Filtrat, nu copiat de pe Twitter.',
+    },
+    {
+      titlu: 'Suport la dezvoltare',
+      text: 'Te blochezi, pui întrebarea, primești răspuns. De la mine și de la oamenii care au trecut prin același lucru.',
+    },
+    {
+      titlu: 'Canalul direcției tale',
+      text: 'Agenție, produs sau creativ. Separat, ca să nu cauți prin o mie de mesaje care nu te privesc.',
+    },
+    {
+      titlu: 'Sesiune la două săptămâni',
+      text: 'Live, pe ecran, cu problemele reale ale celor din serie. Nu webinar, nu prezentare.',
+    },
+    {
+      titlu: 'Oamenii din seria ta',
+      text: 'Nouă oameni care au început în aceeași zi cu tine. Din experiență, asta cântărește cel mai mult.',
+    },
+    {
+      titlu: 'Tot ce apare după',
+      text: 'Șabloanele, fluxurile și prompturile noi intră acolo pe măsură ce le fac. Le primești fără să plătești iar.',
+    },
+  ],
+} as const;
 
 export const ZILE = [
   {
@@ -231,16 +269,8 @@ import CAP_NEOTRADER from '../assets/capturi/neotrader.jpg';
 import CAP_SWAGG from '../assets/capturi/swagg.jpg';
 import CAP_PWAS from '../assets/capturi/pwas.jpg';
 import CAP_WIZZY from '../assets/capturi/wizzywazza.jpg';
-
-/**
- * Cardurile de produs arată exact ca pe prima pagină. Comutatorul ăsta decide
- * dacă primesc și captura produsului ca fundal estompat, care se limpezește
- * la hover.
- *
- * `false` = cardul curat, identic cu prima pagină.
- * `true`  = la fel, plus un strat de textură din ecranul real al produsului.
- */
-export const CARDURI_CU_CAPTURA = true;
+import CAP_DOZAIN from '../assets/capturi/dozain.jpg';
+import CAP_CHINA from '../assets/capturi/chinadirect.jpg';
 
 /**
  * Captura fiecărui produs, pe id-ul lui din PROJECTS.
@@ -256,6 +286,8 @@ export const CAPTURI: Record<string, string> = {
   blur: CAP_BLUR,
   swagg: CAP_SWAGG,
   wizzywazza: CAP_WIZZY,
+  dozain: CAP_DOZAIN,
+  chinadirect: CAP_CHINA,
 };
 
 /**
