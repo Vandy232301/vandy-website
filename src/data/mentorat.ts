@@ -34,15 +34,6 @@ export const OFERTA = {
 
 export const locuriLibere = OFERTA.locuriTotal - OFERTA.locuriLuate;
 
-/**
- * Cele două produse live care nu apar în galeria de capturi.
- * Restul au captură proprie — vezi CAPTURI mai jos.
- */
-export const FARA_CAPTURA = [
-  { nume: 'DOZAIN', href: 'https://dozain.com/' },
-  { nume: 'CHINA DIRECT', href: 'https://china-direct-app.vercel.app/' },
-] as const;
-
 /** Cele trei direcții. Primești toate trei, execuți una. */
 export const DIRECTII = [
   {
@@ -241,15 +232,41 @@ import CAP_SWAGG from '../assets/capturi/swagg.jpg';
 import CAP_PWAS from '../assets/capturi/pwas.jpg';
 import CAP_WIZZY from '../assets/capturi/wizzywazza.jpg';
 
-export const CAPTURI = [
-  { nume: 'NOWWWA',     ce: 'Platformă de development',        src: CAP_NOWWWA,    href: 'https://nowwwa.ai/' },
-  { nume: 'NEO TRADER', ce: 'Indicatori din limbaj natural',   src: CAP_NEOTRADER, href: 'https://neotrader.app/' },
-  { nume: 'IZZY',       ce: 'Agent imobiliar AI',              src: CAP_IZZY,      href: 'https://izzy.estate/' },
-  { nume: 'PWAS',       ce: 'Piață autonomă de software',      src: CAP_PWAS,      href: 'https://pwas.dev/' },
-  { nume: 'ELYA',       ce: 'Asistenți AI de vânzări',         src: CAP_ELYA,      href: 'https://elya.app/' },
-  { nume: 'BLUR',       ce: 'Pay-per-view pentru creatori',    src: CAP_BLUR,      href: 'https://blur.fan/' },
-  { nume: 'SWAGG',      ce: 'Studio pe abonament',             src: CAP_SWAGG,     href: 'https://swagg.studio/' },
-  { nume: 'WIZZYWAZZA', ce: 'DJ AI audio-reactiv',             src: CAP_WIZZY,     href: 'https://wizzywazza.com/' },
+/**
+ * Cardurile de produs arată exact ca pe prima pagină. Comutatorul ăsta decide
+ * dacă primesc și captura produsului ca fundal estompat, care se limpezește
+ * la hover.
+ *
+ * `false` = cardul curat, identic cu prima pagină.
+ * `true`  = la fel, plus un strat de textură din ecranul real al produsului.
+ */
+export const CARDURI_CU_CAPTURA = true;
+
+/**
+ * Captura fiecărui produs, pe id-ul lui din PROJECTS.
+ * Cardurile de pe /mentorat sunt aceleași componente ca pe prima pagină,
+ * doar că primesc captura ca fundal.
+ */
+export const CAPTURI: Record<string, string> = {
+  nowwwa: CAP_NOWWWA,
+  neotrader: CAP_NEOTRADER,
+  izzy: CAP_IZZY,
+  pwas: CAP_PWAS,
+  elya: CAP_ELYA,
+  blur: CAP_BLUR,
+  swagg: CAP_SWAGG,
+  wizzywazza: CAP_WIZZY,
+};
+
+/**
+ * Ce produse apar ca dovadă pe /mentorat, în ordinea asta.
+ * Lipsesc intenționat `dynasty` (comunitate de trading, nu aplicație) și
+ * `consult` (serviciu) — titlul secțiunii spune „zece aplicații", deci
+ * trebuie să fie exact zece aplicații.
+ */
+export const PRODUSE_DOVADA = [
+  'nowwwa', 'neotrader', 'izzy', 'pwas', 'elya',
+  'blur', 'swagg', 'wizzywazza', 'dozain', 'chinadirect',
 ] as const;
 
 /* ────────────────────────────────────────────────────────────────────────

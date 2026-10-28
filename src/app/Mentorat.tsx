@@ -2,10 +2,15 @@ import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Minus, Quote, ShieldCheck } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { Caseta, Secventa, Eticheta, TitluSecvenca, Buton } from './components/mentorat/Bucati';
+import { ProjectCard } from './components/ProjectCard';
+import { PROJECTS } from '../data/projects';
+import { translations } from '../data/translations';
+import { useLoves } from './hooks/useLoves';
 import { Formular } from './components/mentorat/Formular';
 import {
   OFERTA, DIRECTII, PLECI_CU, ZILE, NU_E_PENTRU, INTREBARI, locuriLibere,
-  CAPTURI, FARA_CAPTURA, PIATA, PIATA_AVERTISMENT, RECENZII, INCREDERE, FIRMA,
+  CAPTURI, CARDURI_CU_CAPTURA, PRODUSE_DOVADA, PIATA, PIATA_AVERTISMENT,
+  RECENZII, INCREDERE, FIRMA,
 } from '../data/mentorat';
 import AVATAR_IMG from '../assets/280a05b4e7cffd644dd36f6c7453213920fff3ac.png';
 
@@ -58,7 +63,12 @@ function Locuri() {
   );
 }
 
+/** Pagina e doar în română, deci cardurile iau descrierile direct din blocul RO. */
+const textRO = translations.RO;
+
 export default function Mentorat() {
+  const { loves, lovedIds, love } = useLoves();
+
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white/30 font-sans tracking-tight p-4 md:p-6 lg:p-8 flex justify-center">
       <div className="fixed inset-0 z-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-neutral-900 via-black to-black pointer-events-none" />
@@ -166,59 +176,37 @@ export default function Mentorat() {
           </Caseta>
         </Secventa>
 
-        {/* ——— DOVADA: capturi reale ——— */}
+        {/* ——— DOVADA ——— */}
         <Secventa className="pt-10">
           <TitluSecvenca
             eticheta="Dovada"
-            titlu={<>Zece aplicații construite și publicate. Astea sunt ecranele lor, acum.</>}
+            titlu={<>Zece aplicații construite și publicate. Click pe oricare.</>}
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {CAPTURI.map((c) => (
-              <a
-                key={c.nume}
-                href={c.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group rounded-2xl overflow-hidden bg-neutral-900/40 border border-neutral-800 hover:border-neutral-600 transition-colors"
-              >
-                <div className="relative aspect-[8/5] overflow-hidden bg-black">
-                  <ImageWithFallback
-                    src={c.src}
-                    alt={`Ecran din ${c.nume}`}
-                    loading="lazy"
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
-                </div>
-                <div className="p-4 flex items-center justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="text-white text-sm font-bold tracking-wide truncate">{c.nume}</p>
-                    <p className="text-neutral-500 text-xs truncate">{c.ce}</p>
-                  </div>
-                  <ArrowUpRight size={16} className="text-neutral-600 group-hover:text-white transition-colors shrink-0" />
-                </div>
-              </a>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+            {PRODUSE_DOVADA.map((id) => {
+              const produs = PROJECTS.find((x) => x.id === id);
+              if (!produs) return null;
+              return (
+                <ProjectCard
+                  key={produs.id}
+                  project={produs}
+                  description={textRO.projects[produs.descKey]}
+                  discoverLabel={textRO.projects.discover}
+                  loves={loves[produs.id] ?? 0}
+                  hasLoved={lovedIds.has(produs.id)}
+                  onLove={love}
+                  backdrop={CARDURI_CU_CAPTURA ? CAPTURI[produs.id] : undefined}
+                />
+              );
+            })}
           </div>
-
-          <div className="mt-4 space-y-3">
-            <p className="text-neutral-500 text-sm leading-relaxed max-w-3xl">
-              Capturile sunt luate de pe site-urile live, nu sunt machete. Și încă două pe care le poți
-              deschide la fel:{' '}
-              {FARA_CAPTURA.map((x, i) => (
-                <span key={x.nume}>
-                  {i > 0 && ' și '}
-                  <a href={x.href} target="_blank" rel="noopener noreferrer" className="text-white hover:text-neutral-400 transition-colors">
-                    {x.nume}
-                  </a>
-                </span>
-              ))}.
-            </p>
-            <p className="text-neutral-500 text-sm leading-relaxed max-w-3xl">
-              Nu îți vorbesc din teorie. Fiecare lucru de mai sus e online acum și a fost construit cu
-              exact metoda pe care o predau în cele trei zile.
-            </p>
-          </div>
+          <p className="text-neutral-500 text-sm leading-relaxed mt-4 max-w-3xl">
+            {CARDURI_CU_CAPTURA
+              ? 'În spatele fiecărui card stă ecranul real al produsului, luat de pe site-ul lui live — treci cu mouse-ul peste ca să îl vezi. '
+              : ''}
+            Nu îți vorbesc din teorie: deschide oricare și verifică. Fiecare a fost construit cu exact
+            metoda pe care o predau în cele trei zile.
+          </p>
         </Secventa>
 
         {/* ——— MOTORUL ——— */}

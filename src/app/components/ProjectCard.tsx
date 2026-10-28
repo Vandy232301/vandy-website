@@ -16,6 +16,12 @@ interface ProjectCardProps {
   hasLoved: boolean;
   /** Register a love. */
   onLove: (projectId: string) => void;
+  /**
+   * Captură a produsului, pusă ca fundal al cardului.
+   * Prima pagină o omite, deci arată neschimbată; /mentorat o trimite,
+   * pentru că acolo cardul trebuie să fie și dovadă vizuală.
+   */
+  backdrop?: string;
 }
 
 export function ProjectCard({
@@ -25,6 +31,7 @@ export function ProjectCard({
   loves,
   hasLoved,
   onLove,
+  backdrop,
 }: ProjectCardProps) {
   const { id, title, category, href, avatar } = project;
 
@@ -42,6 +49,20 @@ export function ProjectCard({
       href={href}
       className="group relative min-h-[400px] md:min-h-[450px] bg-neutral-950 border-neutral-900 hover:bg-neutral-950 hover:border-neutral-900 flex flex-col overflow-hidden"
     >
+      {/* Fundalul, când există: captura produsului, întunecată sub text. */}
+      {backdrop && (
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <ImageWithFallback
+            src={backdrop}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="w-full h-full object-cover object-top opacity-[0.16] grayscale blur-[2px] group-hover:opacity-50 group-hover:blur-0 group-hover:grayscale-0 transition-all duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/90 to-neutral-950/55" />
+        </div>
+      )}
+
       {/* Top Section */}
       <div className="relative z-10 p-6 flex justify-between items-start">
         <div className="px-3 py-1 rounded-full bg-neutral-900/50 backdrop-blur-sm text-neutral-300 text-[10px] font-bold tracking-wider uppercase">
