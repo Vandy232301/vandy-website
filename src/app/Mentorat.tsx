@@ -10,7 +10,7 @@ import { Formular } from './components/mentorat/Formular';
 import {
   OFERTA, DIRECTII, PLECI_CU, ZILE, NU_E_PENTRU, INTREBARI, locuriLibere,
   CAPTURI, PRODUSE_DOVADA, PIATA, PIATA_AVERTISMENT, RECENZII, INCREDERE, FIRMA,
-  COMUNITATE,
+  COMUNITATE, BRANDURI,
 } from '../data/mentorat';
 import AVATAR_IMG from '../assets/280a05b4e7cffd644dd36f6c7453213920fff3ac.png';
 
@@ -148,6 +148,27 @@ export default function Mentorat() {
             </div>
           </div>
         </Caseta>
+
+        {/* ——— BRANDURI ——— */}
+        <Secventa className="pt-6">
+          <Caseta className="px-6 py-7 md:px-10">
+            <div className="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10">
+              <Eticheta>
+                Branduri pentru care<br className="hidden lg:block" /> am lucrat
+              </Eticheta>
+              <div className="flex-1 flex flex-wrap items-center gap-x-8 gap-y-4 lg:justify-end">
+                {BRANDURI.map((b) => (
+                  <span
+                    key={b}
+                    className="text-neutral-400 text-sm md:text-base font-bold tracking-[0.12em] uppercase hover:text-white transition-colors"
+                  >
+                    {b}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </Caseta>
+        </Secventa>
 
         {/* ——— PROBLEMA ——— */}
         <Secventa className="pt-10">

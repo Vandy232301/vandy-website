@@ -82,6 +82,34 @@ export const PLECI_CU = [
   { titlu: 'Comunitatea ATELIER AI, pe viață',    text: 'Acces lifetime pe Discord. Fără abonament, fără reînnoire, fără să-ți mai cer vreodată bani pentru ea.' },
 ] as const;
 
+/* ────────────────────────────────────────────────────────────────────────
+   BRANDURI PENTRU CARE A LUCRAT
+
+   Aceleași cinci care apar la „TRUSTED BY" pe dozain.com, confirmate de
+   proprietar pe 28.10.2026 ca fiind clienți reali.
+
+   ⚠️ Două reguli, și amândouă contează:
+   1. Se scriu ca TEXT, nu ca logouri. Numele unui client, folosit ca să
+      descrii o colaborare reală, e uz nominativ. Logoul lui e marcă
+      înregistrată și ridică o întrebare în plus pe care nu trebuie să ne-o
+      punem.
+   2. Formularea e „branduri pentru care am lucrat", niciodată „parteneri"
+      sau ceva care sugerează că brandurile astea susțin atelierul. Ele nu
+      au nicio legătură cu ATELIER AI.
+
+   Separat: galeria de pe dozain.com marchează explicit piesele McDonald's,
+   Nike și Coca-Cola drept „concept" — spec work nesolicitat. Alea NU intră
+   aici și nu se amestecă niciodată cu lista de mai jos.
+   ──────────────────────────────────────────────────────────────────────── */
+
+export const BRANDURI = [
+  'UNTOLD',
+  'NEVERSEA',
+  'VOLKSWAGEN',
+  'AUDI',
+  'BANCA TRANSILVANIA',
+] as const;
+
 /**
  * Comunitatea. E livrabilul care rămâne după cele trei zile, deci merită
  * spus explicit: numele ei, platforma, și că accesul nu expiră.
@@ -347,5 +375,6 @@ export const INCREDERE = [
   { titlu: 'Factură fiscală', text: 'Pe firmă sau pe persoană fizică. Plata integral sau în două tranșe.' },
   { titlu: 'Răspund eu, nu un chatbot', text: 'Pe Instagram și pe Telegram, la aceleași conturi de pe care postez.' },
   { titlu: '10 aplicații cu adresă publică', text: 'Nu capturi de ecran: adrese pe care le poți deschide acum și verifica.' },
+  { titlu: 'Branduri mari, lucrări reale', text: 'UNTOLD, NEVERSEA, Volkswagen, Audi, Banca Transilvania. Nu lucrări de portofoliu — clienți.' },
   { titlu: '11 ani în branding', text: 'Nu am început cu AI. AI-ul e unealta din urmă, nu meseria.' },
 ] as const;
