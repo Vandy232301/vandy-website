@@ -13,7 +13,8 @@ import {
   ChevronDown,
   Globe,
   Briefcase,
-  TrendingUp
+  TrendingUp,
+  ArrowUpRight
 } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { ProjectCard } from './components/ProjectCard';
@@ -171,6 +172,35 @@ export default function App() {
 
         </div>
 
+        {/* ATELIER AI — oferta principală. Stă deasupra steagurilor pentru că
+            e singurul lucru pe care îl vindem direct de pe prima pagină. */}
+        <a
+          href="/mentorat"
+          className="group relative overflow-hidden rounded-2xl border border-neutral-700 bg-neutral-900/70 hover:bg-neutral-900 hover:border-neutral-600 transition-colors backdrop-blur-sm p-6 md:p-7 flex flex-col md:flex-row md:items-center gap-5 md:gap-8"
+        >
+          <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent blur-xl" />
+          </div>
+
+          <div className="relative flex-1 min-w-0 space-y-2.5">
+            <span className="block text-[10px] uppercase tracking-[0.2em] font-semibold text-neutral-500">
+              {t.mentorat.tag}
+            </span>
+            <h3 className="text-lg md:text-xl font-bold text-white tracking-tight leading-snug">
+              {t.mentorat.title}
+            </h3>
+            <p className="text-neutral-500 text-xs font-medium">
+              {t.mentorat.meta}
+              {t.mentorat.nota && <span className="text-neutral-600"> · {t.mentorat.nota}</span>}
+            </p>
+          </div>
+
+          <span className="relative shrink-0 inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-black tracking-tight group-hover:bg-neutral-200 transition-colors">
+            {t.mentorat.cta}
+            <ArrowUpRight size={15} />
+          </span>
+        </a>
+
         {/* Live offers — one coloured flag per project with an active promo */}
         <div className="pt-6">
           <PromoFlags />
@@ -185,7 +215,7 @@ export default function App() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
           {PROJECTS.map((project) => (
             <ProjectCard
               key={project.id}

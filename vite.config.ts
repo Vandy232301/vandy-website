@@ -17,6 +17,17 @@ export default defineConfig({
     },
   },
 
+  // Două pagini separate, nu un SPA cu router: /mentorat are propriile
+  // meta tag-uri de share și se încarcă fără codul paginii principale.
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        mentorat: path.resolve(__dirname, 'mentorat/index.html'),
+      },
+    },
+  },
+
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
 })

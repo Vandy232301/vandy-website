@@ -40,6 +40,13 @@ export const translations = {
         desc: "Ai un proiect în minte? Hai să-l transformăm în realitate.",
         btn: "Contactează-mă"
       },
+      mentorat: {
+        tag: "ATELIER AI · SERIA 1",
+        title: "3 zile live, 10 locuri. Construiești cu AI un lucru pe care îl poți vinde.",
+        meta: "990 € · 10 locuri · noiembrie 2026",
+        cta: "Vezi atelierul",
+        nota: ""
+      },
       footer: "© 2026 VANDY. Făcut cu 🖤 în alt Univers Paralel."
     },
     EN: {
@@ -72,8 +79,8 @@ export const translations = {
         izzyDesc: "Your AI real estate agent for all of Romania. No agent, no commission. Listing, photos, price, contract.",
         blurDesc: "Pay-per-view for creators. Post free to get seen, blurred to get paid. Creators keep 80% of every unlock.",
         dozainDesc: "Premium graphic design on one flat monthly subscription. Delivered in ~48 hours. Pause or cancel anytime.",
-        elyaDesc: "AI assistants, automation and commercial follow-up. Turns prospects into appointments and repeat customers. Live in 72 hours.",
-        pwasDesc: "The autonomous software market. Scouts public data for software opportunities, scores them on evidence, and lets the community decide what gets built.",
+        elyaDesc: "AI assistants, automation and sales follow-up. Turns prospects into meetings and customers. Live in 72 hours.",
+        pwasDesc: "The autonomous software market. Finds opportunities in public data and scores them on evidence. The community decides.",
         chinaDesc: "Your AI buying agent for sourcing directly from China. Tell us what you want and we find the best way to buy it.",
         discover: "Discover more"
       },
@@ -82,6 +89,13 @@ export const translations = {
         title: "Let's work together!",
         desc: "Have a project in mind? Let's turn it into reality.",
         btn: "Contact Me"
+      },
+      mentorat: {
+        tag: "ATELIER AI · SERIES 1",
+        title: "3 live days, 10 seats. You build something with AI that you can actually sell.",
+        meta: "€990 · 10 seats · November 2026",
+        cta: "See the workshop",
+        nota: "Page in Romanian"
       },
       footer: "© 2026 VANDY. Made with 🖤 in another Parallel Universe."
     },
@@ -115,9 +129,9 @@ export const translations = {
         izzyDesc: "Tu agente inmobiliario con IA para toda Rumanía. Sin agente, sin comisión. Anuncio, fotos, precio, contrato.",
         blurDesc: "Pago por visualización para creadores. Publica libre para que te vean, borroso para cobrar. Se quedan el 80%.",
         dozainDesc: "Diseño gráfico premium con una sola suscripción mensual. Entregado en ~48 horas. Pausa o cancela cuando quieras.",
-        elyaDesc: "Asistentes de IA, automatización y seguimiento comercial. Convierte prospectos en citas y clientes. En línea en 72 horas.",
-        pwasDesc: "El mercado autónomo de software. Rastrea datos públicos en busca de oportunidades, las puntúa con evidencia y la comunidad decide qué se construye.",
-        chinaDesc: "Tu agente de compras con IA para abastecerte directamente desde China. Dinos qué quieres y encontramos la mejor forma de comprarlo.",
+        elyaDesc: "Asistentes de IA y seguimiento comercial. Convierte prospectos en citas y clientes. Listo en 72 horas.",
+        pwasDesc: "El mercado autónomo de software. Busca oportunidades en datos públicos y las puntúa con evidencia. La comunidad decide.",
+        chinaDesc: "Tu agente de compras con IA desde China. Dinos qué quieres y encontramos la mejor forma de comprarlo.",
         discover: "Descubre más"
       },
       tech: "Tecnologías",
@@ -125,6 +139,13 @@ export const translations = {
         title: "¡Trabajemos juntos!",
         desc: "¿Tienes un proyecto en mente? Hagámoslo realidad.",
         btn: "Contáctame"
+      },
+      mentorat: {
+        tag: "ATELIER AI · SERIE 1",
+        title: "3 días en directo, 10 plazas. Construyes con IA algo que puedes vender.",
+        meta: "990 € · 10 plazas · noviembre 2026",
+        cta: "Ver el taller",
+        nota: "Página en rumano"
       },
       footer: "© 2026 VANDY. Hecho con 🖤 en otro Universo Paralelo."
     },
@@ -158,9 +179,9 @@ export const translations = {
         izzyDesc: "Votre agent immobilier IA pour toute la Roumanie. Sans agent, sans commission. Annonce, photos, prix, contrat.",
         blurDesc: "Paiement à la vue pour créateurs. Publiez librement pour être vu, flouté pour être payé. Ils gardent 80%.",
         dozainDesc: "Design graphique premium avec un seul abonnement mensuel. Livré en ~48 heures. Pause ou annulation à tout moment.",
-        elyaDesc: "Assistants IA, automatisation et relance commerciale. Transforme les prospects en rendez-vous et en clients. En ligne en 72 heures.",
-        pwasDesc: "Le marché autonome du logiciel. Il explore les données publiques, note chaque opportunité sur preuves, et la communauté décide ce qui est construit.",
-        chinaDesc: "Votre agent d'achat IA pour sourcer directement en Chine. Dites-nous ce que vous voulez, nous trouvons la meilleure façon de l'acheter.",
+        elyaDesc: "Assistants IA et relance commerciale. Transforme les prospects en rendez-vous et en clients. En ligne en 72 heures.",
+        pwasDesc: "Le marché autonome du logiciel. Explore les données publiques et note les opportunités sur preuves. La communauté décide.",
+        chinaDesc: "Votre agent d'achat IA en Chine. Dites-nous ce que vous voulez, nous trouvons la meilleure façon de l'acheter.",
         discover: "Découvrir plus"
       },
       tech: "Technologies",
@@ -168,6 +189,13 @@ export const translations = {
         title: "Travaillons ensemble !",
         desc: "Vous avez un projet en tête ? Réalisons-le.",
         btn: "Contactez-moi"
+      },
+      mentorat: {
+        tag: "ATELIER AI · SÉRIE 1",
+        title: "3 jours en direct, 10 places. Tu construis avec l’IA quelque chose que tu peux vendre.",
+        meta: "990 € · 10 places · novembre 2026",
+        cta: "Voir l’atelier",
+        nota: "Page en roumain"
       },
       footer: "© 2026 VANDY. Fait avec 🖤 dans un autre Univers Parallèle."
     },
@@ -201,8 +229,8 @@ export const translations = {
         izzyDesc: "Dein KI-Immobilienmakler für ganz Rumänien. Kein Makler, keine Provision. Inserat, Fotos, Preis, Vertrag.",
         blurDesc: "Pay-per-View für Creator. Frei posten für Reichweite, verschwommen für Umsatz. Creator behalten 80%.",
         dozainDesc: "Premium-Grafikdesign mit einem festen Monatsabo. Lieferung in ~48 Stunden. Jederzeit pausieren oder kündigen.",
-        elyaDesc: "KI-Assistenten, Automatisierung und kommerzielles Follow-up. Macht aus Interessenten Termine und Kunden. In 72 Stunden live.",
-        pwasDesc: "Der autonome Software-Markt. Durchsucht öffentliche Daten nach Chancen, bewertet sie anhand von Belegen — die Community entscheidet, was gebaut wird.",
+        elyaDesc: "KI-Assistenten und Vertriebs-Follow-up. Macht aus Interessenten Termine und Kunden. In 72 Stunden live.",
+        pwasDesc: "Der autonome Software-Markt. Findet Chancen in öffentlichen Daten und bewertet sie mit Belegen. Die Community entscheidet.",
         chinaDesc: "Dein KI-Einkaufsagent für die Beschaffung direkt aus China. Sag uns, was du willst — wir finden den besten Weg, es zu kaufen.",
         discover: "Mehr entdecken"
       },
@@ -211,6 +239,13 @@ export const translations = {
         title: "Lass uns zusammenarbeiten!",
         desc: "Hast du ein Projekt im Kopf? Lass es uns verwirklichen.",
         btn: "Kontaktiere mich"
+      },
+      mentorat: {
+        tag: "ATELIER AI · SERIE 1",
+        title: "3 Tage live, 10 Plätze. Du baust mit KI etwas, das du verkaufen kannst.",
+        meta: "990 € · 10 Plätze · November 2026",
+        cta: "Workshop ansehen",
+        nota: "Seite auf Rumänisch"
       },
       footer: "© 2026 VANDY. Gemacht mit 🖤 in einem anderen Paralleluniversum."
     },
@@ -236,16 +271,16 @@ export const translations = {
       },
       projects: {
         dynastyDesc: "Самое мощное торговое сообщество, ориентированное на Memecoins, фьючерсы и инвестиции.",
-        novaDesc: "Старшие инженеры + ИИ. Никаких догадок. Только четкая, структурированная и предсказуемая разработка ПО.",
+        novaDesc: "Старшие инженеры + ИИ. Никаких догадок. Только четкая и предсказуемая разработка ПО.",
         foundersDesc: "Получите консультацию по вопросам бизнеса, стратегического брендинга, маркетинга, технологий или трейдинга.",
-        wizzywazzaDesc: "ИИ-диджей, который никогда не останавливается. Непрерывный аудиореактивный сет, чувствующий энергию зала.",
-        neotraderDesc: "ИИ, который создаёт индикаторы TradingView из обычного текста и публикует каждый сигнал в открытом реестре.",
+        wizzywazzaDesc: "ИИ-диджей, который не останавливается. Непрерывный аудиореактивный сет, чувствующий энергию зала.",
+        neotraderDesc: "ИИ создаёт индикаторы TradingView из обычного текста и публикует каждый сигнал в открытом реестре.",
         swaggDesc: "Веб, ИИ-софт, приложения, видео и брендинг. Одна подписка. Безлимитное исполнение. Ноль корпоратива.",
         izzyDesc: "Ваш ИИ-риелтор для всей Румынии. Без агента и комиссии. Объявление, фото, цена, договор.",
         blurDesc: "Оплата за просмотр для авторов. Публикуй открыто ради охвата, размыто ради дохода. Авторы получают 80%.",
         dozainDesc: "Премиальный графический дизайн по одной месячной подписке. Готово за ~48 часов. Пауза или отмена в любой момент.",
-        elyaDesc: "ИИ-ассистенты, автоматизация и коммерческие follow-up. Превращает лиды во встречи и клиентов. Запуск за 72 часа.",
-        pwasDesc: "Автономный рынок программного обеспечения. Ищет возможности в публичных данных, оценивает их по фактам, а сообщество решает, что строить.",
+        elyaDesc: "ИИ-ассистенты и коммерческий follow-up. Превращает лиды во встречи и клиентов. Запуск за 72 часа.",
+        pwasDesc: "Автономный рынок ПО. Ищет возможности в данных и оценивает их по фактам. Решает сообщество.",
         chinaDesc: "Ваш ИИ-агент по закупкам напрямую из Китая. Скажите, что вам нужно, и мы найдём лучший способ это купить.",
         discover: "Узнать больше"
       },
@@ -254,6 +289,13 @@ export const translations = {
         title: "Давайте работать вместе!",
         desc: "Есть проект? Давайте воплотим его в реальность.",
         btn: "Свяжитесь со мной"
+      },
+      mentorat: {
+        tag: "ATELIER AI · СЕРИЯ 1",
+        title: "3 дня в прямом эфире, 10 мест. Вы создаёте с ИИ то, что можно продать.",
+        meta: "990 € · 10 мест · ноябрь 2026",
+        cta: "Смотреть воркшоп",
+        nota: "Страница на румынском"
       },
       footer: "© 2026 VANDY. Сделано с 🖤 в другой параллельной вселенной."
     }

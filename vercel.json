@@ -1,3 +1,6 @@
 {
-  "crons": []
+  "crons": [],
+  "rewrites": [
+    { "source": "/mentorat", "destination": "/mentorat/index.html" }
+  ]
 }
