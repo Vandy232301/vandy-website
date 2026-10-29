@@ -123,6 +123,7 @@ export default function Mentorat() {
       {/* Al doilea halou, mov, jos-stânga: dă adâncime și face cele două accente
           să pară un sistem, nu un autocolant verde peste o pagină neagră. */}
       <div className="fixed top-[55%] -left-40 w-[640px] h-[640px] z-0 rounded-full bg-mov/[0.06] blur-[150px] pointer-events-none" />
+      <div className="granulatie fixed inset-0 z-0 pointer-events-none" />
 
       <div className="w-full max-w-5xl relative z-10 flex flex-col gap-4 spatiu-bara">
 
@@ -172,7 +173,10 @@ export default function Mentorat() {
                 Nu te învăț să folosești AI.<br />
                 <span className="text-neutral-500">
                   Te învăț să construiești cu AI lucruri{' '}
-                  <span className="text-neon lumina-text">pentru care oamenii plătesc</span>.
+                  <span className="serif-italic text-neon lumina-text text-[1.1em]">
+                    pentru care oamenii plătesc
+                  </span>
+                  .
                 </span>
               </h2>
 
@@ -185,20 +189,13 @@ export default function Mentorat() {
                 prețul scris pe el și cu primii zece clienți pe nume.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3 mb-8">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Buton href="#aplica">Lasă-ți datele pentru detalii <ArrowRight size={16} /></Buton>
                 <Buton href="#zile" variant="contur">Vezi cele 3 zile</Buton>
               </div>
-
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-neutral-500 font-medium">
-                <span className="text-white font-bold tabular-nums">{locuriLibere} locuri din {OFERTA.locuriTotal}</span>
-                <span>{OFERTA.durata}</span>
-                <span className="text-neon/80 font-semibold">comunitate pe viață</span>
-                <span>{OFERTA.dateText}</span>
-              </div>
             </div>
 
-            <div className="w-full md:w-[34%] border-t md:border-t-0 md:border-l border-neutral-800/50 p-6 md:p-8 flex flex-col justify-between gap-8 bg-black/20">
+            <div className="w-full md:w-[34%] border-t md:border-t-0 md:border-l border-white/[0.06] p-6 md:p-8 flex flex-col gap-8 bg-black/20">
               <div className="space-y-4">
                 <Eticheta>Locuri</Eticheta>
                 <p className="text-6xl md:text-7xl font-bold text-neon tracking-tight leading-none tabular-nums lumina-text">
@@ -210,7 +207,26 @@ export default function Mentorat() {
                 </p>
               </div>
 
-              <div className="space-y-3 pt-6 border-t border-neutral-800/60">
+              {/* Fișa tehnică. Stătea sub butoane, ca rând de text; aici umple
+                  coloana și lasă stânga doar cu argumentul și cu CTA-ul. */}
+              <div className="pt-6 border-t border-white/[0.06]">
+                <Eticheta ton="mov">Pe scurt</Eticheta>
+                <dl className="mt-4 space-y-3">
+                  {[
+                    ['Durata', OFERTA.durata],
+                    ['Comunitate', 'pe viață'],
+                    ['Start', OFERTA.dateText.replace('Pornește în ', '')],
+                    ['Limba', 'română'],
+                  ].map(([cheie, valoare]) => (
+                    <div key={cheie} className="flex items-baseline justify-between gap-4">
+                      <dt className="text-neutral-600 text-xs">{cheie}</dt>
+                      <dd className="text-white text-sm font-semibold text-right">{valoare}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+
+              <div className="space-y-3 pt-6 border-t border-white/[0.06]">
                 <Eticheta ton="neon">Garanție pe livrare</Eticheta>
                 <p className="text-neutral-300 text-sm leading-relaxed">
                   Dacă la finalul zilei 3 nu ai construit și publicat lucrul tău, îți returnez toți
@@ -243,7 +259,7 @@ export default function Mentorat() {
         </Secventa>
 
         {/* ——— PROBLEMA ——— */}
-        <Secventa className="pt-10">
+        <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="De ce AI-ul nu ți-a schimbat încă cifrele"
             titlu={<>Problema nu e că nu știi destule. E că nimic din ce ai testat n-a intrat în firmă.</>}
@@ -271,7 +287,7 @@ export default function Mentorat() {
         </Secventa>
 
         {/* ——— DOVADA ——— */}
-        <Secventa className="pt-10">
+        <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="Dovada"
             titlu={<>Zece aplicații construite și publicate. Click pe oricare.</>}
@@ -302,7 +318,7 @@ export default function Mentorat() {
         </Secventa>
 
         {/* ——— MOTORUL ——— */}
-        <Secventa className="pt-10">
+        <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="Motorul"
             titlu={<>Un singur mecanism, trei feluri de a-l vinde.</>}
@@ -331,7 +347,7 @@ export default function Mentorat() {
         </Secventa>
 
         {/* ——— DIRECȚII ——— */}
-        <Secventa className="pt-10">
+        <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="Alegi o direcție"
             titlu={<>Le primești pe toate trei. Execuți una.</>}
@@ -345,7 +361,7 @@ export default function Mentorat() {
                 </div>
                 <p className="text-white text-base font-semibold mb-3">{d.promisiune}</p>
                 <p className="text-neutral-400 text-sm leading-relaxed mb-6 flex-1">{d.text}</p>
-                <div className="pt-5 border-t border-neutral-800/60 space-y-2.5">
+                <div className="pt-5 border-t border-white/[0.06] space-y-2.5">
                   <Eticheta ton="mov">Pleci cu</Eticheta>
                   {d.pleciCu.map((x) => (
                     <div key={x} className="flex items-start gap-2.5">
@@ -367,7 +383,7 @@ export default function Mentorat() {
         </Secventa>
 
         {/* ——— CÂT SE VINDE PE PIAȚĂ ——— */}
-        <Secventa className="pt-10">
+        <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="Cât se vinde pe piață"
             titlu={<>Prețurile sunt publice. Uite-le, ca să știi ce vinzi.</>}
@@ -378,7 +394,7 @@ export default function Mentorat() {
                 <Eticheta ton="mov">{d.nume}</Eticheta>
                 <div className="mt-5 space-y-4 flex-1">
                   {d.randuri.map((r) => (
-                    <div key={r.ce} className="pb-4 border-b border-neutral-800/60 last:border-0 last:pb-0">
+                    <div key={r.ce} className="pb-4 border-b border-white/[0.06] last:border-0 last:pb-0">
                       <p className="text-neutral-400 text-[13px] leading-snug mb-2">{r.ce}</p>
                       <p className="text-neon text-2xl md:text-[1.7rem] font-bold tracking-tight leading-none tabular-nums">{r.pret}</p>
                       <p className="text-neutral-500 text-xs mt-2 tabular-nums">{r.detaliu}</p>
@@ -387,7 +403,7 @@ export default function Mentorat() {
                 </div>
                 {/* Linkurile de sursă au fost scoase la cererea owner-ului, 29.10.2026.
                     Proveniența fiecărei cifre rămâne scrisă în `PIATA` din date. */}
-                <div className="mt-6 pt-5 border-t border-neutral-800/60">
+                <div className="mt-6 pt-5 border-t border-white/[0.06]">
                   <p className="text-neutral-300 text-sm leading-relaxed">{d.acopera}</p>
                 </div>
               </Caseta>
@@ -409,7 +425,7 @@ export default function Mentorat() {
         </Secventa>
 
         {/* ——— CE PLECI CU ——— */}
-        <Secventa className="pt-10">
+        <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="Ce pleci cu"
             titlu={<>Cinci lucruri pe care le poți arăta cuiva luni dimineață.</>}
@@ -430,7 +446,7 @@ export default function Mentorat() {
         </Secventa>
 
         {/* ——— CELE 3 ZILE ——— */}
-        <Secventa className="pt-10">
+        <Secventa className="pt-16 md:pt-24">
           <div id="zile" className="scroll-mt-8">
             <TitluSecvenca
               eticheta="Structura"
@@ -461,7 +477,7 @@ export default function Mentorat() {
              Blocul cu cea mai mare greutate vizuală de pe pagină: e singurul
              lucru din ofertă care nu se termină în trei zile, deci merită să
              se vadă ca atare. */}
-        <Secventa className="pt-10">
+        <Secventa className="pt-16 md:pt-24">
           <Caseta className="overflow-hidden ring-2 ring-neon/25 lumina-bloc">
             <div className="bg-gradient-to-br from-neon/[0.07] via-transparent to-mov/[0.07]">
 
@@ -482,7 +498,9 @@ export default function Mentorat() {
                 <div>
                   <h2 className="text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-[1.15] mb-5 masura-titlu">
                     Masterclass-ul se termină în trei zile.{' '}
-                    <span className="text-neon lumina-text">Comunitatea, niciodată.</span>
+                    <span className="serif-italic text-neon lumina-text text-[1.1em]">
+                      Comunitatea, niciodată.
+                    </span>
                   </h2>
 
                   <p className="text-neutral-300 text-base leading-relaxed masura-text mb-8">
@@ -570,7 +588,7 @@ export default function Mentorat() {
 
         {/* ——— RECENZII ——— */}
         {RECENZII.length > 0 && (
-          <Secventa className="pt-10">
+          <Secventa className="pt-16 md:pt-24">
             <TitluSecvenca
               eticheta="Clienții mei"
               titlu={<>Ce spun oamenii pentru care am construit.</>}
@@ -580,7 +598,7 @@ export default function Mentorat() {
                 <Caseta key={r.nume + r.lucrare} className="p-6 flex flex-col">
                   <Quote size={18} className="text-mov mb-4 shrink-0" />
                   <p className="text-neutral-300 text-sm leading-relaxed flex-1">{r.text}</p>
-                  <div className="mt-6 pt-5 border-t border-neutral-800/60">
+                  <div className="mt-6 pt-5 border-t border-white/[0.06]">
                     <p className="text-white text-sm font-bold">{r.nume}</p>
                     <p className="text-neutral-500 text-xs mt-0.5">{r.rol}</p>
                     <p className="text-neutral-600 text-[11px] mt-2">{r.lucrare}</p>
@@ -605,7 +623,7 @@ export default function Mentorat() {
              Prețul NU apare aici. Decizie owner, 29.10.2026: se spune la apel.
              Secțiunea răspunde în schimb la întrebarea pe care o ridică absența
              lui, pentru că a o ocoli ar arăta mai rău decât o cifră. */}
-        <Secventa className="pt-10">
+        <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="Investiția"
             titlu={<>Prețul îl afli la apel. Și e intenționat.</>}
@@ -619,7 +637,7 @@ export default function Mentorat() {
               <p className="text-neutral-500 text-sm mb-6">{OFERTA.dateText}</p>
               <Locuri />
 
-              <div className="mt-6 pt-5 border-t border-neutral-800/60">
+              <div className="mt-6 pt-5 border-t border-white/[0.06]">
                 <p className="text-white text-sm font-semibold">Integral sau în două tranșe</p>
                 <p className="text-neutral-500 text-xs mt-1">
                   Factură pe firmă sau pe persoană fizică. Nimic nu se plătește înainte de apel.
@@ -637,7 +655,7 @@ export default function Mentorat() {
                   primești pentru ea e scris mai sus, rând cu rând.
                 </p>
               </div>
-              <div className="pt-6 border-t border-neutral-800/60">
+              <div className="pt-6 border-t border-white/[0.06]">
                 <Eticheta ton="neon">Garanție pe livrare</Eticheta>
                 <p className="text-neutral-300 text-sm leading-relaxed mt-3">
                   Dacă la finalul zilei 3 nu ai construit și publicat lucrul tău, scrii un email și
@@ -645,7 +663,7 @@ export default function Mentorat() {
                   livrarea depinde de mine.
                 </p>
               </div>
-              <div className="pt-6 border-t border-neutral-800/60">
+              <div className="pt-6 border-t border-white/[0.06]">
                 <Buton href="#aplica" className="w-full sm:w-auto">
                   Lasă-ți datele pentru detalii <ArrowRight size={16} />
                 </Buton>
@@ -655,7 +673,7 @@ export default function Mentorat() {
         </Secventa>
 
         {/* ——— ÎNCREDERE ——— */}
-        <Secventa className="pt-10">
+        <Secventa className="pt-16 md:pt-24">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {INCREDERE.map((x) => (
               <Caseta key={x.titlu} className="p-5 flex items-start gap-3.5">
@@ -670,7 +688,7 @@ export default function Mentorat() {
         </Secventa>
 
         {/* ——— NU E PENTRU TINE ——— */}
-        <Secventa className="pt-10">
+        <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca eticheta="Cinstit" titlu={<>Când să nu ne scrii.</>} />
           <Caseta className="p-6 md:p-8 space-y-4">
             {NU_E_PENTRU.map((x) => (
@@ -683,11 +701,11 @@ export default function Mentorat() {
         </Secventa>
 
         {/* ——— FORMULAR ——— */}
-        <Secventa className="pt-10">
+        <Secventa className="pt-16 md:pt-24">
           <div id="aplica" className="scroll-mt-8">
             <Caseta className="overflow-hidden ring-1 ring-neon/20">
               <div className="grid grid-cols-1 lg:grid-cols-5">
-                <div className="lg:col-span-3 border-b lg:border-b-0 lg:border-r border-neutral-800/60">
+                <div className="lg:col-span-3 border-b lg:border-b-0 lg:border-r border-white/[0.06]">
                   <Formular />
                 </div>
                 <div className="lg:col-span-2 p-6 md:p-8 bg-black/20 space-y-7">
@@ -699,14 +717,14 @@ export default function Mentorat() {
                       Dacă nu ne potrivim, ți-o spunem atunci.
                     </p>
                   </div>
-                  <div className="pt-6 border-t border-neutral-800/60">
+                  <div className="pt-6 border-t border-white/[0.06]">
                     <Eticheta ton="mov">Ce nu se întâmplă la apel</Eticheta>
                     <p className="text-neutral-300 text-sm leading-relaxed mt-3">
                       Nu te ține nimeni o oră ca să te convingă și nu există ofertă care „expiră în
                       zece minute". Afli prețul, închizi telefonul și te gândești.
                     </p>
                   </div>
-                  <div className="pt-6 border-t border-neutral-800/60">
+                  <div className="pt-6 border-t border-white/[0.06]">
                     <Eticheta ton="mov">Preferi să scrii?</Eticheta>
                     <div className="flex flex-col gap-2 mt-3 text-sm">
                       <a href="https://www.instagram.com/vandy_o1/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-mov transition-colors inline-flex items-center gap-1.5">
@@ -724,7 +742,7 @@ export default function Mentorat() {
         </Secventa>
 
         {/* ——— ÎNTREBĂRI ——— */}
-        <Secventa className="pt-10">
+        <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca eticheta="Întrebări" titlu={<>Ce mă întreabă toți.</>} />
           <div className="flex flex-col gap-3">
             {INTREBARI.map((x, i) => (
@@ -734,10 +752,13 @@ export default function Mentorat() {
         </Secventa>
 
         {/* ——— FINAL ——— */}
-        <Secventa className="pt-10">
+        <Secventa className="pt-16 md:pt-24">
           <Caseta className="p-8 md:p-12 text-center ring-1 ring-neon/20">
             <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-[1.1] masura-titlu mx-auto mb-5">
-              În trei zile ai construit ceva, sau mai trece un trimestru la fel.
+              În trei zile ai construit ceva,{' '}
+              <span className="serif-italic text-neutral-500 text-[1.1em]">
+                sau mai trece un trimestru la fel.
+              </span>
             </h2>
             <p className="text-neutral-400 text-base leading-relaxed masura-intro mx-auto mb-8 tabular-nums">
               {locuriLibere} locuri libere din {OFERTA.locuriTotal}. {OFERTA.dateText}.
@@ -749,7 +770,7 @@ export default function Mentorat() {
         </Secventa>
 
         {/* ——— FOOTER ——— */}
-        <footer className="pt-10 pb-4 space-y-4">
+        <footer className="pt-16 md:pt-24 pb-4 space-y-4">
           <div className="rounded-2xl border border-neutral-900 bg-neutral-950/40 p-5">
             <p className="text-neutral-600 text-[11px] leading-relaxed masura-mic">
               {OFERTA.numeProgram} este un program de formare practică. Nu reprezintă consultanță

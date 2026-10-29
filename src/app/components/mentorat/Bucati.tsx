@@ -1,10 +1,24 @@
 import { ReactNode } from 'react';
 import { motion } from 'motion/react';
 
-/** Caseta standard a site-ului: aceleași colțuri, aceeași bordură, același fundal. */
+/**
+ * Caseta paginii.
+ *
+ * Nu e un dreptunghi cu chenar, e o suprafață: degrade de sus în jos, bordură
+ * de lumină și nu de gri, umbră proiectată departe, plus firul de lumină de pe
+ * muchia de sus. Firul ăla e detaliul care face diferența între „card pe negru"
+ * și „obiect așezat pe negru" — e cum arată o margine reală prinsă de o sursă
+ * de lumină de deasupra.
+ */
 export function Caseta({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
-    <div className={`rounded-2xl bg-neutral-900/40 border border-neutral-800 backdrop-blur-sm ${className}`}>
+    <div
+      className={`relative rounded-2xl border border-white/[0.07] bg-gradient-to-b from-neutral-900/70 to-neutral-950/50 backdrop-blur-sm shadow-[0_24px_60px_-28px_rgba(0,0,0,0.95)] ${className}`}
+    >
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
+      />
       {children}
     </div>
   );
@@ -49,7 +63,12 @@ export function Eticheta({
 
 export function TitluSecvenca({ eticheta, titlu }: { eticheta: string; titlu: ReactNode }) {
   return (
-    <div className="space-y-3 mb-6">
+    <div className="space-y-3 mb-8">
+      {/* Firul subțire de deasupra kickerului dă startul secțiunii fără chenar. */}
+      <span
+        aria-hidden
+        className="block h-px w-16 bg-gradient-to-r from-mov/70 to-transparent mb-5"
+      />
       {/* Kickerul numește secțiunea — e structură, deci mov. */}
       <Eticheta ton="mov">{eticheta}</Eticheta>
       <h2 className="text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-[1.15] masura-titlu">
@@ -85,10 +104,10 @@ export function Buton({
     `inline-flex items-center justify-center gap-2 rounded-full font-bold tracking-tight transition-all text-center ${padding}`;
   const stil =
     variant === 'neon'
-      ? 'bg-neon text-black hover:brightness-110 lumina-bloc'
+      ? 'bg-neon text-black hover:brightness-110 hover:-translate-y-0.5 lumina-bloc shadow-[inset_0_1px_0_0_rgba(255,255,255,0.4)]'
       : variant === 'alb'
-        ? 'bg-white text-black hover:bg-neutral-200'
-        : 'border border-neon/40 text-neon hover:bg-neon/10 hover:border-neon/70';
+        ? 'bg-white text-black hover:bg-neutral-200 hover:-translate-y-0.5'
+        : 'border border-neon/40 text-neon hover:bg-neon/10 hover:border-neon/70 hover:-translate-y-0.5';
   const clase = `${baza} ${stil} ${className}`;
 
   if (href) {

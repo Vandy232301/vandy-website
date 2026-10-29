@@ -135,3 +135,43 @@
   max-width: 64ch;
   text-wrap: pretty;
 }
+
+/* ────────────────────────────────────────────────────────────────────────
+   ACCENTUL SERIF
+
+   Un singur font display, folosit puțin: doar frazele evidențiate din
+   titluri. Contrastul dintre sansul greu al titlului și serifa în italic
+   face toată diferența — dacă îl pui peste tot, dispare.
+
+   Fallbackul e Georgia, nu „serif": Georgia există pe orice mașină, are
+   diacriticele românești corecte și nu sare layoutul dacă fontul întârzie.
+   ──────────────────────────────────────────────────────────────────────── */
+.serif {
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.serif-italic {
+  font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   GRANULAȚIA
+
+   Un strat de zgomot foarte fin peste toată pagina. Două motive, amândouă
+   practice: degradeurile mari pe negru fac benzi vizibile pe ecranele de
+   8 biți, iar zgomotul le rupe; și dă suprafeței o textură de hârtie, nu
+   de plastic. La 3,5% nu se vede ca zgomot, se simte ca material.
+   ──────────────────────────────────────────────────────────────────────── */
+.granulatie {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.035;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .granulatie { display: none; }
+}

@@ -135,7 +135,7 @@ export function CardProdus({
 
         {/* ——— Captura, într-o fereastră de browser ——— */}
         <div
-          className={`relative order-1 p-5 md:p-7 flex items-center bg-black/25 border-b md:border-b-0 border-neutral-800/60 ${
+          className={`relative order-1 p-5 md:p-7 flex items-center bg-black/25 border-b md:border-b-0 border-white/[0.06] ${
             capturaLaStanga ? 'md:order-1 md:border-r' : 'md:order-2 md:border-l'
           }`}
         >
