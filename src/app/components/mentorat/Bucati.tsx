@@ -31,11 +31,15 @@ export function Eticheta({
   ton = 'neutral',
 }: {
   children: ReactNode;
-  ton?: 'neutral' | 'alb' | 'neon';
+  ton?: 'neutral' | 'alb' | 'neon' | 'mov';
 }) {
-  // Verdele e rezervat etichetelor care anunță bani, locuri sau garanție.
+  // Verdele e rezervat etichetelor care anunță bani, locuri sau garanție;
+  // movul, celor care numesc structura programului.
   const culoare =
-    ton === 'neon' ? 'text-neon' : ton === 'alb' ? 'text-white' : 'text-neutral-500';
+    ton === 'neon' ? 'text-neon'
+    : ton === 'mov' ? 'text-mov'
+    : ton === 'alb' ? 'text-white'
+    : 'text-neutral-500';
   return (
     <span className={`block text-[10px] md:text-xs uppercase tracking-[0.2em] font-semibold ${culoare}`}>
       {children}
@@ -47,7 +51,7 @@ export function TitluSecvenca({ eticheta, titlu }: { eticheta: string; titlu: Re
   return (
     <div className="space-y-3 mb-6">
       <Eticheta>{eticheta}</Eticheta>
-      <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-snug max-w-2xl">
+      <h2 className="text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-[1.15] max-w-3xl">
         {titlu}
       </h2>
     </div>

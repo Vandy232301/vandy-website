@@ -75,7 +75,7 @@ export function CardProdus({
           }`}
         >
           <div className="flex items-center gap-3 mb-6">
-            <span className="text-neutral-700 text-xs font-bold tabular-nums group-hover:text-neon transition-colors duration-300">
+            <span className="text-neutral-600 text-lg font-bold tabular-nums group-hover:text-mov transition-colors duration-300">
               {String(index + 1).padStart(2, '0')}
             </span>
             <span className="px-3 py-1 rounded-full bg-neutral-900/70 border border-neutral-800 text-neutral-300 text-[10px] font-bold tracking-wider uppercase">
@@ -98,7 +98,7 @@ export function CardProdus({
                 </div>
               )}
             </div>
-            <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight group-hover:translate-x-1 transition-transform duration-300">
+            <h3 className="text-3xl md:text-4xl font-bold text-white tracking-tight group-hover:translate-x-1 transition-transform duration-300">
               {title}
             </h3>
           </div>

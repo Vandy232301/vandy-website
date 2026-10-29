@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Minus, Quote, ShieldCheck }
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { Caseta, Secventa, Eticheta, TitluSecvenca, Buton } from './components/mentorat/Bucati';
 import { CardProdus } from './components/mentorat/CardProdus';
+import { Intrebare } from './components/mentorat/Intrebare';
 import { PROJECTS } from '../data/projects';
 import { translations } from '../data/translations';
 import { useLoves } from './hooks/useLoves';
@@ -12,7 +13,14 @@ import {
   CAPTURI, PRODUSE_DOVADA, PIATA, PIATA_AVERTISMENT, RECENZII, INCREDERE, FIRMA,
   COMUNITATE, BRANDURI,
 } from '../data/mentorat';
-import AVATAR_IMG from '../assets/280a05b4e7cffd644dd36f6c7453213920fff3ac.png';
+// Portretul real, cel de pe cardurile de social media. NU randarea neagră de
+// pe prima pagină: aici vinde un om, nu un personaj.
+// Decupat pe cap, ca să nu iasă jumătate de sacou într-un cerc de 56px:
+//   sips -c 1600 1600 --cropOffset 0 140 \
+//     ~/vandy_quotes/surse/personaj/avatar-real-2048.png --out x.png
+//   sips -Z 512 x.png --out src/assets/vandy-real.png
+// PNG, nu JPEG: la 512px e lossless, fără subeșantionare de culoare.
+import AVATAR_IMG from '../assets/vandy-real.png';
 
 /**
  * CTA-ul care te urmărește după ce treci de hero — pe telefon e singurul
@@ -49,7 +57,7 @@ function BaraFixa() {
           <p className="text-white text-[13px] sm:text-sm font-bold tracking-tight truncate">
             <span className="text-neon">{OFERTA.tip}</span> · {OFERTA.durata}
           </p>
-          <p className="text-neutral-500 text-[11px] truncate">
+          <p className="text-neutral-400 text-xs truncate tabular-nums">
             {locuriLibere} din {OFERTA.locuriTotal} locuri libere
           </p>
         </div>
@@ -80,6 +88,26 @@ function Locuri() {
   );
 }
 
+/* ────────────────────────────────────────────────────────────────────────
+   CELE DOUĂ ACCENTE, ȘI CÂND SE FOLOSEȘTE FIECARE
+
+   Două culori pe o pagină devin zgomot dacă nu au fiecare o treabă. Aici au:
+
+   🟩 VERDE (`neon`) — BANI și ACȚIUNE. Butoanele, bara flotantă, locurile
+      libere, prețurile pieței, garanția, bifele cu ce pleci, accesul pe
+      viață, promisiunea din hero. Tot ce înseamnă „asta primești" și
+      „apasă aici".
+
+   🟪 MOV (`mov`) — STRUCTURĂ și METODĂ. Numerele celor trei piese ale
+      motorului, numerele direcțiilor, etichetele celor trei zile,
+      numerotarea produselor, întrebarea deschisă din FAQ, banda de
+      încredere, numele brandurilor la hover. Tot ce descrie cum e făcut
+      programul, nu ce câștigi din el.
+
+   Regula practică: dacă elementul cere o acțiune sau numără bani, e verde.
+   Dacă explică sau ordonează, e mov. Când ai dubii, lasă-l neutru.
+   ──────────────────────────────────────────────────────────────────────── */
+
 /** Pagina e doar în română, deci cardurile iau descrierile direct din blocul RO. */
 const textRO = translations.RO;
 
@@ -92,6 +120,9 @@ export default function Mentorat() {
       {/* O singură urmă de verde în fundal, sus, ca accentul să pară că vine din
           pagină și nu lipit pe ea. Difuz, altfel ar colora textul din hero. */}
       <div className="fixed -top-56 left-1/2 -translate-x-1/2 w-[760px] h-[440px] z-0 rounded-full bg-neon/[0.05] blur-[140px] pointer-events-none" />
+      {/* Al doilea halou, mov, jos-stânga: dă adâncime și face cele două accente
+          să pară un sistem, nu un autocolant verde peste o pagină neagră. */}
+      <div className="fixed top-[55%] -left-40 w-[640px] h-[640px] z-0 rounded-full bg-mov/[0.06] blur-[150px] pointer-events-none" />
 
       <div className="w-full max-w-5xl relative z-10 flex flex-col gap-4 spatiu-bara">
 
@@ -101,7 +132,7 @@ export default function Mentorat() {
             <ArrowLeft size={16} className="text-neutral-600 group-hover:text-neon transition-colors" />
             <h1 className="text-2xl font-bold text-white tracking-wide">VANDY</h1>
           </a>
-          <Eticheta ton="neon">{OFERTA.tip} · {OFERTA.numeProgram}</Eticheta>
+          <Eticheta ton="mov">{OFERTA.tip} · {OFERTA.numeProgram}</Eticheta>
         </header>
 
         {/* ——— HERO ——— */}
@@ -109,30 +140,35 @@ export default function Mentorat() {
           <div className="flex flex-col md:flex-row">
             <div className="flex-1 p-6 md:p-10 bg-gradient-to-br from-neutral-900/50 to-transparent">
               <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-full overflow-hidden border border-neutral-700 grayscale shrink-0">
-                  <ImageWithFallback src={AVATAR_IMG} alt="VANDY" className="w-full h-full object-cover" />
+                <div className="w-14 h-14 rounded-full overflow-hidden border border-neutral-700 shrink-0">
+                  <ImageWithFallback
+                    src={AVATAR_IMG}
+                    alt="VANDY"
+                    loading="eager"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div>
-                  <p className="text-white text-sm font-bold tracking-wide">VANDY</p>
-                  <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-semibold">
+                  <p className="text-white text-base font-bold tracking-wide">VANDY</p>
+                  <p className="text-[11px] md:text-xs text-neutral-500 uppercase tracking-widest font-semibold tabular-nums">
                     10 aplicații live · 11 ani în branding
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-wrap items-center gap-2.5 mb-6">
-                <span className="px-3.5 py-1.5 rounded-full bg-neon text-black text-[10px] font-bold tracking-[0.18em] uppercase">
+                <span className="px-4 py-1.5 rounded-full bg-neon text-black text-xs font-bold tracking-[0.18em] uppercase">
                   {OFERTA.tip}
                 </span>
-                <span className="px-3.5 py-1.5 rounded-full border border-neutral-700 text-neutral-300 text-[10px] font-bold tracking-[0.18em] uppercase">
+                <span className="px-4 py-1.5 rounded-full border border-neutral-700 text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase tabular-nums">
                   {OFERTA.durata}
                 </span>
-                <span className="px-3.5 py-1.5 rounded-full border border-neutral-700 text-neutral-300 text-[10px] font-bold tracking-[0.18em] uppercase">
+                <span className="px-4 py-1.5 rounded-full border border-neutral-700 text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase tabular-nums">
                   {locuriLibere} locuri
                 </span>
               </div>
 
-              <h2 className="text-3xl md:text-[2.6rem] font-bold leading-[1.15] text-white tracking-tight mb-6">
+              <h2 className="text-4xl md:text-[3rem] font-bold leading-[1.1] text-white tracking-tight mb-6">
                 Nu te învăț să folosești AI.<br />
                 <span className="text-neutral-500">
                   Te învăț să construiești cu AI lucruri{' '}
@@ -155,8 +191,8 @@ export default function Mentorat() {
                 <Buton href="#zile" variant="contur">Vezi cele 3 zile</Buton>
               </div>
 
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-neutral-500 font-medium">
-                <span className="text-white font-bold">{locuriLibere} locuri din {OFERTA.locuriTotal}</span>
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-neutral-500 font-medium">
+                <span className="text-white font-bold tabular-nums">{locuriLibere} locuri din {OFERTA.locuriTotal}</span>
                 <span>{OFERTA.durata}</span>
                 <span className="text-neon/80 font-semibold">comunitate pe viață</span>
                 <span>{OFERTA.dateText}</span>
@@ -166,8 +202,8 @@ export default function Mentorat() {
             <div className="w-full md:w-[34%] border-t md:border-t-0 md:border-l border-neutral-800/50 p-6 md:p-8 flex flex-col justify-between gap-8 bg-black/20">
               <div className="space-y-4">
                 <Eticheta>Locuri</Eticheta>
-                <p className="text-5xl font-bold text-neon tracking-tight leading-none lumina-text">
-                  {locuriLibere}<span className="text-neutral-700 text-2xl">/{OFERTA.locuriTotal}</span>
+                <p className="text-6xl md:text-7xl font-bold text-neon tracking-tight leading-none tabular-nums lumina-text">
+                  {locuriLibere}<span className="text-neutral-700 text-3xl">/{OFERTA.locuriTotal}</span>
                 </p>
                 <Locuri />
                 <p className="text-neutral-500 text-xs leading-relaxed">
@@ -198,7 +234,7 @@ export default function Mentorat() {
                 {BRANDURI.map((b) => (
                   <span
                     key={b}
-                    className="text-neutral-400 text-sm md:text-base font-bold tracking-[0.12em] uppercase hover:text-neon transition-colors"
+                    className="text-neutral-400 text-sm md:text-base font-bold tracking-[0.12em] uppercase hover:text-mov transition-colors"
                   >
                     {b}
                   </span>
@@ -221,7 +257,7 @@ export default function Mentorat() {
               { t: 'Și cifrele sunt aceleași', d: 'Aceleași costuri, aceleași termene, aceiași oameni pe aceleași task-uri. Nimic de pus pe masă la final de trimestru.' },
             ].map((x) => (
               <Caseta key={x.t} className="p-6">
-                <p className="text-white text-sm font-bold mb-2">{x.t}</p>
+                <p className="text-white text-base font-bold mb-2">{x.t}</p>
                 <p className="text-neutral-400 text-sm leading-relaxed">{x.d}</p>
               </Caseta>
             ))}
@@ -287,10 +323,10 @@ export default function Mentorat() {
                 { n: '3', t: 'Publici și ceri bani', d: 'Cum pui lucrul în fața oamenilor, cum se formează prețul și cum îl ceri fără să te scuzi.' },
               ].map((p) => (
                 <div key={p.n} className="space-y-3">
-                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-neon/40 text-neon text-xs font-bold">
+                  <span className="inline-flex items-center justify-center w-11 h-11 rounded-full border border-mov/40 text-mov text-lg font-bold tabular-nums">
                     {p.n}
                   </span>
-                  <p className="text-white text-sm font-bold">{p.t}</p>
+                  <p className="text-white text-base font-bold">{p.t}</p>
                   <p className="text-neutral-400 text-sm leading-relaxed">{p.d}</p>
                 </div>
               ))}
@@ -308,10 +344,10 @@ export default function Mentorat() {
             {DIRECTII.map((d) => (
               <Caseta key={d.id} className="p-6 flex flex-col">
                 <div className="flex items-baseline gap-3 mb-4">
-                  <span className="text-neutral-700 text-xs font-bold">{d.numar}</span>
-                  <h3 className="text-white text-lg font-bold tracking-wide">{d.nume}</h3>
+                  <span className="text-mov text-base font-bold tabular-nums">{d.numar}</span>
+                  <h3 className="text-white text-xl font-bold tracking-wide">{d.nume}</h3>
                 </div>
-                <p className="text-white text-sm font-semibold mb-3">{d.promisiune}</p>
+                <p className="text-white text-base font-semibold mb-3">{d.promisiune}</p>
                 <p className="text-neutral-400 text-sm leading-relaxed mb-6 flex-1">{d.text}</p>
                 <div className="pt-5 border-t border-neutral-800/60 space-y-2.5">
                   <Eticheta>Pleci cu</Eticheta>
@@ -348,9 +384,9 @@ export default function Mentorat() {
                 <div className="mt-5 space-y-4 flex-1">
                   {d.randuri.map((r) => (
                     <div key={r.ce} className="pb-4 border-b border-neutral-800/60 last:border-0 last:pb-0">
-                      <p className="text-neutral-400 text-xs leading-snug mb-1.5">{r.ce}</p>
-                      <p className="text-neon text-lg font-bold tracking-tight leading-none">{r.pret}</p>
-                      <p className="text-neutral-600 text-[11px] mt-1.5">{r.detaliu}</p>
+                      <p className="text-neutral-400 text-[13px] leading-snug mb-2">{r.ce}</p>
+                      <p className="text-neon text-2xl md:text-[1.7rem] font-bold tracking-tight leading-none tabular-nums">{r.pret}</p>
+                      <p className="text-neutral-500 text-xs mt-2 tabular-nums">{r.detaliu}</p>
                     </div>
                   ))}
                 </div>
@@ -396,7 +432,7 @@ export default function Mentorat() {
                 <div className="flex items-start gap-4">
                   <Check size={18} className="text-neon mt-0.5 shrink-0" strokeWidth={2.5} />
                   <div>
-                    <p className="text-white text-sm font-bold mb-1.5">{x.titlu}</p>
+                    <p className="text-white text-base font-bold mb-1.5">{x.titlu}</p>
                     <p className="text-neutral-400 text-sm leading-relaxed">{x.text}</p>
                   </div>
                 </div>
@@ -418,8 +454,10 @@ export default function Mentorat() {
               <Caseta key={z.eticheta} className="p-6 md:p-8">
                 <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-10">
                   <div className="md:w-48 shrink-0">
-                    <Eticheta>{z.eticheta}</Eticheta>
-                    <p className="text-white text-xl font-bold tracking-wide mt-1">{z.nume}</p>
+                    <span className="block text-xs md:text-sm uppercase tracking-[0.2em] font-semibold text-mov tabular-nums">
+                      {z.eticheta}
+                    </span>
+                    <p className="text-white text-xl md:text-2xl font-bold tracking-wide mt-1.5">{z.nume}</p>
                   </div>
                   <p className="text-neutral-400 text-sm leading-relaxed flex-1">{z.text}</p>
                 </div>
@@ -441,7 +479,7 @@ export default function Mentorat() {
               </span>
             </div>
 
-            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-snug mb-5 max-w-2xl">
+            <h2 className="text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-[1.15] mb-5 max-w-3xl">
               Masterclass-ul se termină în trei zile. Comunitatea {COMUNITATE.nume} nu se termină niciodată.
             </h2>
 
@@ -457,7 +495,7 @@ export default function Mentorat() {
                 <div key={x.titlu} className="flex items-start gap-3">
                   <Check size={15} className="text-neon mt-0.5 shrink-0" strokeWidth={2.5} />
                   <div>
-                    <p className="text-white text-sm font-bold mb-1.5">{x.titlu}</p>
+                    <p className="text-white text-base font-bold mb-1.5">{x.titlu}</p>
                     <p className="text-neutral-400 text-sm leading-relaxed">{x.text}</p>
                   </div>
                 </div>
@@ -476,7 +514,7 @@ export default function Mentorat() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {RECENZII.map((r) => (
                 <Caseta key={r.nume + r.lucrare} className="p-6 flex flex-col">
-                  <Quote size={18} className="text-neutral-700 mb-4 shrink-0" />
+                  <Quote size={18} className="text-mov mb-4 shrink-0" />
                   <p className="text-neutral-300 text-sm leading-relaxed flex-1">{r.text}</p>
                   <div className="mt-6 pt-5 border-t border-neutral-800/60">
                     <p className="text-white text-sm font-bold">{r.nume}</p>
@@ -511,8 +549,8 @@ export default function Mentorat() {
           <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
             <Caseta className="md:col-span-2 p-6 md:p-8">
               <Eticheta>Locuri în prima serie</Eticheta>
-              <p className="text-5xl md:text-6xl font-bold text-neon tracking-tight leading-none mt-3 mb-2 lumina-text">
-                {locuriLibere}<span className="text-neutral-700 text-2xl">/{OFERTA.locuriTotal}</span>
+              <p className="text-6xl md:text-7xl font-bold text-neon tracking-tight leading-none mt-3 mb-2 tabular-nums lumina-text">
+                {locuriLibere}<span className="text-neutral-700 text-3xl">/{OFERTA.locuriTotal}</span>
               </p>
               <p className="text-neutral-500 text-sm mb-6">{OFERTA.dateText}</p>
               <Locuri />
@@ -560,9 +598,9 @@ export default function Mentorat() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {INCREDERE.map((x) => (
               <Caseta key={x.titlu} className="p-5 flex items-start gap-3.5">
-                <ShieldCheck size={17} className="text-neon/70 mt-0.5 shrink-0" strokeWidth={1.75} />
+                <ShieldCheck size={17} className="text-mov mt-0.5 shrink-0" strokeWidth={1.75} />
                 <div>
-                  <p className="text-white text-sm font-bold mb-1">{x.titlu}</p>
+                  <p className="text-white text-[15px] font-bold mb-1">{x.titlu}</p>
                   <p className="text-neutral-400 text-[13px] leading-relaxed">{x.text}</p>
                 </div>
               </Caseta>
@@ -629,11 +667,8 @@ export default function Mentorat() {
         <Secventa className="pt-10">
           <TitluSecvenca eticheta="Întrebări" titlu={<>Ce mă întreabă toți.</>} />
           <div className="flex flex-col gap-3">
-            {INTREBARI.map((x) => (
-              <Caseta key={x.q} className="p-6">
-                <p className="text-white text-sm font-bold mb-2.5">{x.q}</p>
-                <p className="text-neutral-400 text-sm leading-relaxed max-w-3xl">{x.a}</p>
-              </Caseta>
+            {INTREBARI.map((x, i) => (
+              <Intrebare key={x.q} q={x.q} a={x.a} deschisaInitial={i === 0} />
             ))}
           </div>
         </Secventa>
@@ -641,10 +676,10 @@ export default function Mentorat() {
         {/* ——— FINAL ——— */}
         <Secventa className="pt-10">
           <Caseta className="p-8 md:p-12 text-center ring-1 ring-neon/20">
-            <h2 className="text-2xl md:text-4xl font-bold text-white tracking-tight leading-tight max-w-2xl mx-auto mb-5">
+            <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-[1.1] max-w-3xl mx-auto mb-5">
               În trei zile ai construit ceva, sau mai trece un trimestru la fel.
             </h2>
-            <p className="text-neutral-400 text-sm leading-relaxed max-w-lg mx-auto mb-8">
+            <p className="text-neutral-400 text-base leading-relaxed max-w-lg mx-auto mb-8 tabular-nums">
               {locuriLibere} locuri libere din {OFERTA.locuriTotal}. {OFERTA.dateText}.
             </p>
             <Buton href="#aplica" className="mx-auto">

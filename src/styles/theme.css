@@ -46,6 +46,13 @@
      tokenul doar există aici, nu e folosit acolo. */
   --neon: #39ff14;
   --neon-rgb: 57, 255, 20;
+
+  /* Al doilea accent, cerut de owner pe 29.10.2026: „mov neon… ala putin spre
+     albastru". E violetul care există deja în casă — culoarea NOWWWA din
+     projects.ts și începutul gradientului iridescent din brand book.
+     Împărțirea muncii între cele două e scrisă în src/app/Mentorat.tsx. */
+  --mov: #7c5cff;
+  --mov-rgb: 124, 92, 255;
 }
 
 .dark {
@@ -87,6 +94,7 @@
 
 @theme inline {
   --color-neon: var(--neon);
+  --color-mov: var(--mov);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

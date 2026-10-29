@@ -294,7 +294,7 @@ export const PIATA: PiataDirectie[] = [
       { ce: 'Magazin online', pret: '4.000 – 10.000 €', detaliu: '20.000 – 50.000 lei' },
       { ce: 'Oră de development în România', pret: '30 – 50 €', detaliu: 'tarif profesionist curent' },
     ],
-    acopera: 'Un singur site de prezentare, vândut la mediana pieței, acoperă masterclass-ul.',
+    acopera: 'Un singur site de prezentare livrat îți acoperă investiția în masterclass.',
     sursa: { text: 'webforge.org.ro — cât costă un site web', href: 'https://webforge.org.ro/blog/cat-costa-un-site-web' },
   },
   {
@@ -305,7 +305,7 @@ export const PIATA: PiataDirectie[] = [
       { ce: 'Aplicație cu roluri, integrări și plăți', pret: '10.000 – 30.000 €', detaliu: 'livrată în 2 – 5 luni' },
       { ce: 'Aplicație enterprise', pret: 'peste 30.000 €', detaliu: 'microservicii, conformitate, SLA' },
     ],
-    acopera: 'Cel mai ieftin MVP din piață costă de trei ori cât masterclass-ul. Aici nu cumperi unul — înveți să îl construiești.',
+    acopera: 'Aici nu cumperi un MVP — înveți să îl construiești. Pe primul, și pe al zecelea.',
     sursa: { text: 'webforge.org.ro — cât costă o aplicație web', href: 'https://webforge.org.ro/blog/cat-costa-o-aplicatie-web' },
   },
   {
