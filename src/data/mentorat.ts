@@ -407,6 +407,15 @@ export const PIATA_AVERTISMENT =
 /* ────────────────────────────────────────────────────────────────────────
    CAPTURI — dovada vizuală. Fiecare e un ecran real, luat de pe site-ul
    live al produsului pe 28.10.2026, nu un mockup și nu o imagine de stoc.
+
+   ⚠️ ELYA, refăcută pe 29.10.2026. Prima captură era hero-ul de marketing,
+   pe fundal deschis, care nu arăta produsul. Platforma propriu-zisă NU e
+   vizibilă public: butonul „ELYA Platform" duce la clientes.elya.app, care
+   e doar ecran de autentificare. Captura actuală e secțiunea „Your
+   intelligent commercial team" de pe elya.app — tot site de marketing, dar
+   singura parte care arată ce face platforma, și pe fundal închis, ca
+   restul rândului. Dacă primești o captură din interfața logată, înlocuiește
+   fișierul; e cea mai bună dovadă posibilă pentru produsul ăsta.
    ──────────────────────────────────────────────────────────────────────── */
 
 import CAP_NOWWWA from '../assets/capturi/nowwwa.jpg';
