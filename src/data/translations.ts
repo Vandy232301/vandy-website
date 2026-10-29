@@ -41,10 +41,10 @@ export const translations = {
         btn: "Contactează-mă"
       },
       mentorat: {
-        tag: "ATELIER AI",
-        title: "3 zile live, 10 locuri. Construiești cu AI un lucru pe care îl poți vinde.",
-        meta: "990 € · 10 locuri · noiembrie 2026",
-        cta: "Vezi atelierul",
+        tag: "MASTERCLASS · ATELIER AI",
+        title: "Exclusiv pentru antreprenorii și fondatorii care vor să performeze în era AI.",
+        meta: "3 zile live · 10 locuri · noiembrie 2026",
+        cta: "Vezi masterclass-ul",
         nota: ""
       },
       footer: "© 2026 VANDY. Făcut cu 🖤 în alt Univers Paralel."
@@ -91,10 +91,10 @@ export const translations = {
         btn: "Contact Me"
       },
       mentorat: {
-        tag: "ATELIER AI",
-        title: "3 live days, 10 seats. You build something with AI that you can actually sell.",
-        meta: "€990 · 10 seats · November 2026",
-        cta: "See the workshop",
+        tag: "MASTERCLASS · ATELIER AI",
+        title: "Exclusively for entrepreneurs and founders who want to perform in the AI era.",
+        meta: "3 live days · 10 seats · November 2026",
+        cta: "See the masterclass",
         nota: "Page in Romanian"
       },
       footer: "© 2026 VANDY. Made with 🖤 in another Parallel Universe."
@@ -141,10 +141,10 @@ export const translations = {
         btn: "Contáctame"
       },
       mentorat: {
-        tag: "ATELIER AI",
-        title: "3 días en directo, 10 plazas. Construyes con IA algo que puedes vender.",
-        meta: "990 € · 10 plazas · noviembre 2026",
-        cta: "Ver el taller",
+        tag: "MASTERCLASS · ATELIER AI",
+        title: "Exclusivo para emprendedores y fundadores que quieren rendir en la era de la IA.",
+        meta: "3 días en directo · 10 plazas · noviembre 2026",
+        cta: "Ver la masterclass",
         nota: "Página en rumano"
       },
       footer: "© 2026 VANDY. Hecho con 🖤 en otro Universo Paralelo."
@@ -191,10 +191,10 @@ export const translations = {
         btn: "Contactez-moi"
       },
       mentorat: {
-        tag: "ATELIER AI",
-        title: "3 jours en direct, 10 places. Tu construis avec l’IA quelque chose que tu peux vendre.",
-        meta: "990 € · 10 places · novembre 2026",
-        cta: "Voir l’atelier",
+        tag: "MASTERCLASS · ATELIER AI",
+        title: "Exclusivement pour les entrepreneurs et les fondateurs qui veulent performer à l’ère de l’IA.",
+        meta: "3 jours en direct · 10 places · novembre 2026",
+        cta: "Voir la masterclass",
         nota: "Page en roumain"
       },
       footer: "© 2026 VANDY. Fait avec 🖤 dans un autre Univers Parallèle."
@@ -241,10 +241,10 @@ export const translations = {
         btn: "Kontaktiere mich"
       },
       mentorat: {
-        tag: "ATELIER AI",
-        title: "3 Tage live, 10 Plätze. Du baust mit KI etwas, das du verkaufen kannst.",
-        meta: "990 € · 10 Plätze · November 2026",
-        cta: "Workshop ansehen",
+        tag: "MASTERCLASS · ATELIER AI",
+        title: "Exklusiv für Unternehmer und Gründer, die im KI-Zeitalter performen wollen.",
+        meta: "3 Tage live · 10 Plätze · November 2026",
+        cta: "Masterclass ansehen",
         nota: "Seite auf Rumänisch"
       },
       footer: "© 2026 VANDY. Gemacht mit 🖤 in einem anderen Paralleluniversum."
@@ -291,10 +291,10 @@ export const translations = {
         btn: "Свяжитесь со мной"
       },
       mentorat: {
-        tag: "ATELIER AI",
-        title: "3 дня в прямом эфире, 10 мест. Вы создаёте с ИИ то, что можно продать.",
-        meta: "990 € · 10 мест · ноябрь 2026",
-        cta: "Смотреть воркшоп",
+        tag: "MASTERCLASS · ATELIER AI",
+        title: "Только для предпринимателей и основателей, которые хотят быть результативными в эпоху ИИ.",
+        meta: "3 дня в прямом эфире · 10 мест · ноябрь 2026",
+        cta: "Смотреть мастеркласс",
         nota: "Страница на румынском"
       },
       footer: "© 2026 VANDY. Сделано с 🖤 в другой параллельной вселенной."

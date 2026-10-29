@@ -4,7 +4,14 @@
  * Ce vei vrea să schimbi cel mai des:
  *   OFERTA.locuriLuate  — crește-l cu 1 la fiecare loc vândut. Pagina recalculează singură.
  *   OFERTA.dateText     — datele seriei, când le confirmi.
- *   OFERTA.numeProgram  — numele atelierului, dacă îl schimbi.
+ *   OFERTA.numeProgram  — numele programului, dacă îl schimbi.
+ *
+ * ⛔ PREȚUL NU SE AFIȘEAZĂ NICĂIERI PE PAGINĂ. Decizie owner, 29.10.2026:
+ * „Pretul nu l-as pune la vedere." Rămâne în fișier pentru că e nevoie de el
+ * la apel și în emailul intern, dar nicio componentă nu îl randează. Dacă
+ * adaugi vreodată `{OFERTA.pret}` în JSX, încalci decizia asta.
+ * Omul îl află la apel; în formular e întrebat doar cât ar fi dispus să
+ * investească (OPTIUNI_BUGET), ca să știm cu ce venim la discuție.
  *
  * Regulă pe care pagina o respectă peste tot: promitem ce PLECI CU, niciodată
  * un venit. Un venit promis în scris e afirmație comercială reglementată
@@ -16,7 +23,17 @@
 export const OFERTA = {
   numeProgram: 'ATELIER AI',
 
-  /** Preț integral, în euro. */
+  /**
+   * Poziționarea, cerută de owner pe 29.10.2026, verbatim:
+   * „Vreau pozitiinarea sa fie MASTERCLASS Exclusiv pentru Antreprenorii si
+   * Fondatorii care vor sa performeze in era AI."
+   * `tip` e cuvântul de deasupra numelui peste tot; `pentruCine` e rândul care
+   * spune din prima cui i se adresează și, implicit, cui nu.
+   */
+  tip: 'MASTERCLASS',
+  pentruCine: 'Exclusiv pentru antreprenorii și fondatorii care vor să performeze în era AI.',
+
+  /** ⛔ NU se afișează pe pagină. Se spune la apel. Vezi antetul fișierului. */
   pret: 990,
   /** Varianta în două tranșe. Suma e intenționat mai mare — plata integrală trebuie să fie cea convenabilă. */
   rate: { numar: 2, suma: 545 },
@@ -94,7 +111,7 @@ export const PLECI_CU = [
       înregistrată și ridică o întrebare în plus pe care nu trebuie să ne-o
       punem.
    2. Formularea e „branduri pentru care am lucrat", niciodată „parteneri"
-      sau ceva care sugerează că brandurile astea susțin atelierul. Ele nu
+      sau ceva care sugerează că brandurile astea susțin masterclass-ul. Ele nu
       au nicio legătură cu ATELIER AI.
 
    Separat: galeria de pe dozain.com marchează explicit piesele McDonald's,
@@ -168,8 +185,9 @@ export const ZILE = [
 ] as const;
 
 export const NU_E_PENTRU = [
+  'Dacă nu conduci încă nimic — nici firmă, nici proiect propriu, nici o echipă. Masterclass-ul pornește de la ceva ce ai deja.',
   'Dacă vrei bani fără să construiești nimic. Aici se muncește trei zile.',
-  'Dacă intenționezi să te uiți la înregistrări „când am timp". Atelierul e live dintr-un motiv.',
+  'Dacă intenționezi să te uiți la înregistrări „când am timp". Masterclass-ul e live dintr-un motiv.',
   'Dacă aștepți să îți garantez un venit. Nu garantez, și nu ar trebui să crezi pe nimeni care o face.',
 ] as const;
 
@@ -192,7 +210,15 @@ export const INTREBARI = [
   },
   {
     q: 'Cu ce tool-uri lucrăm?',
-    a: 'Cu cele care sunt cele mai bune în ziua atelierului, și ți le arăt pe ecranul meu. Nu construim lecția în jurul unui tool, pentru că tool-ul se schimbă în trei luni. Metoda nu.',
+    a: 'Cu cele care sunt cele mai bune în ziua masterclass-ului, și ți le arăt pe ecranul meu. Nu construim lecția în jurul unui tool, pentru că tool-ul se schimbă în trei luni. Metoda nu.',
+  },
+  {
+    q: 'Cât costă?',
+    a: 'Prețul îl primești la apel, odată cu datele exacte și cu direcția potrivită pentru tine — nu e o ofertă pe care o compari dintr-un tabel, iar la 10 locuri discuția contează mai mult decât cifra. Ce pot spune de pe acum: se plătește integral sau în două tranșe, primești factură, și nu ți se cere nimic până nu vorbim.',
+  },
+  {
+    q: 'De ce nu scrieți prețul pe pagină?',
+    a: 'Pentru că nu vând un loc oricui plătește. La apel vedem întâi dacă ai ce construi în trei zile; dacă nu ne potrivim, ți-o spun la telefon și nu ai pierdut decât douăzeci de minute. Prețul fără discuția asta nu îți spune nimic util.',
   },
   {
     q: 'Primesc factură?',
@@ -209,10 +235,25 @@ export const OPTIUNI_DIRECTIE = [
 ] as const;
 
 export const OPTIUNI_STADIU = [
-  { value: 'zero',    label: 'Nu am început nimic' },
-  { value: 'incercat', label: 'Am încercat singur, m-am blocat' },
-  { value: 'clienti', label: 'Am deja clienți, vreau să livrez cu AI' },
-  { value: 'firma',   label: 'Am firmă și echipă' },
+  { value: 'proiect',  label: 'Construiesc acum afacerea, încă fără venit constant' },
+  { value: 'firma',    label: 'Am firmă și clienți, dar AI-ul nu e în fluxul de lucru' },
+  { value: 'punctual', label: 'Folosesc AI punctual, fără sistem și fără rezultate măsurabile' },
+  { value: 'echipa',   label: 'Am echipă și vreau să o pun să lucreze cu AI' },
+] as const;
+
+/**
+ * Bugetul. Owner, 29.10.2026: „Vreau sa fie pretul in formular gen cat ar plati
+ * pentru asta" + „Si sa fie 3 optiuni".
+ *
+ * Întrebarea califică, nu stabilește prețul — iar pagina SPUNE asta sub câmp.
+ * Fără precizarea aia, „cât ai plăti" sugerează că plătești cât spui tu, și
+ * am minți: prețul e fix. Pragurile sunt alese ca prețul real să intre în
+ * prima treaptă, deci nimeni nu se autoelimină răspunzând cinstit.
+ */
+export const OPTIUNI_BUGET = [
+  { value: 'pana-1000',   label: 'Până în 1.000 €' },
+  { value: '1000-3000',   label: 'Între 1.000 și 3.000 €' },
+  { value: 'peste-3000',  label: 'Peste 3.000 €' },
 ] as const;
 
 /* ────────────────────────────────────────────────────────────────────────
@@ -253,7 +294,7 @@ export const PIATA: PiataDirectie[] = [
       { ce: 'Magazin online', pret: '4.000 – 10.000 €', detaliu: '20.000 – 50.000 lei' },
       { ce: 'Oră de development în România', pret: '30 – 50 €', detaliu: 'tarif profesionist curent' },
     ],
-    acopera: 'Un singur site de prezentare, vândut la mediana pieței, acoperă atelierul.',
+    acopera: 'Un singur site de prezentare, vândut la mediana pieței, acoperă masterclass-ul.',
     sursa: { text: 'webforge.org.ro — cât costă un site web', href: 'https://webforge.org.ro/blog/cat-costa-un-site-web' },
   },
   {
@@ -264,7 +305,7 @@ export const PIATA: PiataDirectie[] = [
       { ce: 'Aplicație cu roluri, integrări și plăți', pret: '10.000 – 30.000 €', detaliu: 'livrată în 2 – 5 luni' },
       { ce: 'Aplicație enterprise', pret: 'peste 30.000 €', detaliu: 'microservicii, conformitate, SLA' },
     ],
-    acopera: 'Cel mai ieftin MVP din piață costă de trei ori cât atelierul. Aici nu cumperi unul — înveți să îl construiești.',
+    acopera: 'Cel mai ieftin MVP din piață costă de trei ori cât masterclass-ul. Aici nu cumperi unul — înveți să îl construiești.',
     sursa: { text: 'webforge.org.ro — cât costă o aplicație web', href: 'https://webforge.org.ro/blog/cat-costa-o-aplicatie-web' },
   },
   {
@@ -370,7 +411,7 @@ export const RECENZII: Recenzie[] = [];
 export const FIRMA: { denumire: string; cui: string; sediu: string } | null = null;
 
 export const INCREDERE = [
-  { titlu: 'Nu plătești până nu vorbim', text: 'Aplici, te sun, și abia după ce îți confirm locul se discută plata.' },
+  { titlu: 'Nu plătești până nu vorbim', text: 'Îți lași datele, te sună echipa, și abia după ce îți confirmăm locul se discută plata.' },
   { titlu: 'Returnare integrală', text: 'Dacă la finalul zilei 3 nu ai construit și publicat lucrul tău, primești toți banii înapoi.' },
   { titlu: 'Factură fiscală', text: 'Pe firmă sau pe persoană fizică. Plata integral sau în două tranșe.' },
   { titlu: 'Răspund eu, nu un chatbot', text: 'Pe Instagram și pe Telegram, la aceleași conturi de pe care postez.' },

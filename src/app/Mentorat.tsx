@@ -35,14 +35,14 @@ function BaraFixa() {
         <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
           <div className="min-w-0">
             <p className="text-white text-sm font-bold tracking-tight truncate">
-              <span className="text-neon">{OFERTA.pret} €</span> · {OFERTA.durata}
+              <span className="text-neon">{OFERTA.tip}</span> · {OFERTA.durata}
             </p>
             <p className="text-neutral-500 text-[11px] truncate">
               {locuriLibere} din {OFERTA.locuriTotal} locuri libere
             </p>
           </div>
           <Buton href="#aplica" className="shrink-0 px-5 py-3">
-            Aplică <ArrowRight size={15} />
+            Vreau detalii <ArrowRight size={15} />
           </Buton>
         </div>
       </div>
@@ -86,7 +86,7 @@ export default function Mentorat() {
             <ArrowLeft size={16} className="text-neutral-600 group-hover:text-neon transition-colors" />
             <h1 className="text-2xl font-bold text-white tracking-wide">VANDY</h1>
           </a>
-          <Eticheta ton="neon">{OFERTA.numeProgram}</Eticheta>
+          <Eticheta ton="neon">{OFERTA.tip} · {OFERTA.numeProgram}</Eticheta>
         </header>
 
         {/* ——— HERO ——— */}
@@ -105,6 +105,18 @@ export default function Mentorat() {
                 </div>
               </div>
 
+              <div className="flex flex-wrap items-center gap-2.5 mb-6">
+                <span className="px-3.5 py-1.5 rounded-full bg-neon text-black text-[10px] font-bold tracking-[0.18em] uppercase">
+                  {OFERTA.tip}
+                </span>
+                <span className="px-3.5 py-1.5 rounded-full border border-neutral-700 text-neutral-300 text-[10px] font-bold tracking-[0.18em] uppercase">
+                  {OFERTA.durata}
+                </span>
+                <span className="px-3.5 py-1.5 rounded-full border border-neutral-700 text-neutral-300 text-[10px] font-bold tracking-[0.18em] uppercase">
+                  {locuriLibere} locuri
+                </span>
+              </div>
+
               <h2 className="text-3xl md:text-[2.6rem] font-bold leading-[1.15] text-white tracking-tight mb-6">
                 Nu te învăț să folosești AI.<br />
                 <span className="text-neutral-500">
@@ -113,20 +125,23 @@ export default function Mentorat() {
                 </span>
               </h2>
 
+              <p className="text-neutral-200 text-base md:text-lg font-semibold leading-snug max-w-xl mb-6 pb-6 border-b border-neutral-800/70">
+                {OFERTA.pentruCine}
+              </p>
+
               <p className="text-neutral-400 text-base leading-relaxed max-w-xl mb-8">
-                Trei zile live, zece oameni. Nu pleci cu notițe și cu o listă de tool-uri. Pleci cu
-                lucrul tău construit și publicat, cu prețul scris pe el și cu primii zece clienți
-                identificați pe nume.
+                Trei zile live, zece antreprenori. Nu pleci cu notițe și cu o listă de tool-uri.
+                Pleci cu lucrul tău construit și publicat, cu prețul scris pe el și cu primii zece
+                clienți identificați pe nume.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 mb-8">
-                <Buton href="#aplica">Aplică pentru unul din {locuriLibere} locuri <ArrowRight size={16} /></Buton>
+                <Buton href="#aplica">Lasă-ți datele pentru detalii <ArrowRight size={16} /></Buton>
                 <Buton href="#zile" variant="contur">Vezi cele 3 zile</Buton>
               </div>
 
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-neutral-500 font-medium">
-                <span className="text-neon font-bold lumina-text">{OFERTA.pret} €</span>
-                <span>sau {OFERTA.rate.numar} × {OFERTA.rate.suma} €</span>
+                <span className="text-white font-bold">{locuriLibere} locuri din {OFERTA.locuriTotal}</span>
                 <span>{OFERTA.durata}</span>
                 <span className="text-neon/80 font-semibold">comunitate pe viață</span>
                 <span>{OFERTA.dateText}</span>
@@ -181,14 +196,14 @@ export default function Mentorat() {
         {/* ——— PROBLEMA ——— */}
         <Secventa className="pt-10">
           <TitluSecvenca
-            eticheta="De ce încă n-ai făcut nimic cu AI"
-            titlu={<>Problema nu e că nu știi destule. E că nu ai construit nimic.</>}
+            eticheta="De ce AI-ul nu ți-a schimbat încă cifrele"
+            titlu={<>Problema nu e că nu știi destule. E că nimic din ce ai testat n-a intrat în firmă.</>}
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {[
-              { t: 'Ai încercat', d: 'Ai deschis ChatGPT, ai cerut ceva, ai primit ceva aproape bun. Și ai închis tab-ul.' },
-              { t: 'Ai învățat', d: 'Două sute de clipuri cu „cele mai bune 10 tool-uri AI". Patruzeci de postări salvate pe care nu le-ai mai deschis.' },
-              { t: 'Și tot n-ai nimic', d: 'Niciun lucru pe care să îl pui în fața unui client și să spui: ăsta e, costă atât.' },
+              { t: 'Ai testat', d: 'Ai deschis ChatGPT, ai cerut ceva, ai primit ceva aproape bun. A rămas un tab deschis, nu un proces.' },
+              { t: 'Ai delegat', d: 'Ai pus pe cineva din echipă „să se uite peste AI". S-a întors cu entuziasm și cu niciun flux de lucru schimbat.' },
+              { t: 'Și cifrele sunt aceleași', d: 'Aceleași costuri, aceleași termene, aceiași oameni pe aceleași task-uri. Nimic de pus pe masă la final de trimestru.' },
             ].map((x) => (
               <Caseta key={x.t} className="p-6">
                 <p className="text-white text-sm font-bold mb-2">{x.t}</p>
@@ -198,9 +213,10 @@ export default function Mentorat() {
           </div>
           <Caseta className="p-6 md:p-8 mt-3">
             <p className="text-neutral-300 text-base leading-relaxed max-w-3xl">
-              Nu e vina ta. Aproape tot ce se vinde azi te învață <span className="text-white font-semibold">tool-uri</span>,
+              Nu e o problemă de inteligență, e una de format. Aproape tot ce se vinde azi te
+              învață <span className="text-white font-semibold">tool-uri</span>,
               iar tool-ul se schimbă în trei luni. Ce nu se schimbă e lucrul pe care îl livrezi și
-              faptul că cineva scoate bani pentru el. Atelierul ăsta e construit invers față de un
+              faptul că cineva scoate bani pentru el. Masterclass-ul ăsta e construit invers față de un
               curs: pornim de la lucrul care se vinde și mergem înapoi spre ce trebuie să știi ca să-l faci.
             </p>
           </Caseta>
@@ -344,8 +360,8 @@ export default function Mentorat() {
               Din ziua 3 ai deja ce să vinzi: lucrul construit, oferta scrisă, prețul și primii zece
               clienți pe nume. La prețurile de mai sus,{' '}
               <span className="text-neon font-semibold">un singur proiect livrat pe oricare din cele
-              trei direcții acoperă cei {OFERTA.pret} €</span> — un site de prezentare, o treime dintr-un
-              MVP, sau trei luni cu un client pe pachetul de clipuri.
+              trei direcții acoperă investiția în masterclass</span> — fie că e un site de prezentare,
+              o parte dintr-un MVP sau câteva luni cu un client pe pachetul de clipuri.
             </p>
             <p className="text-neutral-500 text-xs leading-relaxed max-w-3xl">
               {PIATA_AVERTISMENT}
@@ -411,12 +427,12 @@ export default function Mentorat() {
             </div>
 
             <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight leading-snug mb-5 max-w-2xl">
-              Atelierul se termină în trei zile. Comunitatea {COMUNITATE.nume} nu se termină niciodată.
+              Masterclass-ul se termină în trei zile. Comunitatea {COMUNITATE.nume} nu se termină niciodată.
             </h2>
 
             <p className="text-neutral-400 text-sm leading-relaxed max-w-3xl mb-9">
               Problemele nu apar în ziua 2, apar în săptămâna 4. De asta accesul la comunitate nu e
-              bonus și nu e abonament: îl cumperi o dată, odată cu atelierul, și rămâne al tău. Fără
+              bonus și nu e abonament: îl cumperi o dată, odată cu masterclass-ul, și rămâne al tău. Fără
               reînnoire, fără taxă lunară, fără să-ți mai cer vreodată bani pentru el. Acolo găsești
               tot ce îți trebuie ca să construiești și să vinzi în era AI.
             </p>
@@ -468,56 +484,56 @@ export default function Mentorat() {
           </Secventa>
         )}
 
-        {/* ——— PREȚ ——— */}
+        {/* ——— INVESTIȚIA ———
+             Prețul NU apare aici. Decizie owner, 29.10.2026: se spune la apel.
+             Secțiunea răspunde în schimb la întrebarea pe care o ridică absența
+             lui, pentru că a o ocoli ar arăta mai rău decât o cifră. */}
         <Secventa className="pt-10">
-          <TitluSecvenca eticheta="Investiția" titlu={<>{OFERTA.pret} €, și de ce atât.</>} />
+          <TitluSecvenca
+            eticheta="Investiția"
+            titlu={<>Prețul îl afli la apel. Și e intenționat.</>}
+          />
           <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
             <Caseta className="md:col-span-2 p-6 md:p-8">
-              <p className="text-5xl md:text-6xl font-bold text-neon tracking-tight leading-none mb-2 lumina-text">
-                {OFERTA.pret} €
+              <Eticheta>Locuri în prima serie</Eticheta>
+              <p className="text-5xl md:text-6xl font-bold text-neon tracking-tight leading-none mt-3 mb-2 lumina-text">
+                {locuriLibere}<span className="text-neutral-700 text-2xl">/{OFERTA.locuriTotal}</span>
               </p>
-              <p className="text-neutral-500 text-sm mb-6">plată integrală</p>
+              <p className="text-neutral-500 text-sm mb-6">{OFERTA.dateText}</p>
+              <Locuri />
 
-              <div className="pt-5 border-t border-neutral-800/60">
-                <p className="text-white text-sm font-semibold">
-                  sau {OFERTA.rate.numar} × {OFERTA.rate.suma} €
-                </p>
+              <div className="mt-6 pt-5 border-t border-neutral-800/60">
+                <p className="text-white text-sm font-semibold">Integral sau în două tranșe</p>
                 <p className="text-neutral-500 text-xs mt-1">
-                  prima tranșă înainte de ziua 1, a doua la 30 de zile
-                </p>
-              </div>
-
-              <div className="mt-6 pt-5 border-t border-neutral-800/60 space-y-2">
-                <Locuri />
-                <p className="text-neutral-500 text-xs">
-                  {locuriLibere} din {OFERTA.locuriTotal} locuri libere
+                  Factură pe firmă sau pe persoană fizică. Nimic nu se plătește înainte de apel.
                 </p>
               </div>
             </Caseta>
 
             <Caseta className="md:col-span-3 p-6 md:p-8 space-y-6">
               <div>
-                <Eticheta>De ce {OFERTA.pret} €</Eticheta>
+                <Eticheta>De ce nu scrie prețul aici</Eticheta>
                 <p className="text-neutral-300 text-sm leading-relaxed mt-3">
-                  Pentru că nu îți vând acces la niște înregistrări — îți vând trei zile din timpul
-                  meu, împărțite la zece oameni, plus acces pe viață la comunitatea{' '}
-                  {COMUNITATE.nume} de pe {COMUNITATE.platforma}, pe care o plătești o singură dată,
-                  acum. Un singur
-                  proiect livrat corect pe oricare din cele trei direcții acoperă suma. Cât de repede
-                  ajungi acolo depinde de tine, și nu îți promit un termen.
+                  Pentru că nu vindem un loc oricui plătește. Sunt zece, și la apel ne uităm întâi
+                  dacă ai ce construi în trei zile și care dintre cele trei direcții e a ta. Dacă nu
+                  ne potrivim, ți-o spunem atunci și nu ai pierdut decât douăzeci de minute. O cifră
+                  fără discuția asta nu îți spune nimic util. Ce primești pentru ea e scris mai sus,
+                  rând cu rând: trei zile din timpul meu împărțite la zece oameni, lucrul tău
+                  construit și publicat, și acces pe viață la comunitatea {COMUNITATE.nume} de pe{' '}
+                  {COMUNITATE.platforma}, plătit o singură dată.
                 </p>
               </div>
               <div className="pt-6 border-t border-neutral-800/60">
                 <Eticheta ton="neon">Garanție pe livrare</Eticheta>
                 <p className="text-neutral-300 text-sm leading-relaxed mt-3">
                   Dacă la finalul zilei 3 nu ai construit și publicat lucrul tău, scrii un email și
-                  îți returnez integral cei {OFERTA.pret} €. Nu îți cer motive și nu te pun să
-                  dovedești nimic. Riscul e al meu, pentru că livrarea depinde de mine.
+                  îți returnez integral banii. Nu îți cer motive și nu te pun să dovedești nimic.
+                  Riscul e al meu, pentru că livrarea depinde de mine.
                 </p>
               </div>
               <div className="pt-6 border-t border-neutral-800/60">
                 <Buton href="#aplica" className="w-full sm:w-auto">
-                  Aplică pentru unul din {locuriLibere} locuri <ArrowRight size={16} />
+                  Lasă-ți datele pentru detalii <ArrowRight size={16} />
                 </Buton>
               </div>
             </Caseta>
@@ -541,7 +557,7 @@ export default function Mentorat() {
 
         {/* ——— NU E PENTRU TINE ——— */}
         <Secventa className="pt-10">
-          <TitluSecvenca eticheta="Cinstit" titlu={<>Când să nu aplici.</>} />
+          <TitluSecvenca eticheta="Cinstit" titlu={<>Când să nu ne scrii.</>} />
           <Caseta className="p-6 md:p-8 space-y-4">
             {NU_E_PENTRU.map((x) => (
               <div key={x} className="flex items-start gap-3">
@@ -564,16 +580,17 @@ export default function Mentorat() {
                   <div>
                     <Eticheta>Cum arată pasul 2</Eticheta>
                     <p className="text-neutral-300 text-sm leading-relaxed mt-3">
-                      Un apel de 20 de minute. Te întreb ce vrei să construiești, îți spun dacă se
-                      poate în trei zile, și stabilim direcția. Dacă nu ne potrivim, ți-o spun la
-                      telefon și nu pierzi nimic.
+                      Un apel de 20 de minute cu echipa. Te întrebăm ce vrei să construiești, îți
+                      spunem dacă se poate în trei zile, stabilim direcția și primești toate
+                      detaliile — datele exacte, prețul și condițiile. Dacă nu ne potrivim, ți-o
+                      spunem la telefon și nu pierzi nimic.
                     </p>
                   </div>
                   <div className="pt-6 border-t border-neutral-800/60">
                     <Eticheta>Ce nu se întâmplă la apel</Eticheta>
                     <p className="text-neutral-300 text-sm leading-relaxed mt-3">
                       Nu te ține nimeni o oră ca să te convingă. Nu există ofertă care „expiră în
-                      zece minute". Prețul e {OFERTA.pret} € și e scris mai sus.
+                      zece minute". Afli prețul și condițiile, închizi telefonul și te gândești.
                     </p>
                   </div>
                   <div className="pt-6 border-t border-neutral-800/60">
@@ -610,13 +627,13 @@ export default function Mentorat() {
         <Secventa className="pt-10">
           <Caseta className="p-8 md:p-12 text-center ring-1 ring-neon/20">
             <h2 className="text-2xl md:text-4xl font-bold text-white tracking-tight leading-tight max-w-2xl mx-auto mb-5">
-              În trei zile ai construit ceva, sau ai mai salvat niște postări.
+              În trei zile ai construit ceva, sau mai trece un trimestru la fel.
             </h2>
             <p className="text-neutral-400 text-sm leading-relaxed max-w-lg mx-auto mb-8">
               {locuriLibere} locuri libere din {OFERTA.locuriTotal}. {OFERTA.dateText}.
             </p>
             <Buton href="#aplica" className="mx-auto">
-              Aplică acum <ArrowRight size={16} />
+              Lasă-ți datele <ArrowRight size={16} />
             </Buton>
           </Caseta>
         </Secventa>

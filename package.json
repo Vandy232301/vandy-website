@@ -7,7 +7,8 @@
     "build": "vite build",
     "dev": "vite",
     "start": "node server.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:validare": "tsx ops/test-validare.mjs"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
