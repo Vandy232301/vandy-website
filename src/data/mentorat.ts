@@ -138,6 +138,22 @@ export const COMUNITATE = {
   nume: 'ATELIER AI',
   platforma: 'Discord',
   acces: 'LIFETIME',
+
+  /**
+   * Canalele, afișate ca panou pe pagină. Fiecare corespunde unui rând din
+   * `lucruri` de mai jos — nu promit nimic în plus față de ce scrie acolo.
+   * Dacă schimbi unul, schimbă și perechea lui.
+   */
+  canale: [
+    'noutati-ai',
+    'suport-dezvoltare',
+    'agentie',
+    'produs',
+    'creativ',
+    'sesiuni-live',
+    'sabloane-noi',
+  ],
+
   lucruri: [
     {
       titlu: 'Noutățile din lumea AI',
@@ -265,8 +281,16 @@ export const OPTIUNI_BUGET = [
    cifră inventată, iar „vei face X pe lună" ar fi afirmație comercială
    reglementată (Legea 363/2007).
 
-   Dacă schimbi cifrele, schimbă și sursa. Niciun număr fără sursă.
-   Verificate pe 28.10.2026.
+   ⚠️ Owner, 29.10.2026: „Scoate sursele" — linkurile nu se mai afișează pe
+   pagină. Câmpul `sursa` RĂMÂNE în fișier, ca proveniența fiecărei cifre să
+   existe în scris. Dacă te întreabă cineva (client, ANPC) de unde vin
+   numerele, răspunsul e aici. Nu șterge câmpul și nu pune cifre fără el.
+
+   ⚠️ Owner, 29.10.2026: „Toate preturile afisate sa fie in euro nu si in lei".
+   Prețurile din piața video erau publicate în lei; sunt convertite la cursul
+   BNR din 28.10.2026, 1 € = 5,3495 lei, rotunjit la 5 €. Valorile originale:
+   450 lei · 1.800 lei/lună (800 / 1.500) · 600 lei · 5.400 lei/lună.
+   Dacă actualizezi cifrele, actualizează și cursul de aici.
    ──────────────────────────────────────────────────────────────────────── */
 
 export interface RandPiata {
@@ -291,7 +315,7 @@ export const PIATA: PiataDirectie[] = [
     nume: 'AGENȚIA',
     randuri: [
       { ce: 'Site de prezentare', pret: '500 – 2.500 €', detaliu: 'mediana pieței: ~1.000 €' },
-      { ce: 'Magazin online', pret: '4.000 – 10.000 €', detaliu: '20.000 – 50.000 lei' },
+      { ce: 'Magazin online', pret: '4.000 – 10.000 €', detaliu: 'în funcție de produse și integrări' },
       { ce: 'Oră de development în România', pret: '30 – 50 €', detaliu: 'tarif profesionist curent' },
     ],
     acopera: 'Un singur site de prezentare livrat îți acoperă investiția în masterclass.',
@@ -312,11 +336,11 @@ export const PIATA: PiataDirectie[] = [
     id: 'creativ',
     nume: 'CREATIVUL',
     randuri: [
-      { ce: 'Reclame UGC făcute cu AI', pret: 'de la 450 lei', detaliu: 'pentru un set de 3' },
-      { ce: 'Pachet lunar de 12 clipuri', pret: '1.800 lei / lună', detaliu: '4 clipuri: 800 lei · 8 clipuri: 1.500 lei' },
-      { ce: 'Editare pe materialul clientului', pret: 'de la 600 lei', detaliu: 'pentru 10 clipuri' },
+      { ce: 'Reclame UGC făcute cu AI', pret: 'de la 85 €', detaliu: 'pentru un set de 3' },
+      { ce: 'Pachet lunar de 12 clipuri', pret: '335 € / lună', detaliu: '4 clipuri: 150 € · 8 clipuri: 280 €' },
+      { ce: 'Editare pe materialul clientului', pret: 'de la 110 €', detaliu: 'pentru 10 clipuri' },
     ],
-    acopera: 'Trei clienți pe pachetul lunar de 12 clipuri înseamnă 5.400 lei pe lună, la prețurile afișate azi în piață.',
+    acopera: 'Trei clienți pe pachetul lunar de 12 clipuri înseamnă peste 1.000 € pe lună, la prețurile afișate azi în piață.',
     sursa: { text: 'tezeumedia.ro — marketing video', href: 'https://tezeumedia.ro/marketing-video' },
   },
 ];

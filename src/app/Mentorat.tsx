@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Minus, Quote, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Hash, Minus, Quote, ShieldCheck, User } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { Caseta, Secventa, Eticheta, TitluSecvenca, Buton } from './components/mentorat/Bucati';
 import { CardProdus } from './components/mentorat/CardProdus';
@@ -164,7 +164,7 @@ export default function Mentorat() {
                   {OFERTA.durata}
                 </span>
                 <span className="px-4 py-1.5 rounded-full border border-neutral-700 text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase tabular-nums">
-                  {locuriLibere} locuri
+                  Doar {locuriLibere} locuri
                 </span>
               </div>
 
@@ -385,16 +385,10 @@ export default function Mentorat() {
                     </div>
                   ))}
                 </div>
-                <div className="mt-6 pt-5 border-t border-neutral-800/60 space-y-3">
+                {/* Linkurile de sursă au fost scoase la cererea owner-ului, 29.10.2026.
+                    Proveniența fiecărei cifre rămâne scrisă în `PIATA` din date. */}
+                <div className="mt-6 pt-5 border-t border-neutral-800/60">
                   <p className="text-neutral-300 text-sm leading-relaxed">{d.acopera}</p>
-                  <a
-                    href={d.sursa.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-neutral-500 hover:text-mov transition-colors text-[11px]"
-                  >
-                    sursă: {d.sursa.text} <ArrowUpRight size={11} />
-                  </a>
                 </div>
               </Caseta>
             ))}
@@ -463,36 +457,113 @@ export default function Mentorat() {
           </p>
         </Secventa>
 
-        {/* ——— COMUNITATEA ——— */}
+        {/* ——— COMUNITATEA ———
+             Blocul cu cea mai mare greutate vizuală de pe pagină: e singurul
+             lucru din ofertă care nu se termină în trei zile, deci merită să
+             se vadă ca atare. */}
         <Secventa className="pt-10">
-          <Caseta className="p-6 md:p-10">
-            <div className="flex flex-wrap items-center gap-3 mb-4">
-              <Eticheta ton="neon">Acces {COMUNITATE.acces}</Eticheta>
-              <span className="px-3 py-1 rounded-full bg-neon text-black text-[10px] font-bold tracking-wider uppercase">
-                pe {COMUNITATE.platforma}
-              </span>
-            </div>
+          <Caseta className="overflow-hidden ring-2 ring-neon/25 lumina-bloc">
+            <div className="bg-gradient-to-br from-neon/[0.07] via-transparent to-mov/[0.07]">
 
-            <h2 className="text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-[1.15] mb-5 masura-titlu">
-              Masterclass-ul se termină în trei zile. Comunitatea {COMUNITATE.nume}, niciodată.
-            </h2>
+              <div className="flex flex-wrap items-center gap-3 px-6 pt-6 md:px-10 md:pt-8">
+                <span className="px-4 py-2 rounded-full bg-neon text-black text-xs font-bold tracking-[0.18em] uppercase lumina-bloc">
+                  Acces {COMUNITATE.acces}
+                </span>
+                <span className="px-4 py-2 rounded-full border border-neutral-700 text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase">
+                  pe {COMUNITATE.platforma}
+                </span>
+                <span className="px-4 py-2 rounded-full border border-neutral-700 text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase">
+                  plătit o dată
+                </span>
+              </div>
 
-            <p className="text-neutral-400 text-sm leading-relaxed masura-text mb-9">
-              Problemele nu apar în ziua 2, apar în săptămâna 4. De asta accesul nu e bonus și nu e
-              abonament: îl cumperi o dată, cu masterclass-ul, și rămâne al tău. Fără reînnoire,
-              fără taxă lunară.
-            </p>
+              <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-8 lg:gap-12 p-6 md:p-10">
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-7">
-              {COMUNITATE.lucruri.map((x) => (
-                <div key={x.titlu} className="flex items-start gap-3">
-                  <Check size={15} className="text-neon mt-0.5 shrink-0" strokeWidth={2.5} />
-                  <div>
-                    <p className="text-white text-base font-bold mb-1.5">{x.titlu}</p>
-                    <p className="text-neutral-400 text-sm leading-relaxed">{x.text}</p>
+                <div>
+                  <h2 className="text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-[1.15] mb-5 masura-titlu">
+                    Masterclass-ul se termină în trei zile.{' '}
+                    <span className="text-neon lumina-text">Comunitatea, niciodată.</span>
+                  </h2>
+
+                  <p className="text-neutral-300 text-base leading-relaxed masura-text mb-8">
+                    Problemele nu apar în ziua 2, apar în săptămâna 4. De asta accesul nu e bonus și
+                    nu e abonament: îl cumperi o dată, cu masterclass-ul, și rămâne al tău.
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-7 gap-y-6">
+                    {COMUNITATE.lucruri.map((x) => (
+                      <div key={x.titlu} className="flex items-start gap-3">
+                        <Check size={15} className="text-neon mt-0.5 shrink-0" strokeWidth={2.5} />
+                        <div>
+                          <p className="text-white text-[15px] font-bold mb-1">{x.titlu}</p>
+                          <p className="text-neutral-400 text-sm leading-relaxed">{x.text}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              ))}
+
+                {/* Panoul comunității.
+                    ⚠️ Locurile din dreapta sunt goale DINADINS — sunt locuri, nu
+                    oameni. Chipuri de stoc aici ar fi exact aceeași minciună ca o
+                    recenzie inventată. Când există poze reale cu membri, intră aici. */}
+                <div className="rounded-2xl border border-neutral-800 bg-black/50 overflow-hidden self-start">
+                  <div className="flex items-center gap-2 px-4 py-2.5 border-b border-neutral-800 bg-neutral-900/70">
+                    <span className="flex gap-1.5 shrink-0">
+                      <span className="w-2 h-2 rounded-full bg-neutral-700" />
+                      <span className="w-2 h-2 rounded-full bg-neutral-700" />
+                      <span className="w-2 h-2 rounded-full bg-neutral-700" />
+                    </span>
+                    <span className="flex-1 text-center text-[10px] text-neutral-500 font-medium truncate">
+                      {COMUNITATE.platforma.toLowerCase()} · {COMUNITATE.nume}
+                    </span>
+                    <span className="w-[26px] shrink-0" />
+                  </div>
+
+                  <div className="p-3">
+                    {COMUNITATE.canale.map((canal, i) => (
+                      <div
+                        key={canal}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
+                          i === 0 ? 'bg-mov/10' : ''
+                        }`}
+                      >
+                        <Hash size={13} className={i === 0 ? 'text-mov' : 'text-neutral-600'} />
+                        <span className={`text-[13px] ${i === 0 ? 'text-white font-semibold' : 'text-neutral-400'}`}>
+                          {canal}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="px-4 py-4 border-t border-neutral-800 space-y-3">
+                    <Eticheta ton="mov">Seria 1</Eticheta>
+                    <div className="flex items-center gap-3">
+                      <div className="flex -space-x-2.5">
+                        <span className="w-9 h-9 rounded-full overflow-hidden border-2 border-neutral-900 ring-1 ring-neon/40 shrink-0">
+                          <ImageWithFallback src={AVATAR_IMG} alt="VANDY" className="w-full h-full object-cover" />
+                        </span>
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <span
+                            key={i}
+                            className="w-9 h-9 rounded-full bg-neutral-900 border-2 border-neutral-900 ring-1 ring-neutral-800 flex items-center justify-center shrink-0"
+                          >
+                            <User size={13} className="text-neutral-700" />
+                          </span>
+                        ))}
+                      </div>
+                      <p className="text-neutral-500 text-xs leading-snug">
+                        tu și încă{' '}
+                        <span className="text-white font-semibold tabular-nums">
+                          {OFERTA.locuriTotal - 1}
+                        </span>
+                        , plus eu
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </Caseta>
         </Secventa>
