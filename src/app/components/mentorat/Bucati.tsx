@@ -26,8 +26,16 @@ export function Secventa({ children, className = '' }: { children: ReactNode; cl
 }
 
 /** Eticheta mică, majuscule rărite — elementul care leagă pagina de restul site-ului. */
-export function Eticheta({ children, ton = 'neutral' }: { children: ReactNode; ton?: 'neutral' | 'alb' }) {
-  const culoare = ton === 'alb' ? 'text-white' : 'text-neutral-500';
+export function Eticheta({
+  children,
+  ton = 'neutral',
+}: {
+  children: ReactNode;
+  ton?: 'neutral' | 'alb' | 'neon';
+}) {
+  // Verdele e rezervat etichetelor care anunță bani, locuri sau garanție.
+  const culoare =
+    ton === 'neon' ? 'text-neon' : ton === 'alb' ? 'text-white' : 'text-neutral-500';
   return (
     <span className={`block text-[10px] md:text-xs uppercase tracking-[0.2em] font-semibold ${culoare}`}>
       {children}
@@ -46,26 +54,32 @@ export function TitluSecvenca({ eticheta, titlu }: { eticheta: string; titlu: Re
   );
 }
 
-/** Butonul alb, ca în emailurile brandului. */
+/**
+ * Butonul paginii. Varianta implicită e verde fosforescent cu text negru:
+ * pe negru e singurul element care se aprinde, deci ochiul merge la el.
+ * Textul rămâne negru — alb pe verde n-ar avea contrast.
+ */
 export function Buton({
   children,
   href,
   onClick,
-  variant = 'alb',
+  variant = 'neon',
   className = '',
 }: {
   children: ReactNode;
   href?: string;
   onClick?: () => void;
-  variant?: 'alb' | 'contur';
+  variant?: 'neon' | 'alb' | 'contur';
   className?: string;
 }) {
   const baza =
-    'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold tracking-tight transition-colors text-center';
+    'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold tracking-tight transition-all text-center';
   const stil =
-    variant === 'alb'
-      ? 'bg-white text-black hover:bg-neutral-200'
-      : 'border border-neutral-700 text-white hover:bg-neutral-800/60';
+    variant === 'neon'
+      ? 'bg-neon text-black hover:brightness-110 lumina-bloc'
+      : variant === 'alb'
+        ? 'bg-white text-black hover:bg-neutral-200'
+        : 'border border-neon/40 text-neon hover:bg-neon/10 hover:border-neon/70';
   const clase = `${baza} ${stil} ${className}`;
 
   if (href) {

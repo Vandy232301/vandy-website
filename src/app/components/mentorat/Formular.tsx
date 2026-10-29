@@ -30,7 +30,7 @@ function valideaza(f: typeof GOL): string | null {
 
 const eticheteCamp = 'block text-xs font-semibold text-neutral-400 mb-2';
 const camp =
-  'w-full bg-black/40 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:outline-none focus:border-neutral-600 transition-colors';
+  'w-full bg-black/40 border border-neutral-800 rounded-xl px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:outline-none focus:border-neon/60 focus:ring-1 focus:ring-neon/25 transition-colors';
 
 export function Formular() {
   const [stare, setStare] = useState<Stare>('formular');
@@ -76,7 +76,11 @@ export function Formular() {
   if (stare === 'trimis') {
     return (
       <div className="flex flex-col items-center text-center gap-4 py-10 px-6">
-        <CheckCircle2 size={40} className="text-white" strokeWidth={1.5} />
+        <CheckCircle2
+          size={40}
+          className="text-neon drop-shadow-[0_0_18px_rgba(57,255,20,0.55)]"
+          strokeWidth={1.5}
+        />
         <h3 className="text-xl font-bold text-white tracking-tight">Am primit aplicarea.</h3>
         <p className="text-neutral-400 text-sm leading-relaxed max-w-md">
           Te sun în maximum 48 de ore de pe un număr din România. Apelul durează 20 de minute și la
@@ -164,7 +168,7 @@ export function Formular() {
             type="checkbox"
             checked={acord}
             onChange={(e) => { setAcord(e.target.checked); if (eroare) setEroare(''); }}
-            className="mt-0.5 w-4 h-4 shrink-0 accent-white"
+            className="mt-0.5 w-4 h-4 shrink-0 accent-neon"
           />
           <span className="text-xs text-neutral-500 leading-relaxed group-hover:text-neutral-400 transition-colors">
             Sunt de acord să fiu contactat telefonic și pe email în legătură cu această aplicare.
@@ -182,7 +186,7 @@ export function Formular() {
           type="button"
           onClick={trimite}
           disabled={seTrimite}
-          className="w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 bg-white text-black text-sm font-bold tracking-tight hover:bg-neutral-200 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+          className="w-full inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 bg-neon text-black text-sm font-bold tracking-tight lumina-bloc hover:brightness-110 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {seTrimite ? (
             <><Loader2 size={16} className="animate-spin" /> Se trimite...</>

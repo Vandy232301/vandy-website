@@ -34,3 +34,22 @@
     transform: scale(1.03);
   }
 }
+
+/* „Fosforescent" nu e doar culoarea, e lumina pe care o lasă în jur.
+   Trei trepte, ca accentul să nu fie doar verde: aură pe text, halou pe
+   suprafețele pline, și o linie care chiar pare aprinsă. */
+.lumina-text {
+  text-shadow: 0 0 22px rgba(var(--neon-rgb), 0.45);
+}
+
+.lumina-bloc {
+  box-shadow: 0 0 30px -8px rgba(var(--neon-rgb), 0.5);
+}
+
+.lumina-bloc:hover {
+  box-shadow: 0 0 38px -4px rgba(var(--neon-rgb), 0.65);
+}
+
+.lumina-linie {
+  box-shadow: 0 0 9px rgba(var(--neon-rgb), 0.7);
+}

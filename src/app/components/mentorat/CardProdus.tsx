@@ -64,7 +64,7 @@ export function CardProdus({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.5 }}
-      className="group relative block overflow-hidden rounded-2xl bg-neutral-900/40 border border-neutral-800 hover:border-neutral-600 hover:bg-neutral-900/70 transition-colors duration-300"
+      className="group relative block overflow-hidden rounded-2xl bg-neutral-900/40 border border-neutral-800 hover:border-neon/50 hover:bg-neutral-900/70 transition-colors duration-300"
     >
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1.08fr]">
 
@@ -75,7 +75,7 @@ export function CardProdus({
           }`}
         >
           <div className="flex items-center gap-3 mb-6">
-            <span className="text-neutral-700 text-xs font-bold tabular-nums">
+            <span className="text-neutral-700 text-xs font-bold tabular-nums group-hover:text-neon transition-colors duration-300">
               {String(index + 1).padStart(2, '0')}
             </span>
             <span className="px-3 py-1 rounded-full bg-neutral-900/70 border border-neutral-800 text-neutral-300 text-[10px] font-bold tracking-wider uppercase">
@@ -106,7 +106,7 @@ export function CardProdus({
           <p className="text-neutral-400 text-sm leading-relaxed max-w-md mb-7">{description}</p>
 
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-neutral-900 border border-neutral-800 rounded-full text-xs font-bold text-white group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300">
+            <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-neutral-900 border border-neutral-800 rounded-full text-xs font-bold text-white group-hover:bg-neon group-hover:text-black group-hover:border-neon transition-all duration-300">
               {discoverLabel}
               <ArrowUpRight size={14} />
             </span>
