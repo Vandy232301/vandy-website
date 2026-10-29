@@ -45,6 +45,19 @@ export const OFERTA = {
   dateText: 'Pornește în noiembrie 2026',
   dateNota: 'Datele exacte se stabilesc la apel, cu cei 10 înscriși.',
 
+  /**
+   * Rândul al doilea din bara flotantă.
+   *
+   * ⚠️ Owner a cerut pe 29.10.2026 „Locurile se ocupa rapid". L-am lăsat
+   * deocamdată pe varianta de mai jos, care spune același lucru și e
+   * adevărată cu 0 locuri vândute. „Se ocupă rapid" e o afirmație despre
+   * viitor pe care nimic nu o susține încă, iar urgența falsă e exact ce
+   * contrazice „nu există ofertă care expiră în zece minute" de pe aceeași
+   * pagină — și e pe lista neagră din Directiva 2005/29/CE (Legea 363/2007).
+   * Când chiar se vând locuri, schimbă rândul ăsta și devine adevărat.
+   */
+  notaLocuri: 'Doar 10 locuri. Când se ocupă, se închide.',
+
   durata: '3 zile live',
 } as const;
 
@@ -90,13 +103,49 @@ export const DIRECTII = [
   },
 ] as const;
 
-/** Ce pleci cu — baza garanției. Fiecare rând e verificabil în ziua 3. */
+/**
+ * Ce pleci cu — baza garanției. Fiecare rând e verificabil în ziua 3.
+ * `icon` e o cheie din harta ICOANE din Mentorat.tsx. Iconițe diferite, nu
+ * aceeași bifă de cinci ori: lista se citește mai repede dacă fiecare rând
+ * are un semn propriu.
+ */
 export const PLECI_CU = [
-  { titlu: 'Lucrul tău, construit și publicat', text: 'Nu un demo, nu un plan. Ceva care funcționează și are adresă.' },
-  { titlu: 'Oferta scrisă și prețul',            text: 'Ce vinzi, cu ce cuvinte, și cât ceri. Pe hârtie, nu în cap.' },
-  { titlu: 'Primii 10 clienți, pe nume',         text: 'Nu „publicul țintă". Zece oameni sau firme, cu nume și contact.' },
-  { titlu: 'Tot ce folosesc eu',                 text: 'Prompturile, șabloanele și fluxurile mele de lucru, așa cum sunt.' },
-  { titlu: 'Comunitatea ATELIER AI, pe viață',    text: 'Acces lifetime pe Discord. Fără abonament, fără reînnoire, plătit o singură dată.' },
+  { icon: 'rachetă',   titlu: 'Lucrul tău, construit și publicat', text: 'Nu un demo, nu un plan. Ceva care funcționează și are adresă.' },
+  { icon: 'etichetă',  titlu: 'Oferta scrisă și prețul',           text: 'Ce vinzi, cu ce cuvinte, și cât ceri. Pe hârtie, nu în cap.' },
+  { icon: 'oameni',    titlu: 'Primii 10 clienți, pe nume',        text: 'Nu „publicul țintă". Zece oameni sau firme, cu nume și contact.' },
+  { icon: 'unelte',    titlu: 'Tot ce folosesc eu',                text: 'Prompturile, șabloanele și fluxurile mele de lucru, așa cum sunt.' },
+  { icon: 'infinit',   titlu: 'Comunitatea ATELIER AI, pe viață',  text: 'Acces lifetime pe Discord. Fără abonament, fără reînnoire, plătit o singură dată.' },
+] as const;
+
+/* ────────────────────────────────────────────────────────────────────────
+   PENTRU CINE E
+
+   Perechea pozitivă a lui NU_E_PENTRU. Patru profiluri, nu zece: trei
+   corespund celor trei direcții, al patrulea prinde pe oricine conduce
+   ceva. Dacă adaugi al cincilea, întreabă-te pe cine excluzi — o listă
+   care include pe toată lumea nu mai spune nimic.
+   ──────────────────────────────────────────────────────────────────────── */
+export const PENTRU_CINE = [
+  {
+    icon: 'servietă',
+    titlu: 'Ai firmă de servicii și livrezi tot manual',
+    text: 'Site-uri, campanii, conținut, oferte. Pleci cu fluxul care le face de câteva ori mai repede, cu aceiași oameni.',
+  },
+  {
+    icon: 'cutie',
+    titlu: 'Ai un produs în cap și n-ai apucat să-l faci',
+    text: 'La finalul zilei 3 e publicat, la domeniul lui, cu plata funcțională în el. Nu un prototip.',
+  },
+  {
+    icon: 'clachetă',
+    titlu: 'Vinzi creativ și vrei să vinzi la alt nivel',
+    text: 'Video cu AI la calitate de difuzat, pentru branduri care au bugete și foarte puțini furnizori.',
+  },
+  {
+    icon: 'echipă',
+    titlu: 'Conduci o echipă rămasă în urmă cu AI',
+    text: 'Pleci cu prompturile și fluxurile pe care le dai mai departe luni dimineață, nu cu o listă de tool-uri.',
+  },
 ] as const;
 
 /* ────────────────────────────────────────────────────────────────────────
@@ -156,26 +205,32 @@ export const COMUNITATE = {
 
   lucruri: [
     {
+      icon: 'ziar',
       titlu: 'Noutățile din lumea AI',
       text: 'Ce a apărut și ce înseamnă pentru ce construiești tu. Filtrat, nu copiat de pe Twitter.',
     },
     {
+      icon: 'colac',
       titlu: 'Suport la dezvoltare',
       text: 'Te blochezi, întrebi, primești răspuns. De la mine și de la cine a trecut prin asta.',
     },
     {
+      icon: 'diez',
       titlu: 'Canalul direcției tale',
       text: 'Agenție, produs sau creativ. Separat, ca să nu cauți prin mesaje care nu te privesc.',
     },
     {
+      icon: 'video',
       titlu: 'Sesiune la două săptămâni',
       text: 'Live, pe ecran, cu problemele reale ale seriei. Nu webinar, nu prezentare.',
     },
     {
+      icon: 'oameni',
       titlu: 'Oamenii din seria ta',
       text: 'Nouă oameni care au început în aceeași zi cu tine. Asta cântărește cel mai mult.',
     },
     {
+      icon: 'straturi',
       titlu: 'Tot ce apare după',
       text: 'Șabloanele și prompturile noi intră acolo pe măsură ce le fac. Fără să plătești iar.',
     },
@@ -435,11 +490,11 @@ export const RECENZII: Recenzie[] = [];
 export const FIRMA: { denumire: string; cui: string; sediu: string } | null = null;
 
 export const INCREDERE = [
-  { titlu: 'Nu plătești până nu vorbim', text: 'Îți lași datele, te sună echipa, și abia după ce îți confirmăm locul se discută plata.' },
-  { titlu: 'Returnare integrală', text: 'Dacă la finalul zilei 3 nu ai construit și publicat lucrul tău, primești toți banii înapoi.' },
-  { titlu: 'Factură fiscală', text: 'Pe firmă sau pe persoană fizică. Plata integral sau în două tranșe.' },
-  { titlu: 'Răspund eu, nu un chatbot', text: 'Pe Instagram și pe Telegram, la aceleași conturi de pe care postez.' },
-  { titlu: '10 aplicații cu adresă publică', text: 'Nu capturi de ecran: adrese pe care le poți deschide acum și verifica.' },
-  { titlu: 'Branduri mari, lucrări reale', text: 'UNTOLD, NEVERSEA, Volkswagen, Audi, Banca Transilvania. Nu lucrări de portofoliu — clienți.' },
-  { titlu: '11 ani în branding', text: 'Nu am început cu AI. AI-ul e unealta din urmă, nu meseria.' },
+  { icon: 'telefon',  titlu: 'Nu plătești până nu vorbim', text: 'Îți lași datele, te sună echipa, și abia după ce îți confirmăm locul se discută plata.' },
+  { icon: 'înapoi',   titlu: 'Returnare integrală', text: 'Dacă la finalul zilei 3 nu ai construit și publicat lucrul tău, primești toți banii înapoi.' },
+  { icon: 'chitanță', titlu: 'Factură fiscală', text: 'Pe firmă sau pe persoană fizică. Plata integral sau în două tranșe.' },
+  { icon: 'mesaj',    titlu: 'Răspund eu, nu un chatbot', text: 'Pe Instagram și pe Telegram, la aceleași conturi de pe care postez.' },
+  { icon: 'glob',     titlu: '10 aplicații cu adresă publică', text: 'Nu capturi de ecran: adrese pe care le poți deschide acum și verifica.' },
+  { icon: 'premiu',   titlu: 'Branduri mari, lucrări reale', text: 'UNTOLD, NEVERSEA, Volkswagen, Audi, Banca Transilvania. Nu lucrări de portofoliu — clienți.' },
+  { icon: 'ceas',     titlu: '11 ani în branding', text: 'Nu am început cu AI. AI-ul e unealta din urmă, nu meseria.' },
 ] as const;

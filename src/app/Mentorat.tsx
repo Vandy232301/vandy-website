@@ -1,5 +1,9 @@
-import { useEffect, useState } from 'react';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Hash, Minus, Quote, ShieldCheck, User } from 'lucide-react';
+import { createElement, useEffect, useState } from 'react';
+import {
+  ArrowLeft, ArrowRight, ArrowUpRight, Award, Boxes, Briefcase, Check, Clapperboard, Clock,
+  Globe, Hash, Infinity as Infinit, LifeBuoy, MessageCircle, Minus, Newspaper, PhoneCall,
+  Quote, Receipt, Rocket, Tag, Undo2, Users, Video, Wrench, Layers, User,
+} from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { Caseta, Secventa, Eticheta, TitluSecvenca, Buton } from './components/mentorat/Bucati';
 import { CardProdus } from './components/mentorat/CardProdus';
@@ -11,7 +15,7 @@ import { Formular } from './components/mentorat/Formular';
 import {
   OFERTA, DIRECTII, PLECI_CU, ZILE, NU_E_PENTRU, INTREBARI, locuriLibere,
   CAPTURI, PRODUSE_DOVADA, PIATA, PIATA_AVERTISMENT, RECENZII, INCREDERE, FIRMA,
-  COMUNITATE, BRANDURI,
+  COMUNITATE, BRANDURI, PENTRU_CINE,
 } from '../data/mentorat';
 // Portretul real, cel de pe cardurile de social media. NU randarea neagră de
 // pe prima pagină: aici vinde un om, nu un personaj.
@@ -57,9 +61,7 @@ function BaraFixa() {
           <p className="text-white text-[13px] sm:text-sm font-bold tracking-tight truncate">
             <span className="text-neon">{OFERTA.tip}</span> · {OFERTA.durata}
           </p>
-          <p className="text-neutral-400 text-xs truncate tabular-nums">
-            {locuriLibere} din {OFERTA.locuriTotal} locuri libere
-          </p>
+          <p className="text-neutral-400 text-xs truncate">{OFERTA.notaLocuri}</p>
         </div>
         <Buton
           href="#aplica"
@@ -107,6 +109,22 @@ function Locuri() {
    Regula practică: dacă elementul cere o acțiune sau numără bani, e verde.
    Dacă explică sau ordonează, e mov. Când ai dubii, lasă-l neutru.
    ──────────────────────────────────────────────────────────────────────── */
+
+/**
+ * Iconițele, pe nume românești, ca să poată fi schimbate din fișierul de date
+ * fără să imporți componente acolo. Fiecare rând dintr-o listă primește
+ * semnul lui — o listă cu aceeași bifă de șapte ori se citește ca un bloc,
+ * una cu șapte semne diferite se scanează.
+ */
+const ICOANE = {
+  rachetă: Rocket, etichetă: Tag, oameni: Users, unelte: Wrench, infinit: Infinit,
+  ziar: Newspaper, colac: LifeBuoy, diez: Hash, video: Video, straturi: Layers,
+  telefon: PhoneCall, înapoi: Undo2, chitanță: Receipt, mesaj: MessageCircle,
+  glob: Globe, premiu: Award, ceas: Clock,
+  servietă: Briefcase, cutie: Boxes, clachetă: Clapperboard, echipă: Users,
+} as const;
+
+type NumeIcoana = keyof typeof ICOANE;
 
 /** Pagina e doar în română, deci cardurile iau descrierile direct din blocul RO. */
 const textRO = translations.RO;
@@ -237,25 +255,25 @@ export default function Mentorat() {
           </div>
         </Caseta>
 
-        {/* ——— BRANDURI ——— */}
-        <Secventa className="pt-6">
-          <Caseta className="px-6 py-7 md:px-10">
-            <div className="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10">
-              <Eticheta>
-                Branduri pentru care<br className="hidden lg:block" /> am lucrat
-              </Eticheta>
-              <div className="flex-1 flex flex-wrap items-center gap-x-8 gap-y-4 lg:justify-end">
-                {BRANDURI.map((b) => (
-                  <span
-                    key={b}
-                    className="text-neutral-400 text-sm md:text-base font-bold tracking-[0.12em] uppercase hover:text-mov transition-colors"
-                  >
-                    {b}
-                  </span>
-                ))}
-              </div>
+        {/* ——— BRANDURI ———
+             Fără casetă: numele stau direct pe negru, centrate. O bandă de
+             clienți nu e un card de conținut, e o respirație între hero și
+             restul paginii — chenarul o făcea să pară încă o secțiune.
+             Rămân TEXT, nu logouri: vezi regula din src/data/mentorat.ts. */}
+        <Secventa className="pt-14 md:pt-20">
+          <div className="text-center">
+            <Eticheta>Branduri pentru care am lucrat</Eticheta>
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-x-9 gap-y-4 md:gap-x-12">
+              {BRANDURI.map((b) => (
+                <span
+                  key={b}
+                  className="text-white/90 hover:text-white text-xl md:text-2xl font-bold tracking-[0.1em] uppercase transition-colors"
+                >
+                  {b}
+                </span>
+              ))}
             </div>
-          </Caseta>
+          </div>
         </Secventa>
 
         {/* ——— PROBLEMA ——— */}
@@ -284,6 +302,30 @@ export default function Mentorat() {
               curs: pornim de la ce se vinde și mergem înapoi spre ce trebuie să știi.
             </p>
           </Caseta>
+        </Secventa>
+
+        {/* ——— PENTRU CINE ———
+             Perechea pozitivă a lui „Când să nu ne scrii". Stă devreme,
+             imediat după problemă: cu cât omul se recunoaște mai repede,
+             cu atât citește restul ca despre el. */}
+        <Secventa className="pt-16 md:pt-24">
+          <TitluSecvenca
+            eticheta="Pentru cine e"
+            titlu={<>Patru oameni. Dacă ești unul dintre ei, e pentru tine.</>}
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {PENTRU_CINE.map((x) => (
+              <Caseta key={x.titlu} className="p-6 md:p-7 flex items-start gap-4">
+                <span className="shrink-0 w-11 h-11 rounded-xl bg-mov/10 border border-mov/25 flex items-center justify-center">
+                  {createElement(ICOANE[x.icon as NumeIcoana], { size: 19, className: 'text-mov', strokeWidth: 1.9 })}
+                </span>
+                <div>
+                  <p className="text-white text-base font-bold mb-1.5 leading-snug">{x.titlu}</p>
+                  <p className="text-neutral-400 text-sm leading-relaxed">{x.text}</p>
+                </div>
+              </Caseta>
+            ))}
+          </div>
         </Secventa>
 
         {/* ——— DOVADA ——— */}
@@ -434,7 +476,9 @@ export default function Mentorat() {
             {PLECI_CU.map((x, i) => (
               <Caseta key={x.titlu} className={`p-6 ${i === PLECI_CU.length - 1 && PLECI_CU.length % 2 === 1 ? 'md:col-span-2' : ''}`}>
                 <div className="flex items-start gap-4">
-                  <Check size={18} className="text-neon mt-0.5 shrink-0" strokeWidth={2.5} />
+                  <span className="shrink-0 w-10 h-10 rounded-xl bg-neon/10 border border-neon/25 flex items-center justify-center">
+                    {createElement(ICOANE[x.icon as NumeIcoana], { size: 18, className: 'text-neon', strokeWidth: 1.9 })}
+                  </span>
                   <div>
                     <p className="text-white text-base font-bold mb-1.5">{x.titlu}</p>
                     <p className="text-neutral-400 text-sm leading-relaxed">{x.text}</p>
@@ -511,7 +555,9 @@ export default function Mentorat() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-7 gap-y-6">
                     {COMUNITATE.lucruri.map((x) => (
                       <div key={x.titlu} className="flex items-start gap-3">
-                        <Check size={15} className="text-neon mt-0.5 shrink-0" strokeWidth={2.5} />
+                        <span className="shrink-0 mt-0.5 w-7 h-7 rounded-lg bg-neon/10 border border-neon/25 flex items-center justify-center">
+                          {createElement(ICOANE[x.icon as NumeIcoana], { size: 14, className: 'text-neon', strokeWidth: 2 })}
+                        </span>
                         <div>
                           <p className="text-white text-[15px] font-bold mb-1">{x.titlu}</p>
                           <p className="text-neutral-400 text-sm leading-relaxed">{x.text}</p>
@@ -677,7 +723,9 @@ export default function Mentorat() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {INCREDERE.map((x) => (
               <Caseta key={x.titlu} className="p-5 flex items-start gap-3.5">
-                <ShieldCheck size={17} className="text-mov mt-0.5 shrink-0" strokeWidth={1.75} />
+                <span className="shrink-0 w-9 h-9 rounded-lg bg-mov/10 border border-mov/25 flex items-center justify-center">
+                  {createElement(ICOANE[x.icon as NumeIcoana], { size: 16, className: 'text-mov', strokeWidth: 1.9 })}
+                </span>
                 <div>
                   <p className="text-white text-[15px] font-bold mb-1">{x.titlu}</p>
                   <p className="text-neutral-400 text-[13px] leading-relaxed">{x.text}</p>
@@ -770,22 +818,31 @@ export default function Mentorat() {
         </Secventa>
 
         {/* ——— FOOTER ——— */}
-        <footer className="pt-16 md:pt-24 pb-4 space-y-4">
-          <div className="rounded-2xl border border-neutral-900 bg-neutral-950/40 p-5">
-            <p className="text-neutral-600 text-[11px] leading-relaxed masura-mic">
-              {OFERTA.numeProgram} este un program de formare practică. Nu reprezintă consultanță
-              financiară sau de investiții și nu garantează niciun venit, nicio sumă și niciun
-              rezultat comercial. Singurul angajament asumat este cel descris la „Ce pleci cu",
-              acoperit de garanția de returnare integrală la finalul zilei 3. Rezultatele depind de
-              munca, piața și deciziile fiecărui participant.
-            </p>
-          </div>
+        <footer className="pt-16 md:pt-24 pb-4">
+          <span
+            aria-hidden
+            className="block h-px w-full bg-gradient-to-r from-transparent via-white/[0.08] to-transparent mb-8"
+          />
+
+          {/* ⚠️ Scurtat la cererea owner-ului, 29.10.2026, dar cele patru lucruri care
+              îl apără au rămas, în ordinea asta: nu e consultanță financiară (contează,
+              pentru că produsul lui de trading îl face „expert" în ochii legii) · nu
+              garantează venit sau rezultat comercial (Legea 363/2007) · singurul
+              angajament e „Ce pleci cu", acoperit de returnare · restul depinde de om.
+              Dacă îl mai scurtezi, nu scoate niciunul din cele patru. */}
+          <p className="text-neutral-500 text-[11px] leading-relaxed masura-mic mx-auto text-center">
+            {OFERTA.numeProgram} este un program de formare practică. Nu e consultanță financiară
+            sau de investiții și nu garantează niciun venit și niciun rezultat comercial. Singurul
+            angajament e cel de la „Ce pleci cu", acoperit de returnarea integrală la finalul
+            zilei 3. Restul depinde de munca, piața și deciziile fiecăruia.
+          </p>
+
           {FIRMA && (
-            <p className="text-center text-neutral-600 text-xs">
+            <p className="text-center text-neutral-600 text-xs mt-5">
               {FIRMA.denumire} · CUI {FIRMA.cui} · {FIRMA.sediu}
             </p>
           )}
-          <p className="text-center text-neutral-700 text-xs">
+          <p className="text-center text-neutral-700 text-xs mt-5">
             © 2026 VANDY. Făcut cu 🖤 în alt Univers Paralel.
           </p>
         </footer>
