@@ -166,7 +166,7 @@ export function Formular() {
   return (
     <div className="p-6 md:p-8">
       <div className="space-y-2 mb-7">
-        <Eticheta>Pasul 1 din 2</Eticheta>
+        <Eticheta ton="mov">Pasul 1 din 2</Eticheta>
         <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
           Lasă-ți datele și te contactăm
         </h3>

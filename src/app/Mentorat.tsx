@@ -323,7 +323,7 @@ export default function Mentorat() {
                 { n: '3', t: 'Publici și ceri bani', d: 'Cum pui lucrul în fața oamenilor, cum se formează prețul și cum îl ceri fără să te scuzi.' },
               ].map((p) => (
                 <div key={p.n} className="space-y-3">
-                  <span className="inline-flex items-center justify-center w-11 h-11 rounded-full border border-mov/40 text-mov text-lg font-bold tabular-nums">
+                  <span className="inline-flex items-center justify-center w-11 h-11 rounded-full border border-mov/50 text-mov text-lg font-bold tabular-nums lumina-bloc-mov">
                     {p.n}
                   </span>
                   <p className="text-white text-base font-bold">{p.t}</p>
@@ -350,7 +350,7 @@ export default function Mentorat() {
                 <p className="text-white text-base font-semibold mb-3">{d.promisiune}</p>
                 <p className="text-neutral-400 text-sm leading-relaxed mb-6 flex-1">{d.text}</p>
                 <div className="pt-5 border-t border-neutral-800/60 space-y-2.5">
-                  <Eticheta>Pleci cu</Eticheta>
+                  <Eticheta ton="mov">Pleci cu</Eticheta>
                   {d.pleciCu.map((x) => (
                     <div key={x} className="flex items-start gap-2.5">
                       <Check size={14} className="text-neon mt-0.5 shrink-0" strokeWidth={2.5} />
@@ -380,7 +380,7 @@ export default function Mentorat() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
             {PIATA.map((d) => (
               <Caseta key={d.id} className="p-6 flex flex-col">
-                <Eticheta>{d.nume}</Eticheta>
+                <Eticheta ton="mov">{d.nume}</Eticheta>
                 <div className="mt-5 space-y-4 flex-1">
                   {d.randuri.map((r) => (
                     <div key={r.ce} className="pb-4 border-b border-neutral-800/60 last:border-0 last:pb-0">
@@ -396,7 +396,7 @@ export default function Mentorat() {
                     href={d.sursa.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-neutral-600 hover:text-neon transition-colors text-[11px]"
+                    className="inline-flex items-center gap-1 text-neutral-500 hover:text-mov transition-colors text-[11px]"
                   >
                     sursă: {d.sursa.text} <ArrowUpRight size={11} />
                   </a>
@@ -565,7 +565,7 @@ export default function Mentorat() {
 
             <Caseta className="md:col-span-3 p-6 md:p-8 space-y-6">
               <div>
-                <Eticheta>De ce nu scrie prețul aici</Eticheta>
+                <Eticheta ton="mov">De ce nu scrie prețul aici</Eticheta>
                 <p className="text-neutral-300 text-sm leading-relaxed mt-3">
                   Pentru că nu vindem un loc oricui plătește. Sunt zece, și la apel ne uităm întâi
                   dacă ai ce construi în trei zile și care dintre cele trei direcții e a ta. Dacă nu
@@ -614,7 +614,7 @@ export default function Mentorat() {
           <Caseta className="p-6 md:p-8 space-y-4">
             {NU_E_PENTRU.map((x) => (
               <div key={x} className="flex items-start gap-3">
-                <Minus size={16} className="text-neutral-600 mt-0.5 shrink-0" />
+                <Minus size={16} className="text-mov/70 mt-0.5 shrink-0" />
                 <p className="text-neutral-300 text-sm leading-relaxed">{x}</p>
               </div>
             ))}
@@ -631,7 +631,7 @@ export default function Mentorat() {
                 </div>
                 <div className="lg:col-span-2 p-6 md:p-8 bg-black/20 space-y-7">
                   <div>
-                    <Eticheta>Cum arată pasul 2</Eticheta>
+                    <Eticheta ton="mov">Cum arată pasul 2</Eticheta>
                     <p className="text-neutral-300 text-sm leading-relaxed mt-3">
                       Un apel de 20 de minute cu echipa. Te întrebăm ce vrei să construiești, îți
                       spunem dacă se poate în trei zile, stabilim direcția și primești toate
@@ -640,19 +640,19 @@ export default function Mentorat() {
                     </p>
                   </div>
                   <div className="pt-6 border-t border-neutral-800/60">
-                    <Eticheta>Ce nu se întâmplă la apel</Eticheta>
+                    <Eticheta ton="mov">Ce nu se întâmplă la apel</Eticheta>
                     <p className="text-neutral-300 text-sm leading-relaxed mt-3">
                       Nu te ține nimeni o oră ca să te convingă. Nu există ofertă care „expiră în
                       zece minute". Afli prețul și condițiile, închizi telefonul și te gândești.
                     </p>
                   </div>
                   <div className="pt-6 border-t border-neutral-800/60">
-                    <Eticheta>Preferi să scrii?</Eticheta>
+                    <Eticheta ton="mov">Preferi să scrii?</Eticheta>
                     <div className="flex flex-col gap-2 mt-3 text-sm">
-                      <a href="https://www.instagram.com/vandy_o1/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-neon transition-colors inline-flex items-center gap-1.5">
+                      <a href="https://www.instagram.com/vandy_o1/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-mov transition-colors inline-flex items-center gap-1.5">
                         Instagram @vandy_o1 <ArrowUpRight size={13} />
                       </a>
-                      <a href="https://t.me/VANDY_001_Official" target="_blank" rel="noopener noreferrer" className="text-white hover:text-neon transition-colors inline-flex items-center gap-1.5">
+                      <a href="https://t.me/VANDY_001_Official" target="_blank" rel="noopener noreferrer" className="text-white hover:text-mov transition-colors inline-flex items-center gap-1.5">
                         Telegram <ArrowUpRight size={13} />
                       </a>
                     </div>

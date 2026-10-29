@@ -58,6 +58,10 @@
   text-shadow: 0 0 22px rgba(var(--mov-rgb), 0.5);
 }
 
+.lumina-bloc-mov {
+  box-shadow: 0 0 24px -6px rgba(var(--mov-rgb), 0.55);
+}
+
 /* Bara flotantă de CTA de pe /mentorat.
    Pagina are `viewport-fit=cover`, deci conținutul trece pe sub indicatorul
    de home al iPhone-ului. Instalată pe ecranul de start (standalone, fără

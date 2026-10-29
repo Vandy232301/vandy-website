@@ -50,7 +50,8 @@ export function Eticheta({
 export function TitluSecvenca({ eticheta, titlu }: { eticheta: string; titlu: ReactNode }) {
   return (
     <div className="space-y-3 mb-6">
-      <Eticheta>{eticheta}</Eticheta>
+      {/* Kickerul numește secțiunea — e structură, deci mov. */}
+      <Eticheta ton="mov">{eticheta}</Eticheta>
       <h2 className="text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-[1.15] max-w-3xl">
         {titlu}
       </h2>
