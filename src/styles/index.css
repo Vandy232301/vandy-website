@@ -87,3 +87,51 @@
 .spatiu-bara {
   padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px));
 }
+
+/* ────────────────────────────────────────────────────────────────────────
+   MĂSURA — câte caractere încap pe un rând
+
+   Un rând se citește cel mai ușor între 45 și 75 de caractere, cu optimul
+   pe la 66. Peste 80, ochiul pierde începutul rândului următor și textul
+   obosește chiar dacă e scurt. Măsurat pe pagină înainte de regula asta:
+   18 blocuri treceau de 78, cel mai lung la 154.
+
+   De aceea limita e scrisă în `ch` — lățimea cifrei zero din fontul curent —
+   nu în pixeli. Un `max-w-3xl` înseamnă 104 caractere la 14px și 66 la 22px:
+   aceeași clasă, două rezultate complet diferite. În `ch`, măsura rămâne
+   măsură oricât ai schimba mărimea fontului.
+
+     .masura-titlu  34 ch — titluri. `text-wrap: balance` împarte rândurile
+                            egal, ca să nu rămână un cuvânt singur jos.
+     .masura-intro  46 ch — fraza de sub titlu, cea care duce în text.
+     .masura-text   56 ch — corpul de text.
+     .masura-mic    64 ch — mărunțiș și text legal, citite în diagonală.
+
+   ⚠️ Valorile nu sunt egale cu numărul de caractere pe rând. `1ch` e lățimea
+   cifrei zero, iar zero e mai lat decât litera medie dintr-un font
+   proporțional: măsurat pe pagina asta, raportul e ~1,21. Deci 56ch dau
+   aproximativ 68 de caractere reale — exact unde voiam. Dacă schimbi fontul,
+   remăsoară înainte să schimbi cifrele.
+
+   `text-wrap: pretty` pe celelalte trei face același lucru doar pentru
+   ultimul rând, fără să rearanjeze tot paragraful.
+   ──────────────────────────────────────────────────────────────────────── */
+.masura-titlu {
+  max-width: 34ch;
+  text-wrap: balance;
+}
+
+.masura-intro {
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+.masura-text {
+  max-width: 56ch;
+  text-wrap: pretty;
+}
+
+.masura-mic {
+  max-width: 64ch;
+  text-wrap: pretty;
+}

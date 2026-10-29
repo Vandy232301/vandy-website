@@ -168,7 +168,7 @@ export default function Mentorat() {
                 </span>
               </div>
 
-              <h2 className="text-4xl md:text-[3rem] font-bold leading-[1.1] text-white tracking-tight mb-6">
+              <h2 className="text-4xl md:text-[3rem] font-bold leading-[1.1] text-white tracking-tight mb-6 text-balance">
                 Nu te învăț să folosești AI.<br />
                 <span className="text-neutral-500">
                   Te învăț să construiești cu AI lucruri{' '}
@@ -176,14 +176,13 @@ export default function Mentorat() {
                 </span>
               </h2>
 
-              <p className="text-neutral-200 text-base md:text-lg font-semibold leading-snug max-w-xl mb-6 pb-6 border-b border-neutral-800/70">
+              <p className="text-neutral-200 text-base md:text-lg font-semibold leading-snug masura-intro mb-6 pb-6 border-b border-neutral-800/70">
                 {OFERTA.pentruCine}
               </p>
 
-              <p className="text-neutral-400 text-base leading-relaxed max-w-xl mb-8">
-                Trei zile live, zece antreprenori. Nu pleci cu notițe și cu o listă de tool-uri.
-                Pleci cu lucrul tău construit și publicat, cu prețul scris pe el și cu primii zece
-                clienți identificați pe nume.
+              <p className="text-neutral-400 text-base leading-relaxed masura-intro mb-8">
+                Trei zile live, zece antreprenori. Pleci cu lucrul tău construit și publicat, cu
+                prețul scris pe el și cu primii zece clienți pe nume.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 mb-8">
@@ -207,8 +206,7 @@ export default function Mentorat() {
                 </p>
                 <Locuri />
                 <p className="text-neutral-500 text-xs leading-relaxed">
-                  Zece, nu o sută. În ziua 2 mă uit pe ecranul fiecăruia și repar pe loc — altfel ar
-                  fi doar un curs.
+                  Zece, nu o sută. În ziua 2 mă uit pe ecranul fiecăruia și repar pe loc.
                 </p>
               </div>
 
@@ -216,7 +214,7 @@ export default function Mentorat() {
                 <Eticheta ton="neon">Garanție pe livrare</Eticheta>
                 <p className="text-neutral-300 text-sm leading-relaxed">
                   Dacă la finalul zilei 3 nu ai construit și publicat lucrul tău, îți returnez toți
-                  banii. Nu îți cer motive.
+                  banii. Fără motive.
                 </p>
               </div>
             </div>
@@ -263,12 +261,11 @@ export default function Mentorat() {
             ))}
           </div>
           <Caseta className="p-6 md:p-8 mt-3">
-            <p className="text-neutral-300 text-base leading-relaxed max-w-3xl">
-              Nu e o problemă de inteligență, e una de format. Aproape tot ce se vinde azi te
-              învață <span className="text-white font-semibold">tool-uri</span>,
-              iar tool-ul se schimbă în trei luni. Ce nu se schimbă e lucrul pe care îl livrezi și
-              faptul că cineva scoate bani pentru el. Masterclass-ul ăsta e construit invers față de un
-              curs: pornim de la lucrul care se vinde și mergem înapoi spre ce trebuie să știi ca să-l faci.
+            <p className="text-neutral-300 text-base leading-relaxed masura-text">
+              Nu e o problemă de inteligență, e una de format. Aproape tot ce se vinde te învață{' '}
+              <span className="text-white font-semibold">tool-uri</span>, iar tool-ul se schimbă în
+              trei luni. Lucrul pe care îl livrezi, nu. Masterclass-ul e construit invers față de un
+              curs: pornim de la ce se vinde și mergem înapoi spre ce trebuie să știi.
             </p>
           </Caseta>
         </Secventa>
@@ -298,10 +295,9 @@ export default function Mentorat() {
               );
             })}
           </div>
-          <p className="text-neutral-500 text-sm leading-relaxed mt-4 max-w-3xl">
-            Fiecare ecran de mai sus e luat de pe site-ul live al produsului, nu e machetă. Nu îți
-            vorbesc din teorie: deschide oricare și verifică. Toate au fost construite cu exact metoda
-            pe care o predau în cele trei zile.
+          <p className="text-neutral-500 text-sm leading-relaxed mt-4 masura-text">
+            Fiecare ecran e luat de pe site-ul live, nu e machetă. Deschide oricare și verifică.
+            Toate sunt construite cu metoda din cele trei zile.
           </p>
         </Secventa>
 
@@ -312,13 +308,13 @@ export default function Mentorat() {
             titlu={<>Un singur mecanism, trei feluri de a-l vinde.</>}
           />
           <Caseta className="p-6 md:p-8">
-            <p className="text-neutral-400 text-sm leading-relaxed max-w-3xl mb-8">
-              Toate cele trei direcții de mai jos folosesc același motor, iar motorul are trei piese.
-              Le înveți o dată, în ziua 1, și de acolo încolo se schimbă doar ce vinzi.
+            <p className="text-neutral-400 text-sm leading-relaxed masura-text mb-8">
+              Cele trei direcții folosesc același motor, iar motorul are trei piese. Le înveți o
+              dată, în ziua 1; de acolo se schimbă doar ce vinzi.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               {[
-                { n: '1', t: 'Traduci cererea', d: 'Cum transformi o cerere vagă — a unui client sau a ta — în caiet de sarcini pe care AI-ul îl execută corect din prima, nu din a douăzecea.' },
+                { n: '1', t: 'Traduci cererea', d: 'Cum transformi o cerere vagă în caiet de sarcini pe care AI-ul îl execută corect din prima, nu din a douăzecea.' },
                 { n: '2', t: 'Construiești de livrat', d: 'Diferența dintre un demo care impresionează și un lucru pentru care cineva plătește. Aici se pierde toată lumea.' },
                 { n: '3', t: 'Publici și ceri bani', d: 'Cum pui lucrul în fața oamenilor, cum se formează prețul și cum îl ceri fără să te scuzi.' },
               ].map((p) => (
@@ -362,11 +358,10 @@ export default function Mentorat() {
             ))}
           </div>
           <Caseta className="p-6 mt-3">
-            <p className="text-neutral-300 text-sm leading-relaxed max-w-3xl">
+            <p className="text-neutral-300 text-sm leading-relaxed masura-text">
               <span className="text-neon font-semibold">Alegi una pentru primele 30 de zile.</span>{' '}
-              Materialele le ai pe toate trei, dar execuți o singură direcție — ăsta e singurul motiv
-              pentru care oamenii termină ce încep. Pe care o alegi o stabilim la apel, împreună,
-              în funcție de ce ai deja în mână.
+              Materialele le ai pe toate trei, dar execuți una singură — ăsta e singurul motiv pentru
+              care oamenii termină ce încep. Care anume, stabilim la apel.
             </p>
           </Caseta>
         </Secventa>
@@ -407,14 +402,13 @@ export default function Mentorat() {
 
           <Caseta className="p-6 md:p-8 mt-3">
             <Eticheta ton="neon">Când îți acoperi investiția</Eticheta>
-            <p className="text-neutral-300 text-base leading-relaxed max-w-3xl mt-3 mb-5">
-              Din ziua 3 ai deja ce să vinzi: lucrul construit, oferta scrisă, prețul și primii zece
-              clienți pe nume. La prețurile de mai sus,{' '}
-              <span className="text-neon font-semibold">un singur proiect livrat pe oricare din cele
-              trei direcții acoperă investiția în masterclass</span> — fie că e un site de prezentare,
-              o parte dintr-un MVP sau câteva luni cu un client pe pachetul de clipuri.
+            <p className="text-neutral-300 text-base leading-relaxed masura-text mt-3 mb-5">
+              Din ziua 3 ai ce să vinzi: lucrul construit, oferta, prețul și primii zece clienți pe
+              nume. La prețurile de mai sus,{' '}
+              <span className="text-neon font-semibold">un singur proiect livrat acoperă investiția
+              în masterclass</span>, pe oricare din cele trei direcții.
             </p>
-            <p className="text-neutral-500 text-xs leading-relaxed max-w-3xl">
+            <p className="text-neutral-500 text-xs leading-relaxed masura-mic">
               {PIATA_AVERTISMENT}
             </p>
           </Caseta>
@@ -459,12 +453,12 @@ export default function Mentorat() {
                     </span>
                     <p className="text-white text-xl md:text-2xl font-bold tracking-wide mt-1.5">{z.nume}</p>
                   </div>
-                  <p className="text-neutral-400 text-sm leading-relaxed flex-1">{z.text}</p>
+                  <p className="text-neutral-400 text-sm leading-relaxed masura-text flex-1">{z.text}</p>
                 </div>
               </Caseta>
             ))}
           </div>
-          <p className="text-neutral-500 text-sm leading-relaxed mt-4 max-w-2xl">
+          <p className="text-neutral-500 text-sm leading-relaxed mt-4 masura-text">
             Live, cu camera pornită, și înregistrat. {OFERTA.dateNota}
           </p>
         </Secventa>
@@ -479,15 +473,14 @@ export default function Mentorat() {
               </span>
             </div>
 
-            <h2 className="text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-[1.15] mb-5 max-w-3xl">
-              Masterclass-ul se termină în trei zile. Comunitatea {COMUNITATE.nume} nu se termină niciodată.
+            <h2 className="text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-[1.15] mb-5 masura-titlu">
+              Masterclass-ul se termină în trei zile. Comunitatea {COMUNITATE.nume}, niciodată.
             </h2>
 
-            <p className="text-neutral-400 text-sm leading-relaxed max-w-3xl mb-9">
-              Problemele nu apar în ziua 2, apar în săptămâna 4. De asta accesul la comunitate nu e
-              bonus și nu e abonament: îl cumperi o dată, odată cu masterclass-ul, și rămâne al tău. Fără
-              reînnoire, fără taxă lunară, fără să-ți mai cer vreodată bani pentru el. Acolo găsești
-              tot ce îți trebuie ca să construiești și să vinzi în era AI.
+            <p className="text-neutral-400 text-sm leading-relaxed masura-text mb-9">
+              Problemele nu apar în ziua 2, apar în săptămâna 4. De asta accesul nu e bonus și nu e
+              abonament: îl cumperi o dată, cu masterclass-ul, și rămâne al tău. Fără reînnoire,
+              fără taxă lunară.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-7">
@@ -567,21 +560,18 @@ export default function Mentorat() {
               <div>
                 <Eticheta ton="mov">De ce nu scrie prețul aici</Eticheta>
                 <p className="text-neutral-300 text-sm leading-relaxed mt-3">
-                  Pentru că nu vindem un loc oricui plătește. Sunt zece, și la apel ne uităm întâi
-                  dacă ai ce construi în trei zile și care dintre cele trei direcții e a ta. Dacă nu
-                  ne potrivim, ți-o spunem atunci și nu ai pierdut decât douăzeci de minute. O cifră
-                  fără discuția asta nu îți spune nimic util. Ce primești pentru ea e scris mai sus,
-                  rând cu rând: trei zile din timpul meu împărțite la zece oameni, lucrul tău
-                  construit și publicat, și acces pe viață la comunitatea {COMUNITATE.nume} de pe{' '}
-                  {COMUNITATE.platforma}, plătit o singură dată.
+                  Pentru că nu vindem un loc oricui plătește. Sunt zece. La apel ne uităm întâi dacă
+                  ai ce construi în trei zile și care direcție e a ta; dacă nu ne potrivim, ți-o
+                  spunem atunci. O cifră fără discuția asta nu îți spune nimic util — iar ce
+                  primești pentru ea e scris mai sus, rând cu rând.
                 </p>
               </div>
               <div className="pt-6 border-t border-neutral-800/60">
                 <Eticheta ton="neon">Garanție pe livrare</Eticheta>
                 <p className="text-neutral-300 text-sm leading-relaxed mt-3">
                   Dacă la finalul zilei 3 nu ai construit și publicat lucrul tău, scrii un email și
-                  îți returnez integral banii. Nu îți cer motive și nu te pun să dovedești nimic.
-                  Riscul e al meu, pentru că livrarea depinde de mine.
+                  îți returnez integral banii. Fără motive, fără dovezi. Riscul e al meu, pentru că
+                  livrarea depinde de mine.
                 </p>
               </div>
               <div className="pt-6 border-t border-neutral-800/60">
@@ -633,17 +623,16 @@ export default function Mentorat() {
                   <div>
                     <Eticheta ton="mov">Cum arată pasul 2</Eticheta>
                     <p className="text-neutral-300 text-sm leading-relaxed mt-3">
-                      Un apel de 20 de minute cu echipa. Te întrebăm ce vrei să construiești, îți
-                      spunem dacă se poate în trei zile, stabilim direcția și primești toate
-                      detaliile — datele exacte, prețul și condițiile. Dacă nu ne potrivim, ți-o
-                      spunem la telefon și nu pierzi nimic.
+                      20 de minute cu echipa. Te întrebăm ce vrei să construiești, îți spunem dacă
+                      se poate în trei zile, și primești toate detaliile: datele, prețul, condițiile.
+                      Dacă nu ne potrivim, ți-o spunem atunci.
                     </p>
                   </div>
                   <div className="pt-6 border-t border-neutral-800/60">
                     <Eticheta ton="mov">Ce nu se întâmplă la apel</Eticheta>
                     <p className="text-neutral-300 text-sm leading-relaxed mt-3">
-                      Nu te ține nimeni o oră ca să te convingă. Nu există ofertă care „expiră în
-                      zece minute". Afli prețul și condițiile, închizi telefonul și te gândești.
+                      Nu te ține nimeni o oră ca să te convingă și nu există ofertă care „expiră în
+                      zece minute". Afli prețul, închizi telefonul și te gândești.
                     </p>
                   </div>
                   <div className="pt-6 border-t border-neutral-800/60">
@@ -676,10 +665,10 @@ export default function Mentorat() {
         {/* ——— FINAL ——— */}
         <Secventa className="pt-10">
           <Caseta className="p-8 md:p-12 text-center ring-1 ring-neon/20">
-            <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-[1.1] max-w-3xl mx-auto mb-5">
+            <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-[1.1] masura-titlu mx-auto mb-5">
               În trei zile ai construit ceva, sau mai trece un trimestru la fel.
             </h2>
-            <p className="text-neutral-400 text-base leading-relaxed max-w-lg mx-auto mb-8 tabular-nums">
+            <p className="text-neutral-400 text-base leading-relaxed masura-intro mx-auto mb-8 tabular-nums">
               {locuriLibere} locuri libere din {OFERTA.locuriTotal}. {OFERTA.dateText}.
             </p>
             <Buton href="#aplica" className="mx-auto">
@@ -691,7 +680,7 @@ export default function Mentorat() {
         {/* ——— FOOTER ——— */}
         <footer className="pt-10 pb-4 space-y-4">
           <div className="rounded-2xl border border-neutral-900 bg-neutral-950/40 p-5">
-            <p className="text-neutral-600 text-[11px] leading-relaxed">
+            <p className="text-neutral-600 text-[11px] leading-relaxed masura-mic">
               {OFERTA.numeProgram} este un program de formare practică. Nu reprezintă consultanță
               financiară sau de investiții și nu garantează niciun venit, nicio sumă și niciun
               rezultat comercial. Singurul angajament asumat este cel descris la „Ce pleci cu",

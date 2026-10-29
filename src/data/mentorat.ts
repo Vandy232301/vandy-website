@@ -57,7 +57,7 @@ export const DIRECTII = [
     numar: '01',
     nume: 'AGENȚIA',
     promisiune: 'Vinzi servicii făcute cu AI.',
-    text: 'Cel mai scurt drum până la primul om care îți dă bani, pentru că vinzi ceva ce există deja din prima zi: rezultatul tău. Nu ai nevoie de produs, de investiție și de așteptare.',
+    text: 'Cel mai scurt drum până la primul om care îți dă bani: vinzi ceva ce există din prima zi — rezultatul tău. Fără produs, fără investiție, fără așteptare.',
     pleciCu: [
       'Oferta scrisă și prețurile tale',
       'Primii 10 clienți identificați pe nume',
@@ -69,7 +69,7 @@ export const DIRECTII = [
     numar: '02',
     nume: 'PRODUSUL',
     promisiune: 'Îți construiești propria aplicație.',
-    text: 'Mai greu la început decât agenția, și e cinstit să o spun. Dar e singura direcție unde construiești lucrul o dată și îl vinzi de o sută de ori. Toate cele 10 aplicații de mai sus sunt direcția asta.',
+    text: 'Mai greu la început decât agenția, cinstit vorbind. Dar e singura unde construiești o dată și vinzi de o sută de ori. Cele 10 aplicații de mai sus sunt direcția asta.',
     pleciCu: [
       'O aplicație publicată, la domeniul ei',
       'Plata funcțională în ea, nu „urmează"',
@@ -81,7 +81,7 @@ export const DIRECTII = [
     numar: '03',
     nume: 'CREATIVUL',
     promisiune: 'Video cu AI pentru branduri.',
-    text: 'Aici lipsa de oameni e cea mai mare: branduri care vor și au bani, foarte puțini care livrează la calitate de difuzat. Diferența nu stă în tool, stă în ce accepți să trimiți mai departe.',
+    text: 'Aici lipsa de oameni e cea mai mare: branduri cu bani, foarte puțini care livrează la calitate de difuzat. Diferența nu e tool-ul, e ce accepți să trimiți.',
     pleciCu: [
       '3 piese de portofoliu, nu teste',
       'Lanțul de producție complet',
@@ -96,7 +96,7 @@ export const PLECI_CU = [
   { titlu: 'Oferta scrisă și prețul',            text: 'Ce vinzi, cu ce cuvinte, și cât ceri. Pe hârtie, nu în cap.' },
   { titlu: 'Primii 10 clienți, pe nume',         text: 'Nu „publicul țintă". Zece oameni sau firme, cu nume și contact.' },
   { titlu: 'Tot ce folosesc eu',                 text: 'Prompturile, șabloanele și fluxurile mele de lucru, așa cum sunt.' },
-  { titlu: 'Comunitatea ATELIER AI, pe viață',    text: 'Acces lifetime pe Discord. Fără abonament, fără reînnoire, fără să-ți mai cer vreodată bani pentru ea.' },
+  { titlu: 'Comunitatea ATELIER AI, pe viață',    text: 'Acces lifetime pe Discord. Fără abonament, fără reînnoire, plătit o singură dată.' },
 ] as const;
 
 /* ────────────────────────────────────────────────────────────────────────
@@ -141,27 +141,27 @@ export const COMUNITATE = {
   lucruri: [
     {
       titlu: 'Noutățile din lumea AI',
-      text: 'Ce a apărut, ce s-a schimbat și ce înseamnă pentru ce construiești tu. Filtrat, nu copiat de pe Twitter.',
+      text: 'Ce a apărut și ce înseamnă pentru ce construiești tu. Filtrat, nu copiat de pe Twitter.',
     },
     {
       titlu: 'Suport la dezvoltare',
-      text: 'Te blochezi, pui întrebarea, primești răspuns. De la mine și de la oamenii care au trecut prin același lucru.',
+      text: 'Te blochezi, întrebi, primești răspuns. De la mine și de la cine a trecut prin asta.',
     },
     {
       titlu: 'Canalul direcției tale',
-      text: 'Agenție, produs sau creativ. Separat, ca să nu cauți prin o mie de mesaje care nu te privesc.',
+      text: 'Agenție, produs sau creativ. Separat, ca să nu cauți prin mesaje care nu te privesc.',
     },
     {
       titlu: 'Sesiune la două săptămâni',
-      text: 'Live, pe ecran, cu problemele reale ale celor din serie. Nu webinar, nu prezentare.',
+      text: 'Live, pe ecran, cu problemele reale ale seriei. Nu webinar, nu prezentare.',
     },
     {
       titlu: 'Oamenii din seria ta',
-      text: 'Nouă oameni care au început în aceeași zi cu tine. Din experiență, asta cântărește cel mai mult.',
+      text: 'Nouă oameni care au început în aceeași zi cu tine. Asta cântărește cel mai mult.',
     },
     {
       titlu: 'Tot ce apare după',
-      text: 'Șabloanele, fluxurile și prompturile noi intră acolo pe măsură ce le fac. Le primești fără să plătești iar.',
+      text: 'Șabloanele și prompturile noi intră acolo pe măsură ce le fac. Fără să plătești iar.',
     },
   ],
 } as const;
@@ -170,55 +170,55 @@ export const ZILE = [
   {
     eticheta: 'ZIUA 1',
     nume: 'MOTORUL',
-    text: 'Partea care nu se schimbă niciodată, oricâte tool-uri apar. Cum transformi o cerere vagă în caiet de sarcini pe care AI-ul îl execută corect din prima. Mediul de lucru pus la punct. Și construim primul lucru împreună, live, de la zero.',
+    text: 'Partea care nu se schimbă, oricâte tool-uri apar: cum transformi o cerere vagă în caiet de sarcini pe care AI-ul îl execută corect din prima. Și construim primul lucru împreună, live.',
   },
   {
     eticheta: 'ZIUA 2',
     nume: 'CONSTRUIEȘTI',
-    text: 'Pe direcția pe care ai ales-o. Nu te uiți la mine cum construiesc — construiești tu, iar eu mă uit pe ecranul tău și repar. Asta e ziua pentru care locurile sunt 10 și nu 100.',
+    text: 'Pe direcția ta. Nu te uiți la mine cum construiesc — construiești tu, iar eu mă uit pe ecranul tău și repar. Pentru ziua asta locurile sunt 10, nu 100.',
   },
   {
     eticheta: 'ZIUA 3',
     nume: 'VINZI',
-    text: 'Cum se formează prețul și cum îl ceri fără să te scuzi. Oferta, primul mesaj, primii 10 clienți. Publicarea lucrului tău. Și exact ce faci în următoarele 30 de zile, zi cu zi.',
+    text: 'Cum se formează prețul și cum îl ceri fără să te scuzi. Oferta, primul mesaj, primii 10 clienți. Și exact ce faci în următoarele 30 de zile.',
   },
 ] as const;
 
 export const NU_E_PENTRU = [
-  'Dacă nu conduci încă nimic — nici firmă, nici proiect propriu, nici o echipă. Masterclass-ul pornește de la ceva ce ai deja.',
+  'Dacă nu conduci încă nimic — nici firmă, nici proiect, nici echipă. Pornim de la ceva ce ai deja.',
   'Dacă vrei bani fără să construiești nimic. Aici se muncește trei zile.',
-  'Dacă intenționezi să te uiți la înregistrări „când am timp". Masterclass-ul e live dintr-un motiv.',
-  'Dacă aștepți să îți garantez un venit. Nu garantez, și nu ar trebui să crezi pe nimeni care o face.',
+  'Dacă ai de gând să te uiți la înregistrări „când am timp". E live dintr-un motiv.',
+  'Dacă aștepți să îți garantez un venit. Nu garantez, și nu crede pe nimeni care o face.',
 ] as const;
 
 export const INTREBARI = [
   {
     q: 'Trebuie să știu să programez?',
-    a: 'Nu. Niciuna din cele 10 aplicații nu a fost scrisă de mână, linie cu linie. Dar nu e nici magie: în cele trei zile muncești, iar în ziua 2 construiești tu, nu te uiți.',
+    a: 'Nu. Niciuna din cele 10 aplicații nu a fost scrisă linie cu linie. Dar nu e nici magie: în ziua 2 construiești tu, nu te uiți.',
   },
   {
     q: 'Cât o să câștig?',
-    a: 'Nu îți promit niciun venit, și te rog să nu crezi pe nimeni care îți promite unul în scris. Ce îți promit e ce pleci cu: lucrul construit și publicat, oferta, prețul și primii 10 clienți. Cât ceri și cât închizi depinde de tine și de piața ta.',
+    a: 'Nu îți promit niciun venit, și nu crede pe nimeni care îți promite unul în scris. Îți promit ce pleci cu: lucrul construit și publicat, oferta, prețul, primii 10 clienți. Cât ceri și cât închizi depinde de tine și de piața ta.',
   },
   {
     q: 'De ce doar 10 locuri?',
-    a: 'Din cauza zilei 2. Ca să mă uit pe ecranul fiecăruia și să repar pe loc, nu pot fi 50 de oameni. La 50 devine un curs, iar cursuri despre AI există deja cu sutele și nu produc nimic.',
+    a: 'Din cauza zilei 2: ca să mă uit pe ecranul fiecăruia, nu pot fi 50. La 50 devine un curs, iar cursuri despre AI există cu sutele și nu produc nimic.',
   },
   {
     q: 'Ce se întâmplă dacă pierd o zi?',
-    a: 'Toate cele trei zile sunt înregistrate și le ai. Dar dacă știi de pe acum că nu poți fi prezent live, îți spun cinstit să aștepți seria următoare — valoarea e în timpul pe care ți-l dau eu, nu în fișierele video.',
+    a: 'Toate zilele sunt înregistrate și le ai. Dar dacă știi că nu poți fi live, mai bine aștepți seria următoare — valoarea e în timpul pe care ți-l dau, nu în fișierele video.',
   },
   {
     q: 'Cu ce tool-uri lucrăm?',
-    a: 'Cu cele care sunt cele mai bune în ziua masterclass-ului, și ți le arăt pe ecranul meu. Nu construim lecția în jurul unui tool, pentru că tool-ul se schimbă în trei luni. Metoda nu.',
+    a: 'Cu cele mai bune din ziua masterclass-ului, pe ecranul meu. Nu construim lecția în jurul unui tool — tool-ul se schimbă în trei luni. Metoda nu.',
   },
   {
     q: 'Cât costă?',
-    a: 'Prețul îl primești la apel, odată cu datele exacte și cu direcția potrivită pentru tine — nu e o ofertă pe care o compari dintr-un tabel, iar la 10 locuri discuția contează mai mult decât cifra. Ce pot spune de pe acum: se plătește integral sau în două tranșe, primești factură, și nu ți se cere nimic până nu vorbim.',
+    a: 'Îl primești la apel, odată cu datele exacte și cu direcția potrivită pentru tine. Ce pot spune de pe acum: se plătește integral sau în două tranșe, primești factură, și nu ți se cere nimic până nu vorbim.',
   },
   {
     q: 'De ce nu scrieți prețul pe pagină?',
-    a: 'Pentru că nu vând un loc oricui plătește. La apel vedem întâi dacă ai ce construi în trei zile; dacă nu ne potrivim, ți-o spun la telefon și nu ai pierdut decât douăzeci de minute. Prețul fără discuția asta nu îți spune nimic util.',
+    a: 'Pentru că nu vând un loc oricui plătește. La apel vedem întâi dacă ai ce construi în trei zile. O cifră fără discuția asta nu îți spune nimic util.',
   },
   {
     q: 'Primesc factură?',
@@ -323,7 +323,7 @@ export const PIATA: PiataDirectie[] = [
 
 /** Apare sub tabele. Nu o șterge — ea e diferența dintre preț de piață și promisiune de câștig. */
 export const PIATA_AVERTISMENT =
-  'Cifrele de mai sus sunt prețuri publicate de furnizori din piață în octombrie 2026, nu veniturile mele și nu o estimare a veniturilor tale. Câți clienți închizi, la ce preț și în cât timp depinde de tine, de piața ta și de cât muncești. Nimeni nu îți poate promite un termen, și nu ar trebui să crezi pe cineva care o face.';
+  'Cifrele de mai sus sunt prețuri publicate de furnizori din piață în octombrie 2026 — nu veniturile mele și nu o estimare a veniturilor tale. Câți clienți închizi, la ce preț și în cât timp depinde de tine, de piața ta și de cât muncești. Nimeni nu îți poate promite un termen.';
 
 /* ────────────────────────────────────────────────────────────────────────
    CAPTURI — dovada vizuală. Fiecare e un ecran real, luat de pe site-ul

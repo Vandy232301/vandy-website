@@ -52,7 +52,7 @@ export function TitluSecvenca({ eticheta, titlu }: { eticheta: string; titlu: Re
     <div className="space-y-3 mb-6">
       {/* Kickerul numește secțiunea — e structură, deci mov. */}
       <Eticheta ton="mov">{eticheta}</Eticheta>
-      <h2 className="text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-[1.15] max-w-3xl">
+      <h2 className="text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-[1.15] masura-titlu">
         {titlu}
       </h2>
     </div>

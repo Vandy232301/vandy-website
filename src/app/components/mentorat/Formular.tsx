@@ -130,14 +130,13 @@ export function Formular() {
           strokeWidth={1.5}
         />
         <h3 className="text-2xl font-bold text-white tracking-tight">Am primit datele tale.</h3>
-        <p className="text-neutral-400 text-sm leading-relaxed max-w-md">
-          Te contactează echipa în maximum 48 de ore, de pe un număr din România. Primești toate
-          detaliile — datele exacte, direcția potrivită pentru tine și cum se face plata — și abia
-          după aceea decizi.
+        <p className="text-neutral-400 text-sm leading-relaxed masura-text">
+          Te contactează echipa în 48 de ore, de pe un număr din România. Primești toate detaliile
+          și abia după aceea decizi.
         </p>
-        <p className="text-neutral-600 text-xs max-w-md">
+        <p className="text-neutral-600 text-xs masura-mic">
           Dacă nu prinzi apelul, te căutăm încă o dată. Ți-am trimis și un email de confirmare —
-          verifică și în Spam, prima dată ajunge uneori acolo.
+          verifică și în Spam.
         </p>
       </div>
     );
@@ -170,9 +169,9 @@ export function Formular() {
         <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
           Lasă-ți datele și te contactăm
         </h3>
-        <p className="text-neutral-400 text-sm leading-relaxed">
-          Durează 30 de secunde. Te caută echipa în maximum 48 de ore și îți dă toate detaliile:
-          datele exacte, direcția potrivită pentru tine și cum se face plata. Nu plătești nimic acum.
+        <p className="text-neutral-400 text-sm leading-relaxed masura-text">
+          Durează 30 de secunde. Te caută echipa în 48 de ore cu toate detaliile: datele, direcția
+          potrivită și cum se face plata. Nu plătești nimic acum.
         </p>
       </div>
 
@@ -259,7 +258,7 @@ export function Formular() {
           <Mesaj camp="ceVreiSaConstruiesti" />
           {!erori.ceVreiSaConstruiesti && (
             <p className="text-neutral-600 text-[11px] mt-2">
-              Pe baza răspunsului pregătim apelul. Două rânduri serioase bat o pagină de generalități.
+              Două rânduri serioase bat o pagină de generalități.
             </p>
           )}
         </div>
@@ -283,9 +282,8 @@ export function Formular() {
           </select>
           <Mesaj camp="buget" />
           {!erori.buget && (
-            <p className="text-neutral-600 text-[11px] mt-2">
-              Răspunsul nu stabilește prețul — prețul e fix și îl afli la apel. Ne ajută doar să
-              știm cu ce venim la discuție.
+            <p className="text-neutral-600 text-[11px] mt-2 masura-mic">
+              Răspunsul nu stabilește prețul — prețul e fix și îl afli la apel.
             </p>
           )}
         </div>
@@ -298,8 +296,8 @@ export function Formular() {
             className="mt-0.5 w-4 h-4 shrink-0 accent-neon"
           />
           <span className="text-xs text-neutral-500 leading-relaxed group-hover:text-neutral-400 transition-colors">
-            Sunt de acord să fiu contactat telefonic și pe email de echipa ATELIER AI în legătură cu
-            această solicitare. Datele nu ajung la nimeni altcineva și le poți cere șterse oricând.
+            Sunt de acord să fiu contactat telefonic și pe email de echipa ATELIER AI. Datele nu
+            ajung la nimeni altcineva și le poți cere șterse oricând.
           </span>
         </label>
 
@@ -322,7 +320,7 @@ export function Formular() {
           )}
         </button>
 
-        <p className="text-neutral-600 text-[11px] text-center">
+        <p className="text-neutral-600 text-[11px] text-center masura-mic mx-auto">
           Nu îți cerem cardul și nu plătești nimic acum. Plata se discută la apel.
         </p>
       </div>
