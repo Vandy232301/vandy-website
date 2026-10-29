@@ -10,10 +10,21 @@ import { motion } from 'motion/react';
  * și „obiect așezat pe negru" — e cum arată o margine reală prinsă de o sursă
  * de lumină de deasupra.
  */
-export function Caseta({ children, className = '' }: { children: ReactNode; className?: string }) {
+export function Caseta({
+  children,
+  className = '',
+  radius = 'rounded-2xl',
+}: {
+  children: ReactNode;
+  className?: string;
+  /** Separat de className din același motiv ca `padding` la Buton: Tailwind
+   *  rezolvă conflictele după ordinea din foaia de stil, nu după ordinea
+   *  claselor, deci un `rounded-3xl` strecurat în className ar putea pierde. */
+  radius?: string;
+}) {
   return (
     <div
-      className={`relative rounded-2xl border border-white/[0.07] bg-gradient-to-b from-neutral-900/70 to-neutral-950/50 backdrop-blur-sm shadow-[0_24px_60px_-28px_rgba(0,0,0,0.95)] ${className}`}
+      className={`relative ${radius} border border-white/[0.07] bg-gradient-to-b from-neutral-900/70 to-neutral-950/50 backdrop-blur-sm shadow-[0_24px_60px_-28px_rgba(0,0,0,0.95)] ${className}`}
     >
       <span
         aria-hidden

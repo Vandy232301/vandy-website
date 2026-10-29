@@ -62,6 +62,45 @@
   box-shadow: 0 0 24px -6px rgba(var(--mov-rgb), 0.55);
 }
 
+/* Lumina din interiorul casetei hero. Două surse, nu una: alb rece din colțul
+   de sus-stânga, ca o fereastră, și mov cald din jos-dreapta, ca reflexia
+   celui de-al doilea accent. Pe negru, un singur gradient se vede lipit;
+   două care se întâlnesc la mijloc fac suprafața să pară luminată. */
+.lumina-hero {
+  background:
+    radial-gradient(90% 80% at 0% 0%, rgba(255, 255, 255, 0.07), transparent 60%),
+    radial-gradient(70% 70% at 100% 100%, rgba(var(--mov-rgb), 0.1), transparent 65%);
+}
+
+/* Inelul portretului din hero. E singurul loc din pagină unde verdele și
+   movul se ating — în jurul feței lui, nu pe un card oarecare. Scris aici și
+   nu ca `bg-[conic-gradient(...)]`, fiindcă o valoare arbitrară cu patru
+   opriri de culoare și `var()` în ea devine o clasă pe care n-o mai citește
+   nimeni. */
+/* Chenarul casetei de comunitate. Înlocuiește halo-ul verde de 30px, care pe
+   un card atât de înalt arăta ca un neon de vitrină, nu ca design. Un fir de
+   un pixel care trece din verde în mov pe diagonală spune același lucru —
+   „ăsta e blocul important" — dar se citește ca intenție, nu ca efect. */
+.chenar-gradient {
+  background: linear-gradient(
+    140deg,
+    rgba(var(--neon-rgb), 0.5) 0%,
+    rgba(255, 255, 255, 0.1) 30%,
+    rgba(var(--mov-rgb), 0.55) 68%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+}
+
+.inel-portret {
+  background: conic-gradient(
+    from 210deg,
+    rgba(var(--neon-rgb), 0.75),
+    rgba(var(--mov-rgb), 0.75),
+    rgba(255, 255, 255, 0.18),
+    rgba(var(--neon-rgb), 0.75)
+  );
+}
+
 /* Bara flotantă de CTA de pe /mentorat.
    Pagina are `viewport-fit=cover`, deci conținutul trece pe sub indicatorul
    de home al iPhone-ului. Instalată pe ecranul de start (standalone, fără

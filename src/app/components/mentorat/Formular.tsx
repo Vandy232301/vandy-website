@@ -25,7 +25,7 @@ const REGULI: Record<Camp, (v: string) => string | null> = {
   nume: validNume,
   email: validEmail,
   telefon: validTelefon,
-  directie: (v) => (v ? null : 'Alege o direcție. Dacă nu știi, alege ultima opțiune.'),
+  directie: (v) => (v ? null : 'Alege ce te interesează. Dacă nu știi, alege ultima opțiune.'),
   stadiu: (v) => (v ? null : 'Spune-ne unde ești acum.'),
   ceVreiSaConstruiesti: validDescriere,
   buget: (v) => (v ? null : 'Alege un interval. E o orientare, nu un angajament.'),
@@ -170,8 +170,8 @@ export function Formular() {
           Lasă-ți datele și te contactăm
         </h3>
         <p className="text-neutral-400 text-sm leading-relaxed masura-text">
-          Durează 30 de secunde. Te caută echipa în 48 de ore cu toate detaliile: datele, direcția
-          potrivită și cum se face plata. Nu plătești nimic acum.
+          Durează 30 de secunde. Te caută echipa în 48 de ore cu toate detaliile: datele,
+          masterclass-ul potrivit și cum se face plata. Nu plătești nimic acum.
         </p>
       </div>
 
@@ -215,7 +215,7 @@ export function Formular() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="directie" className={eticheteCamp}>Ce direcție te interesează</label>
+            <label htmlFor="directie" className={eticheteCamp}>Ce te interesează</label>
             <select
               {...propsCamp('directie')}
               ref={(el) => { campuri.current.directie = el; }}

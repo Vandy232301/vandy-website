@@ -29,7 +29,7 @@ export const translations = {
         izzyDesc: "Agentul tău imobiliar AI pentru toată România. Fără agent, fără comision. Anunț, poze, preț, contract.",
         blurDesc: "Pay-per-view pentru creatori. Postezi liber ca să fii văzut, blurat ca să fii plătit. Creatorii păstrează 80%.",
         dozainDesc: "Design grafic premium cu un singur abonament lunar. Livrat în ~48 de ore. Poți face pauză sau anula oricând.",
-        elyaDesc: "Asistenți AI, automatizare și follow-up comercial. Transformă prospecții în întâlniri și clienți. Live în 72 de ore.",
+        elyaDesc: "Consiliera cu AI care te cunoaște. Voce caldă, memorie lungă: muncă, decizii, o zi grea. Revine la ce ai lăsat nehotărât.",
         pwasDesc: "Piața autonomă de software. Caută în date publice oportunități, le punctează pe dovezi, iar comunitatea decide ce se construiește.",
         chinaDesc: "Agentul tău AI de achiziții din China. Spui ce vrei, găsim cel mai bun mod să-l cumperi. De la idee până la ușa ta.",
         discover: "Descoperă mai mult"
@@ -43,7 +43,7 @@ export const translations = {
       mentorat: {
         tag: "MASTERCLASS · ATELIER AI",
         title: "Exclusiv pentru antreprenorii și fondatorii care vor să performeze în era AI.",
-        meta: "3 zile live · 10 locuri · noiembrie 2026",
+        meta: "3 masterclass-uri · 1 zi live fiecare · 10 locuri · noiembrie 2026",
         cta: "Vezi masterclass-ul",
         nota: ""
       },
@@ -79,7 +79,7 @@ export const translations = {
         izzyDesc: "Your AI real estate agent for all of Romania. No agent, no commission. Listing, photos, price, contract.",
         blurDesc: "Pay-per-view for creators. Post free to get seen, blurred to get paid. Creators keep 80% of every unlock.",
         dozainDesc: "Premium graphic design on one flat monthly subscription. Delivered in ~48 hours. Pause or cancel anytime.",
-        elyaDesc: "AI assistants, automation and sales follow-up. Turns prospects into meetings and customers. Live in 72 hours.",
+        elyaDesc: "The AI advisor who knows you. A warm voice with a long memory: work, decisions, a rough day. She returns to what you left undecided.",
         pwasDesc: "The autonomous software market. Finds opportunities in public data and scores them on evidence. The community decides.",
         chinaDesc: "Your AI buying agent for sourcing directly from China. Tell us what you want and we find the best way to buy it.",
         discover: "Discover more"
@@ -93,7 +93,7 @@ export const translations = {
       mentorat: {
         tag: "MASTERCLASS · ATELIER AI",
         title: "Exclusively for entrepreneurs and founders who want to perform in the AI era.",
-        meta: "3 live days · 10 seats · November 2026",
+        meta: "3 masterclasses · 1 live day each · 10 seats · November 2026",
         cta: "See the masterclass",
         nota: "Page in Romanian"
       },
@@ -129,7 +129,7 @@ export const translations = {
         izzyDesc: "Tu agente inmobiliario con IA para toda Rumanía. Sin agente, sin comisión. Anuncio, fotos, precio, contrato.",
         blurDesc: "Pago por visualización para creadores. Publica libre para que te vean, borroso para cobrar. Se quedan el 80%.",
         dozainDesc: "Diseño gráfico premium con una sola suscripción mensual. Entregado en ~48 horas. Pausa o cancela cuando quieras.",
-        elyaDesc: "Asistentes de IA y seguimiento comercial. Convierte prospectos en citas y clientes. Listo en 72 horas.",
+        elyaDesc: "La consejera con IA que te conoce. Voz cálida y memoria larga: trabajo, decisiones, un día difícil. Vuelve a lo que dejaste sin decidir.",
         pwasDesc: "El mercado autónomo de software. Busca oportunidades en datos públicos y las puntúa con evidencia. La comunidad decide.",
         chinaDesc: "Tu agente de compras con IA desde China. Dinos qué quieres y encontramos la mejor forma de comprarlo.",
         discover: "Descubre más"
@@ -143,7 +143,7 @@ export const translations = {
       mentorat: {
         tag: "MASTERCLASS · ATELIER AI",
         title: "Exclusivo para emprendedores y fundadores que quieren rendir en la era de la IA.",
-        meta: "3 días en directo · 10 plazas · noviembre 2026",
+        meta: "3 masterclasses · 1 día en directo cada uno · 10 plazas · noviembre 2026",
         cta: "Ver la masterclass",
         nota: "Página en rumano"
       },
@@ -179,7 +179,7 @@ export const translations = {
         izzyDesc: "Votre agent immobilier IA pour toute la Roumanie. Sans agent, sans commission. Annonce, photos, prix, contrat.",
         blurDesc: "Paiement à la vue pour créateurs. Publiez librement pour être vu, flouté pour être payé. Ils gardent 80%.",
         dozainDesc: "Design graphique premium avec un seul abonnement mensuel. Livré en ~48 heures. Pause ou annulation à tout moment.",
-        elyaDesc: "Assistants IA et relance commerciale. Transforme les prospects en rendez-vous et en clients. En ligne en 72 heures.",
+        elyaDesc: "La conseillère IA qui vous connaît. Voix chaleureuse, longue mémoire : travail, décisions, journée difficile. Elle revient sur ce que vous avez laissé en suspens.",
         pwasDesc: "Le marché autonome du logiciel. Explore les données publiques et note les opportunités sur preuves. La communauté décide.",
         chinaDesc: "Votre agent d'achat IA en Chine. Dites-nous ce que vous voulez, nous trouvons la meilleure façon de l'acheter.",
         discover: "Découvrir plus"
@@ -193,7 +193,7 @@ export const translations = {
       mentorat: {
         tag: "MASTERCLASS · ATELIER AI",
         title: "Exclusivement pour les entrepreneurs et les fondateurs qui veulent performer à l’ère de l’IA.",
-        meta: "3 jours en direct · 10 places · novembre 2026",
+        meta: "3 masterclass · 1 jour en direct chacun · 10 places · novembre 2026",
         cta: "Voir la masterclass",
         nota: "Page en roumain"
       },
@@ -229,7 +229,7 @@ export const translations = {
         izzyDesc: "Dein KI-Immobilienmakler für ganz Rumänien. Kein Makler, keine Provision. Inserat, Fotos, Preis, Vertrag.",
         blurDesc: "Pay-per-View für Creator. Frei posten für Reichweite, verschwommen für Umsatz. Creator behalten 80%.",
         dozainDesc: "Premium-Grafikdesign mit einem festen Monatsabo. Lieferung in ~48 Stunden. Jederzeit pausieren oder kündigen.",
-        elyaDesc: "KI-Assistenten und Vertriebs-Follow-up. Macht aus Interessenten Termine und Kunden. In 72 Stunden live.",
+        elyaDesc: "Die KI-Beraterin, die dich kennt. Warme Stimme, langes Gedächtnis: Arbeit, Entscheidungen, ein harter Tag. Sie kommt auf Offenes zurück.",
         pwasDesc: "Der autonome Software-Markt. Findet Chancen in öffentlichen Daten und bewertet sie mit Belegen. Die Community entscheidet.",
         chinaDesc: "Dein KI-Einkaufsagent für die Beschaffung direkt aus China. Sag uns, was du willst — wir finden den besten Weg, es zu kaufen.",
         discover: "Mehr entdecken"
@@ -243,7 +243,7 @@ export const translations = {
       mentorat: {
         tag: "MASTERCLASS · ATELIER AI",
         title: "Exklusiv für Unternehmer und Gründer, die im KI-Zeitalter performen wollen.",
-        meta: "3 Tage live · 10 Plätze · November 2026",
+        meta: "3 Masterclasses · je 1 Live-Tag · 10 Plätze · November 2026",
         cta: "Masterclass ansehen",
         nota: "Seite auf Rumänisch"
       },
@@ -279,7 +279,7 @@ export const translations = {
         izzyDesc: "Ваш ИИ-риелтор для всей Румынии. Без агента и комиссии. Объявление, фото, цена, договор.",
         blurDesc: "Оплата за просмотр для авторов. Публикуй открыто ради охвата, размыто ради дохода. Авторы получают 80%.",
         dozainDesc: "Премиальный графический дизайн по одной месячной подписке. Готово за ~48 часов. Пауза или отмена в любой момент.",
-        elyaDesc: "ИИ-ассистенты и коммерческий follow-up. Превращает лиды во встречи и клиентов. Запуск за 72 часа.",
+        elyaDesc: "ИИ-советница, которая тебя знает. Тёплый голос и долгая память: работа, решения, тяжёлый день. Возвращается к тому, что ты не решил.",
         pwasDesc: "Автономный рынок ПО. Ищет возможности в данных и оценивает их по фактам. Решает сообщество.",
         chinaDesc: "Ваш ИИ-агент по закупкам напрямую из Китая. Скажите, что вам нужно, и мы найдём лучший способ это купить.",
         discover: "Узнать больше"
@@ -293,7 +293,7 @@ export const translations = {
       mentorat: {
         tag: "MASTERCLASS · ATELIER AI",
         title: "Только для предпринимателей и основателей, которые хотят быть результативными в эпоху ИИ.",
-        meta: "3 дня в прямом эфире · 10 мест · ноябрь 2026",
+        meta: "3 мастер-класса · по 1 дню в прямом эфире · 10 мест · ноябрь 2026",
         cta: "Смотреть мастеркласс",
         nota: "Страница на румынском"
       },

@@ -158,8 +158,12 @@ export const PROJECTS: Project[] = [
   {
     id: 'elya',
     title: 'ELYA',
-    category: 'AI Sales',
-    href: 'https://elya.app/',
+    category: 'AI Companion',
+    // Owner, 29.10.2026: „La Elya vezi ca domeniul este elya.chat".
+    // Era `elya.app` — alt produs, al altei firme (soluții imobiliare, cu
+    // panou la clientes.elya.app). Logoul din repo e orbul roz pe vișiniu,
+    // adică exact elya.chat; `elya.app` a fost greșit de la bun început.
+    href: 'https://elya.chat/',
     avatar: ELYA_LOGO,
     descKey: 'elyaDesc',
   },

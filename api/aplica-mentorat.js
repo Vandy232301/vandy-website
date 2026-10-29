@@ -18,9 +18,11 @@ const EXPEDITOR = process.env.MENTORAT_FROM || 'VANDY <noreply@vandy.ro>';
 const EXPEDITOR_REZERVA = 'ATELIER AI <onboarding@resend.dev>';
 
 const DIRECTII = {
-  agentie: 'AGENȚIA — vinde servicii cu AI',
-  produs: 'PRODUSUL — își construiește aplicația',
-  creativ: 'CREATIVUL — video cu AI pentru branduri',
+  software: 'SOFTWARE — site-uri, aplicații, software la comandă',
+  agenti: 'AGENȚI — agenția lui de marketing cu AI',
+  automatizari: 'AUTOMATIZĂRI — eficientizează afaceri',
+  doua: 'ORICARE DOUĂ dintre ele',
+  toate: 'TOATE TREI',
   'nu-stiu': 'NU ȘTIE ÎNCĂ — are nevoie de ajutor să aleagă',
 };
 
@@ -120,7 +122,7 @@ function validatorul(d) {
   }
   if (cifreInventate(tel.replace(/\D/g, ''))) return 'Numărul ăsta nu pare real.';
 
-  if (!DIRECTII[d.directie]) return 'Alege o direcție.';
+  if (!DIRECTII[d.directie]) return 'Alege ce te interesează.';
   if (!STADII[d.stadiu]) return 'Alege unde ești acum.';
   if (!BUGETE[d.buget]) return 'Alege un interval de buget.';
 
@@ -158,7 +160,7 @@ function emailCatreProprietar(d) {
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         ${rand('Telefon', `<a href="tel:${esc(d.telefon)}" style="color:#fff;text-decoration:none">${esc(formateazaTelefon(d.telefon))}</a>`)}
         ${rand('Email', `<a href="mailto:${esc(d.email)}" style="color:#fff;text-decoration:none">${esc(d.email)}</a>`)}
-        ${rand('Direcția', esc(DIRECTII[d.directie] || d.directie))}
+        ${rand('Ce vrea', esc(DIRECTII[d.directie] || d.directie))}
         ${rand('Unde e acum', esc(STADII[d.stadiu] || d.stadiu))}
         ${rand('Ar investi', `<strong style="color:#39ff14">${esc(BUGETE[d.buget] || d.buget)}</strong>`)}
       </table>
@@ -187,12 +189,12 @@ function emailCatreAplicant(nume) {
     <tr><td style="padding-top:28px">
       <p style="margin:0 0 16px;color:#fff;font-size:22px;font-weight:700;line-height:1.35;font-family:Arial,sans-serif">${prenume}, am primit datele tale.</p>
       <p style="margin:0 0 14px;color:#a3a3a3;font-size:15px;line-height:1.7;font-family:Arial,sans-serif">Te contactează echipa în maximum 48 de ore, de pe un număr din România. Apelul durează 20 de minute.</p>
-      <p style="margin:0 0 14px;color:#a3a3a3;font-size:15px;line-height:1.7;font-family:Arial,sans-serif">Te întrebăm ce vrei să construiești, îți spunem cinstit dacă se poate în trei zile, stabilim pe care din cele trei direcții intri și primești toate detaliile — datele exacte, prețul și condițiile. Dacă nu ne potrivim, ți-o spunem la telefon și nu ai pierdut nimic.</p>
+      <p style="margin:0 0 14px;color:#a3a3a3;font-size:15px;line-height:1.7;font-family:Arial,sans-serif">Te întrebăm ce vrei să construiești, îți spunem cinstit dacă se poate într-o zi, stabilim pe care din cele trei masterclass-uri intri — unul, două sau toate — și primești toate detaliile: datele exacte, prețul și condițiile. Dacă nu ne potrivim, ți-o spunem la telefon și nu ai pierdut nimic.</p>
     </td></tr>
     <tr><td style="padding:8px 0 20px">
       <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#111111" style="background:#111;border:1px solid #222;border-radius:14px;padding:20px">
         <p style="margin:0 0 10px;color:#fff;font-size:15px;font-weight:700;font-family:Arial,sans-serif">Un lucru, până vorbim</p>
-        <p style="margin:0;color:#a3a3a3;font-size:14px;line-height:1.7;font-family:Arial,sans-serif">Gândește-te la un singur lucru concret pe care ai vrea să îl ai gata la finalul celor trei zile. Nu o idee mare — un lucru. Cu cât e mai precis, cu atât apelul e mai scurt și mai util.</p>
+        <p style="margin:0;color:#a3a3a3;font-size:14px;line-height:1.7;font-family:Arial,sans-serif">Gândește-te la un singur lucru concret pe care ai vrea să îl ai gata la finalul zilei. Nu o idee mare — un lucru. Cu cât e mai precis, cu atât apelul e mai scurt și mai util.</p>
       </td></tr></table>
     </td></tr>
     <tr><td align="center" style="padding-bottom:24px">

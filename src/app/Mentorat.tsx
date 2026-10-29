@@ -1,9 +1,9 @@
 import { createElement, useEffect, useState } from 'react';
 import {
-  ArrowLeft, ArrowRight, ArrowUpRight, Award, Boxes, Briefcase, Check, Clapperboard, Clock,
-  Blocks, Film, Globe, Handshake, Hash, Infinity as Infinit, LifeBuoy, MessageCircle, Minus,
-  Newspaper, PhoneCall,
-  Quote, Receipt, Rocket, Tag, Undo2, Users, Video, Wrench, Layers, User,
+  ArrowRight, ArrowUpRight, Award, Boxes, Briefcase, Check, Clapperboard, Clock,
+  Blocks, Code2, Compass, Eye, Film, Globe, Handshake, Hash, Infinity as Infinit, LifeBuoy,
+  Megaphone, MessageCircle, Minus, Newspaper, PhoneCall,
+  Quote, Receipt, Rocket, ShieldCheck, Tag, Target, Undo2, Users, Video, Wrench, Layers, User,
 } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { Caseta, Secventa, Eticheta, TitluSecvenca, Buton } from './components/mentorat/Bucati';
@@ -16,7 +16,7 @@ import { Formular } from './components/mentorat/Formular';
 import {
   OFERTA, DIRECTII, PLECI_CU, ZILE, NU_E_PENTRU, INTREBARI, locuriLibere,
   CAPTURI, PRODUSE_DOVADA, PIATA, PIATA_AVERTISMENT, RECENZII, INCREDERE, FIRMA,
-  COMUNITATE, BRANDURI, PENTRU_CINE,
+  COMUNITATE, BRANDURI, PENTRU_CINE, EXPERTIZA, SOLOPRENOR,
 } from '../data/mentorat';
 // Portretul real, cel de pe cardurile de social media. NU randarea neagră de
 // pe prima pagină: aici vinde un om, nu un personaj.
@@ -102,7 +102,7 @@ function Locuri() {
       „apasă aici".
 
    🟪 MOV (`mov`) — STRUCTURĂ și METODĂ. Numerele celor trei piese ale
-      motorului, numerele direcțiilor, etichetele celor trei zile,
+      motorului, numerele celor trei masterclass-uri, etichetele părților zilei,
       numerotarea produselor, întrebarea deschisă din FAQ, banda de
       încredere, numele brandurilor la hover. Tot ce descrie cum e făcut
       programul, nu ce câștigi din el.
@@ -124,6 +124,7 @@ const ICOANE = {
   glob: Globe, premiu: Award, ceas: Clock,
   servietă: Briefcase, cutie: Boxes, clachetă: Clapperboard, echipă: Users,
   mână: Handshake, blocuri: Blocks, film: Film,
+  ochi: Eye, busolă: Compass, portavoce: Megaphone, țintă: Target, cod: Code2,
 } as const;
 
 type NumeIcoana = keyof typeof ICOANE;
@@ -149,49 +150,70 @@ export default function Mentorat() {
 
         {/* Header */}
         <header className="flex flex-row justify-between items-center py-4">
-          <a href="/" className="flex flex-row items-center gap-3 group">
-            <ArrowLeft size={16} className="text-neutral-600 group-hover:text-neon transition-colors" />
-            <h1 className="text-2xl font-bold text-white tracking-wide">VANDY</h1>
-          </a>
+          {/* Fără link spre „/" și fără săgeată. Owner, 29.10.2026: „Din pagina
+              asta de masterclass nu vreau sa duca pe pagina principala deci
+              elimina sageata aia." O pagină de vânzare care oferă o ieșire în
+              antet își pierde oamenii exact în secunda în care ezită. */}
+          <h1 className="text-2xl font-bold text-white tracking-wide">VANDY</h1>
           <Eticheta ton="mov">{OFERTA.tip} · {OFERTA.numeProgram}</Eticheta>
         </header>
 
-        {/* ——— HERO ——— */}
-        <Caseta className="overflow-hidden">
-          <div className="flex flex-col md:flex-row">
-            <div className="flex-1 p-6 md:p-10 bg-gradient-to-br from-neutral-900/50 to-transparent">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-14 h-14 rounded-full overflow-hidden border border-neutral-700 shrink-0">
-                  <ImageWithFallback
-                    src={AVATAR_IMG}
-                    alt="VANDY"
-                    loading="eager"
-                    className="w-full h-full object-cover"
-                  />
+        {/* ——— HERO ———
+             Singura casetă cu colț de 1.5rem și cu lumină proprie înăuntru.
+             Un hero care arată exact ca restul casetelor nu mai e hero. */}
+        <Caseta radius="rounded-3xl" className="overflow-hidden">
+          <span aria-hidden className="lumina-hero pointer-events-none absolute inset-0" />
+
+          <div className="relative flex flex-col md:flex-row">
+            <div className="flex-1 p-6 md:p-10">
+
+              {/* Identitatea. Portretul a crescut și a primit inelul în care
+                  verdele și movul se întâlnesc — singurul loc din pagină. */}
+              <div className="flex items-center gap-4 mb-9">
+                {/* Pătrat cu colțuri rotunjite, nu cerc. Owner, 29.10.2026:
+                    „iconita la avatar as face-o ca la un app patrat cu colturi
+                    rotunjite nu rotund." Raza interioară e cu 2px mai mică
+                    decât cea exterioară, exact cât grosimea inelului —
+                    altfel colțul interior se vede strâmb. */}
+                <div className="inel-portret shrink-0 w-16 h-16 md:w-[4.5rem] md:h-[4.5rem] rounded-[1.1rem] p-[2px]">
+                  <div className="w-full h-full rounded-[1rem] overflow-hidden bg-neutral-950">
+                    <ImageWithFallback
+                      src={AVATAR_IMG}
+                      alt="VANDY"
+                      loading="eager"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </div>
                 <div>
-                  <p className="text-white text-base font-bold tracking-wide">VANDY</p>
-                  <p className="text-[11px] md:text-xs text-neutral-500 uppercase tracking-widest font-semibold tabular-nums">
-                    11 aplicații live · 11 ani în branding
+                  <p className="text-white text-lg font-bold tracking-wide leading-tight">VANDY</p>
+                  <p className="mt-1 text-[11px] md:text-xs text-neutral-500 uppercase tracking-widest font-semibold tabular-nums">
+                    11 aplicații live · peste 16 ani de experiență
                   </p>
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2.5 mb-6">
-                <span className="px-4 py-1.5 rounded-full bg-neon text-black text-xs font-bold tracking-[0.18em] uppercase">
+              <div className="flex flex-wrap items-center gap-2.5 mb-7">
+                <span className="px-4 py-1.5 rounded-full bg-neon text-black text-xs font-bold tracking-[0.18em] uppercase lumina-bloc">
                   {OFERTA.tip}
                 </span>
-                <span className="px-4 py-1.5 rounded-full border border-neutral-700 text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase tabular-nums">
-                  {OFERTA.durata}
+                {/* Într-o singură pastilă, nu în două: patru pastile treceau pe
+                    al doilea rând și rupeau ritmul de sub nume. */}
+                <span className="px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase tabular-nums">
+                  {DIRECTII.length} masterclass-uri · {OFERTA.durata} fiecare
                 </span>
-                <span className="px-4 py-1.5 rounded-full border border-neutral-700 text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase tabular-nums">
+                {/* Punctul verde spune „numărul de alături e starea de acum",
+                    nu „grăbește-te". Static, nu pulsant: zece locuri chiar sunt
+                    libere, dar o animație ar vinde o urgență inexistentă. */}
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase tabular-nums">
+                  <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-neon lumina-linie" />
                   Doar {locuriLibere} locuri
                 </span>
               </div>
 
-              <h2 className="text-4xl md:text-[3rem] font-bold leading-[1.1] text-white tracking-tight mb-6 text-balance">
+              <h2 className="text-4xl md:text-[3rem] font-bold leading-[1.06] text-white tracking-tight mb-8 text-balance">
                 Nu te învăț să folosești AI.<br />
-                <span className="text-neutral-500">
+                <span className="text-neutral-400">
                   Te învăț să construiești cu AI lucruri{' '}
                   <span className="serif-italic text-neon lumina-text text-[1.1em]">
                     pentru care oamenii plătesc
@@ -200,59 +222,107 @@ export default function Mentorat() {
                 </span>
               </h2>
 
-              <p className="text-neutral-200 text-base md:text-lg font-semibold leading-snug masura-intro mb-6 pb-6 border-b border-neutral-800/70">
-                {OFERTA.pentruCine}
-              </p>
+              {/* Poziționarea, ca citat: firul verde din stânga o scoate din
+                  curgerea paragrafelor fără să mai ceară o linie despărțitoare. */}
+              <div className="relative pl-5 mb-7">
+                <span
+                  aria-hidden
+                  className="absolute left-0 top-1 bottom-1 w-px bg-gradient-to-b from-neon via-neon/40 to-transparent"
+                />
+                <p className="text-white text-lg md:text-xl font-semibold leading-snug masura-intro">
+                  {OFERTA.pentruCine}
+                </p>
+              </div>
 
-              <p className="text-neutral-400 text-base leading-relaxed masura-intro mb-8">
-                Trei zile live, zece antreprenori. Pleci cu lucrul tău construit și publicat, cu
-                prețul scris pe el și cu primii zece clienți pe nume.
+              <p className="text-neutral-400 text-base leading-relaxed masura-intro mb-9">
+                Trei masterclass-uri, o zi live fiecare, zece antreprenori. Iei unul sau pe toate
+                trei. Pleci cu lucrul tău construit și publicat, cu prețul scris pe el și cu primii
+                zece clienți pe nume.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3">
                 <Buton href="#aplica">Lasă-ți datele pentru detalii <ArrowRight size={16} /></Buton>
-                <Buton href="#zile" variant="contur">Vezi cele 3 zile</Buton>
+                <Buton href="#zile" variant="contur">Vezi cum arată ziua</Buton>
               </div>
             </div>
 
-            <div className="w-full md:w-[34%] border-t md:border-t-0 md:border-l border-white/[0.06] p-6 md:p-8 flex flex-col gap-8 bg-black/20">
+            {/* Fișa. Despărțită de argument printr-un fir de lumină, nu printr-un
+                chenar gri: pe negru, un gri de 1px arată ca o crăpătură. */}
+            <div className="relative w-full md:w-[34%] border-t md:border-t-0 border-white/[0.06] p-6 md:p-8 flex flex-col gap-8 bg-black/20">
+              <span
+                aria-hidden
+                className="pointer-events-none absolute left-0 inset-y-0 hidden md:block w-px bg-gradient-to-b from-transparent via-white/[0.14] to-transparent"
+              />
+
               <div className="space-y-4">
-                <Eticheta>Locuri</Eticheta>
+                <Eticheta>Locuri libere</Eticheta>
                 <p className="text-6xl md:text-7xl font-bold text-neon tracking-tight leading-none tabular-nums lumina-text">
                   {locuriLibere}<span className="text-neutral-700 text-3xl">/{OFERTA.locuriTotal}</span>
                 </p>
                 <Locuri />
                 <p className="text-neutral-500 text-xs leading-relaxed">
-                  Zece, nu o sută. În ziua 2 mă uit pe ecranul fiecăruia și repar pe loc.
+                  Zece, nu o sută. La mijlocul zilei mă uit pe ecranul fiecăruia și repar pe loc.
                 </p>
               </div>
 
-              {/* Fișa tehnică. Stătea sub butoane, ca rând de text; aici umple
-                  coloana și lasă stânga doar cu argumentul și cu CTA-ul. */}
+              {/* Fișa tehnică, cu linie punctată între cheie și valoare. E
+                  detaliul de sumar de carte care face coloana să pară tipărită,
+                  nu o listă de perechi lipite în două capete. */}
               <div className="pt-6 border-t border-white/[0.06]">
                 <Eticheta ton="mov">Pe scurt</Eticheta>
                 <dl className="mt-4 space-y-3">
                   {[
-                    ['Durata', OFERTA.durata],
+                    ['Masterclass-uri', `${DIRECTII.length}, separat sau împreună`],
+                    ['Durata', `${OFERTA.durata} fiecare`],
                     ['Comunitate', 'pe viață'],
                     ['Start', OFERTA.dateText.replace('Pornește în ', '')],
                     ['Limba', 'română'],
                   ].map(([cheie, valoare]) => (
-                    <div key={cheie} className="flex items-baseline justify-between gap-4">
-                      <dt className="text-neutral-600 text-xs">{cheie}</dt>
-                      <dd className="text-white text-sm font-semibold text-right">{valoare}</dd>
+                    <div key={cheie} className="flex items-baseline gap-2">
+                      <dt className="shrink-0 text-neutral-500 text-xs">{cheie}</dt>
+                      <span
+                        aria-hidden
+                        className="flex-1 -translate-y-[3px] border-b border-dotted border-white/15"
+                      />
+                      <dd className="shrink-0 text-white text-sm font-semibold">{valoare}</dd>
                     </div>
                   ))}
                 </dl>
               </div>
 
               <div className="space-y-3 pt-6 border-t border-white/[0.06]">
-                <Eticheta ton="neon">Garanție pe livrare</Eticheta>
-                <p className="text-neutral-300 text-sm leading-relaxed">
-                  Dacă la finalul zilei 3 nu ai construit și publicat lucrul tău, îți returnez toți
-                  banii. Fără motive.
-                </p>
+                <span className="flex items-center gap-2 text-neon">
+                  <ShieldCheck size={14} strokeWidth={2.2} className="shrink-0" />
+                  <Eticheta ton="neon">Garanție pe livrare</Eticheta>
+                </span>
+                <p className="text-neutral-300 text-sm leading-relaxed">{OFERTA.garantie}</p>
               </div>
+            </div>
+          </div>
+
+          {/* Banda de experiență. Pe toată lățimea casetei, sub cele două
+              coloane: îi dă hero-ului un soclu și scoate cele patru meserii
+              din rândul de 11px de sub nume, unde nu le-ar fi citit nimeni. */}
+          <div className="relative border-t border-white/[0.06] bg-black/30">
+            <div className="px-6 md:px-10 pt-5 pb-4">
+              <Eticheta ton="mov">{EXPERTIZA.ani}</Eticheta>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4">
+              {EXPERTIZA.domenii.map((d, i) => (
+                <div
+                  key={d.nume}
+                  className={`flex items-center gap-3 px-6 md:px-5 py-5 border-white/[0.06] ${
+                    i % 2 === 1 ? 'border-l ' : ''
+                  }${i >= 2 ? 'border-t md:border-t-0 ' : ''}${i === 2 ? 'md:border-l' : ''}`}
+                >
+                  {createElement(ICOANE[d.icon as NumeIcoana], {
+                    size: 17, className: 'text-mov shrink-0', strokeWidth: 1.9,
+                  })}
+                  <span className="text-neutral-200 text-[13px] font-semibold leading-tight">
+                    {d.nume}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </Caseta>
@@ -357,7 +427,7 @@ export default function Mentorat() {
           </div>
           <p className="text-neutral-500 text-sm leading-relaxed mt-4 masura-text">
             Fiecare ecran e luat de pe site-ul live, nu e machetă. Deschide oricare și verifică.
-            Toate sunt construite cu metoda din cele trei zile.
+            Toate sunt construite cu metoda din masterclass.
           </p>
         </Secventa>
 
@@ -369,7 +439,7 @@ export default function Mentorat() {
           />
           <Caseta className="p-6 md:p-8">
             <p className="text-neutral-400 text-sm leading-relaxed masura-text mb-8">
-              Cele trei direcții folosesc același motor, iar motorul are trei piese. Le înveți o
+              Cele trei masterclass-uri folosesc același motor, iar motorul are trei piese. Le înveți o
               dată, în ziua 1; de acolo se schimbă doar ce vinzi.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
@@ -393,8 +463,8 @@ export default function Mentorat() {
         {/* ——— DIRECȚII ——— */}
         <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
-            eticheta="Alegi o direcție"
-            titlu={<>Le primești pe toate trei. Execuți una.</>}
+            eticheta="Cele trei masterclass-uri"
+            titlu={<>Trei meserii. Îl iei pe cel care te privește.</>}
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {DIRECTII.map((d) => (
@@ -437,11 +507,65 @@ export default function Mentorat() {
           </div>
           <Caseta className="p-6 mt-3">
             <p className="text-neutral-300 text-sm leading-relaxed masura-text">
-              <span className="text-neon font-semibold">Alegi una pentru primele 30 de zile.</span>{' '}
-              Materialele le ai pe toate trei, dar execuți una singură — ăsta e singurul motiv pentru
-              care oamenii termină ce încep. Care anume, stabilim la apel.
+              <span className="text-neon font-semibold">Fiecare se cumpără separat.</span>{' '}
+              Unul singur e un masterclass întreg, de o zi, cu lucrul tău publicat la final. Dacă le
+              iei pe două sau pe toate trei, prețul pe bucată scade. Care anume ți se potrivește și
+              cât costă, stabilim la apel.
             </p>
           </Caseta>
+        </Secventa>
+
+        {/* ——— SOLOPRENOR ———
+             Cerută de owner pe 29.10.2026, odată cu împărțirea în trei.
+             Stă aici, imediat după cele trei meserii: întâi vezi ce înveți,
+             apoi vezi cum arată viața în care te lasă.
+
+             Fotografii reale, nu randări AI, și fără niciun om în cadru —
+             vezi nota din src/data/mentorat.ts. Tratamentul (desaturare +
+             întunecare, care se desfac la hover) le ține pe toate patru în
+             aceeași lumină, deși sunt făcute de patru oameni diferiți. */}
+        <Secventa className="pt-16 md:pt-24">
+          <TitluSecvenca
+            eticheta={SOLOPRENOR.eticheta}
+            titlu={<>{SOLOPRENOR.titlu}</>}
+          />
+          <p className="text-neutral-400 text-base leading-relaxed masura-text -mt-3 mb-8">
+            {SOLOPRENOR.text}
+          </p>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            {SOLOPRENOR.cadre.map((c) => (
+              <div
+                key={c.titlu}
+                className="group relative overflow-hidden rounded-2xl border border-white/[0.07] shadow-[0_24px_60px_-28px_rgba(0,0,0,0.95)]"
+              >
+                <div className="aspect-[4/5] overflow-hidden bg-neutral-950">
+                  <ImageWithFallback
+                    src={c.imagine}
+                    alt=""
+                    loading="lazy"
+                    className="w-full h-full object-cover grayscale-[0.3] brightness-[0.62] contrast-[1.08] group-hover:grayscale-0 group-hover:brightness-90 group-hover:scale-[1.04] transition-all duration-700"
+                  />
+                </div>
+                {/* Degradeul e ce face textul lizibil peste orice fotografie.
+                    Fără el, un titlu alb peste cer luminat dispare. */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent"
+                />
+                <div className="absolute inset-x-0 bottom-0 p-5">
+                  <p className="text-white text-base md:text-lg font-bold leading-tight mb-1.5">
+                    {c.titlu}
+                  </p>
+                  <p className="text-neutral-300 text-[13px] leading-snug">{c.text}</p>
+                </div>
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                />
+              </div>
+            ))}
+          </div>
         </Secventa>
 
         {/* ——— CÂT SE VINDE PE PIAȚĂ ——— */}
@@ -475,10 +599,10 @@ export default function Mentorat() {
           <Caseta className="p-6 md:p-8 mt-3">
             <Eticheta ton="neon">Când îți acoperi investiția</Eticheta>
             <p className="text-neutral-300 text-base leading-relaxed masura-text mt-3 mb-5">
-              Din ziua 3 ai ce să vinzi: lucrul construit, oferta, prețul și primii zece clienți pe
+              Din prima zi ai ce să vinzi: lucrul construit, oferta, prețul și primii zece clienți pe
               nume. La prețurile de mai sus,{' '}
               <span className="text-neon font-semibold">un singur proiect livrat acoperă investiția
-              în masterclass</span>, pe oricare din cele trei direcții.
+              în masterclass</span>, pe oricare din cele trei.
             </p>
             <p className="text-neutral-500 text-xs leading-relaxed masura-mic">
               {PIATA_AVERTISMENT}
@@ -490,7 +614,7 @@ export default function Mentorat() {
         <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="Ce pleci cu"
-            titlu={<>Cinci lucruri pe care le poți arăta cuiva luni dimineață.</>}
+            titlu={<>Șase lucruri pe care le poți arăta cuiva luni dimineață.</>}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {PLECI_CU.map((x, i) => (
@@ -509,12 +633,12 @@ export default function Mentorat() {
           </div>
         </Secventa>
 
-        {/* ——— CELE 3 ZILE ——— */}
+        {/* ——— CUM ARATĂ ZIUA ——— */}
         <Secventa className="pt-16 md:pt-24">
           <div id="zile" className="scroll-mt-8">
             <TitluSecvenca
-              eticheta="Structura"
-              titlu={<>Trei zile. Fiecare are o singură treabă.</>}
+              eticheta="Structura unei zile"
+              titlu={<>O zi, trei părți. La fel în fiecare dintre cele trei.</>}
             />
           </div>
           <div className="flex flex-col gap-3">
@@ -533,123 +657,141 @@ export default function Mentorat() {
             ))}
           </div>
           <p className="text-neutral-500 text-sm leading-relaxed mt-4 masura-text">
-            Live, cu camera pornită, și înregistrat. {OFERTA.dateNota}
+            Live, cu camera pornită, și înregistrat. Aceeași structură indiferent pe care dintre cele
+            trei o iei. {OFERTA.dateNota}
           </p>
         </Secventa>
 
         {/* ——— COMUNITATEA ———
              Blocul cu cea mai mare greutate vizuală de pe pagină: e singurul
-             lucru din ofertă care nu se termină în trei zile, deci merită să
-             se vadă ca atare. */}
-        <Secventa className="pt-16 md:pt-24">
-          <Caseta className="overflow-hidden ring-2 ring-neon/25 lumina-bloc">
-            <div className="bg-gradient-to-br from-neon/[0.07] via-transparent to-mov/[0.07]">
+             lucru din ofertă care nu se termină odată cu ziua.
 
-              <div className="flex flex-wrap items-center gap-3 px-6 pt-6 md:px-10 md:pt-8">
-                <span className="px-4 py-2 rounded-full bg-neon text-black text-xs font-bold tracking-[0.18em] uppercase lumina-bloc">
+             Nu mai e un card cu halou verde de 30px — owner, 29.10.2026:
+             „Umbra asta cu verde nu imi place." În locul lui, un fir de un
+             pixel care trece din verde în mov, plus patru benzi despărțite de
+             linii: antetul, argumentul, ce primești și seria. Segmentat, nu
+             turnat într-o singură bucată. */}
+        <Secventa className="pt-16 md:pt-24">
+          <div className="chenar-gradient rounded-[1.0625rem] p-px shadow-[0_40px_90px_-45px_rgba(0,0,0,1)]">
+            <div className="relative rounded-2xl overflow-hidden bg-neutral-950">
+              <span aria-hidden className="lumina-hero pointer-events-none absolute inset-0" />
+
+              {/* BANDA 1 — ce este */}
+              <div className="relative flex flex-wrap items-center gap-3 px-6 md:px-10 py-5 border-b border-white/[0.07] bg-white/[0.02]">
+                <span className="px-4 py-2 rounded-full bg-neon text-black text-xs font-bold tracking-[0.18em] uppercase">
                   Acces {COMUNITATE.acces}
                 </span>
-                <span className="px-4 py-2 rounded-full border border-neutral-700 text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase">
+                <span className="px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase">
                   pe {COMUNITATE.platforma}
                 </span>
-                <span className="px-4 py-2 rounded-full border border-neutral-700 text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase">
+                <span className="px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase">
                   plătit o dată
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-8 lg:gap-12 p-6 md:p-10">
-
-                <div>
-                  <h2 className="text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-[1.15] mb-5 masura-titlu">
-                    Masterclass-ul se termină în trei zile.{' '}
+              {/* BANDA 2 — argumentul, lângă panoul de Discord */}
+              <div className="relative grid grid-cols-1 lg:grid-cols-[1.15fr_1fr]">
+                <div className="p-6 md:p-10 flex flex-col justify-center">
+                  <h2 className="text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-[1.12] mb-5 masura-titlu">
+                    Masterclass-ul se termină într-o zi.{' '}
                     <span className="serif-italic text-neon lumina-text text-[1.1em]">
                       Comunitatea, niciodată.
                     </span>
                   </h2>
 
-                  <p className="text-neutral-300 text-base leading-relaxed masura-text mb-8">
-                    Problemele nu apar în ziua 2, apar în săptămâna 4. De asta accesul nu e bonus și
+                  <p className="text-neutral-300 text-base leading-relaxed masura-text">
+                    Problemele nu apar în ziua masterclass-ului, apar în săptămâna 4. De asta accesul nu e bonus și
                     nu e abonament: îl cumperi o dată, cu masterclass-ul, și rămâne al tău.
                   </p>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-7 gap-y-6">
-                    {COMUNITATE.lucruri.map((x) => (
-                      <div key={x.titlu} className="flex items-start gap-3">
-                        <span className="shrink-0 mt-0.5 w-7 h-7 rounded-lg bg-neon/10 border border-neon/25 flex items-center justify-center">
-                          {createElement(ICOANE[x.icon as NumeIcoana], { size: 14, className: 'text-neon', strokeWidth: 2 })}
-                        </span>
-                        <div>
-                          <p className="text-white text-[15px] font-bold mb-1">{x.titlu}</p>
-                          <p className="text-neutral-400 text-sm leading-relaxed">{x.text}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
                 </div>
 
-                {/* Panoul comunității.
-                    ⚠️ Locurile din dreapta sunt goale DINADINS — sunt locuri, nu
-                    oameni. Chipuri de stoc aici ar fi exact aceeași minciună ca o
-                    recenzie inventată. Când există poze reale cu membri, intră aici. */}
-                <div className="rounded-2xl border border-neutral-800 bg-black/50 overflow-hidden self-start">
-                  <div className="flex items-center gap-2 px-4 py-2.5 border-b border-neutral-800 bg-neutral-900/70">
-                    <span className="flex gap-1.5 shrink-0">
-                      <span className="w-2 h-2 rounded-full bg-neutral-700" />
-                      <span className="w-2 h-2 rounded-full bg-neutral-700" />
-                      <span className="w-2 h-2 rounded-full bg-neutral-700" />
-                    </span>
-                    <span className="flex-1 text-center text-[10px] text-neutral-500 font-medium truncate">
-                      {COMUNITATE.platforma.toLowerCase()} · {COMUNITATE.nume}
-                    </span>
-                    <span className="w-[26px] shrink-0" />
-                  </div>
+                <div className="p-6 md:p-8 border-t lg:border-t-0 lg:border-l border-white/[0.07] bg-black/40 flex items-center">
+                  <div className="w-full rounded-xl border border-neutral-800 bg-neutral-950 overflow-hidden shadow-2xl shadow-black/60">
+                    <div className="flex items-center gap-2 px-4 py-2.5 border-b border-neutral-800 bg-neutral-900/70">
+                      <span className="flex gap-1.5 shrink-0">
+                        <span className="w-2 h-2 rounded-full bg-neutral-700" />
+                        <span className="w-2 h-2 rounded-full bg-neutral-700" />
+                        <span className="w-2 h-2 rounded-full bg-neutral-700" />
+                      </span>
+                      <span className="flex-1 text-center text-[10px] text-neutral-500 font-medium truncate">
+                        {COMUNITATE.platforma.toLowerCase()} · {COMUNITATE.nume}
+                      </span>
+                      <span className="w-[26px] shrink-0" />
+                    </div>
 
-                  <div className="p-3">
-                    {COMUNITATE.canale.map((canal, i) => (
-                      <div
-                        key={canal}
-                        className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
-                          i === 0 ? 'bg-mov/10' : ''
-                        }`}
-                      >
-                        <Hash size={13} className={i === 0 ? 'text-mov' : 'text-neutral-600'} />
-                        <span className={`text-[13px] ${i === 0 ? 'text-white font-semibold' : 'text-neutral-400'}`}>
-                          {canal}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="px-4 py-4 border-t border-neutral-800 space-y-3">
-                    <Eticheta ton="mov">Seria 1</Eticheta>
-                    <div className="flex items-center gap-3">
-                      <div className="flex -space-x-2.5">
-                        <span className="w-9 h-9 rounded-full overflow-hidden border-2 border-neutral-900 ring-1 ring-neon/40 shrink-0">
-                          <ImageWithFallback src={AVATAR_IMG} alt="VANDY" className="w-full h-full object-cover" />
-                        </span>
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <span
-                            key={i}
-                            className="w-9 h-9 rounded-full bg-neutral-900 border-2 border-neutral-900 ring-1 ring-neutral-800 flex items-center justify-center shrink-0"
-                          >
-                            <User size={13} className="text-neutral-700" />
+                    <div className="p-3">
+                      {COMUNITATE.canale.map((canal, i) => (
+                        <div
+                          key={canal}
+                          className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
+                            i === 0 ? 'bg-mov/10 border border-mov/20' : ''
+                          }`}
+                        >
+                          <Hash size={13} className={i === 0 ? 'text-mov' : 'text-neutral-600'} />
+                          <span className={`text-[13px] ${i === 0 ? 'text-white font-semibold' : 'text-neutral-400'}`}>
+                            {canal}
                           </span>
-                        ))}
-                      </div>
-                      <p className="text-neutral-500 text-xs leading-snug">
-                        tu și încă{' '}
-                        <span className="text-white font-semibold tabular-nums">
-                          {OFERTA.locuriTotal - 1}
-                        </span>
-                        , plus eu
-                      </p>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
+              </div>
 
+              {/* BANDA 3 — ce primești acolo, în celule despărțite de linii.
+                  `-mb-px -mr-px` pe grilă: marginea de jos și cea din dreapta
+                  ies sub `overflow-hidden`, deci nu se dublează cu chenarul. */}
+              <div className="relative border-t border-white/[0.07]">
+                <div className="px-6 md:px-10 pt-6 pb-4">
+                  <Eticheta ton="mov">Ce primești acolo</Eticheta>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-white/[0.07] -mb-px -mr-px">
+                  {COMUNITATE.lucruri.map((x) => (
+                    <div
+                      key={x.titlu}
+                      className="border-b border-r border-white/[0.07] px-6 md:px-8 py-6 bg-white/[0.012]"
+                    >
+                      <span className="inline-flex w-9 h-9 rounded-xl bg-neon/10 border border-neon/25 items-center justify-center mb-4">
+                        {createElement(ICOANE[x.icon as NumeIcoana], { size: 16, className: 'text-neon', strokeWidth: 1.9 })}
+                      </span>
+                      <p className="text-white text-[15px] font-bold mb-1.5">{x.titlu}</p>
+                      <p className="text-neutral-400 text-sm leading-relaxed">{x.text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* BANDA 4 — seria.
+                  ⚠️ Locurile sunt goale DINADINS — sunt locuri, nu oameni.
+                  Chipuri de stoc aici ar fi exact aceeași minciună ca o
+                  recenzie inventată. Când există poze reale, intră aici. */}
+              <div className="relative flex flex-wrap items-center justify-between gap-x-6 gap-y-4 px-6 md:px-10 py-6 border-t border-white/[0.07] bg-black/40">
+                <div className="flex items-center gap-4">
+                  <div className="flex -space-x-2.5">
+                    <span className="w-9 h-9 rounded-full overflow-hidden border-2 border-neutral-950 ring-1 ring-neon/40 shrink-0">
+                      <ImageWithFallback src={AVATAR_IMG} alt="VANDY" className="w-full h-full object-cover" />
+                    </span>
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <span
+                        key={i}
+                        className="w-9 h-9 rounded-full bg-neutral-900 border-2 border-neutral-950 ring-1 ring-neutral-800 flex items-center justify-center shrink-0"
+                      >
+                        <User size={13} className="text-neutral-700" />
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-neutral-400 text-sm leading-snug">
+                    tu și încă{' '}
+                    <span className="text-white font-semibold tabular-nums">
+                      {OFERTA.locuriTotal - 1}
+                    </span>
+                    , plus eu
+                  </p>
+                </div>
+                <Eticheta ton="mov">Seria 1</Eticheta>
               </div>
             </div>
-          </Caseta>
+          </div>
         </Secventa>
 
         {/* ——— RECENZII ——— */}
@@ -704,9 +846,11 @@ export default function Mentorat() {
               <Locuri />
 
               <div className="mt-6 pt-5 border-t border-white/[0.06]">
-                <p className="text-white text-sm font-semibold">Integral sau în două tranșe</p>
+                <p className="text-white text-sm font-semibold">Trei prețuri, nu unul</p>
                 <p className="text-neutral-500 text-xs mt-1">
-                  Factură pe firmă sau pe persoană fizică. Nimic nu se plătește înainte de apel.
+                  Unul singur, oricare două, sau toate trei — pe bucată costă din ce în ce mai puțin.
+                  Integral sau în două tranșe, factură pe firmă sau pe persoană fizică. Nimic nu se
+                  plătește înainte de apel.
                 </p>
               </div>
             </Caseta>
@@ -716,7 +860,7 @@ export default function Mentorat() {
                 <Eticheta ton="mov">De ce nu scrie prețul aici</Eticheta>
                 <p className="text-neutral-300 text-sm leading-relaxed mt-3">
                   Pentru că nu vindem un loc oricui plătește. Sunt zece. La apel ne uităm întâi dacă
-                  ai ce construi în trei zile și care direcție e a ta; dacă nu ne potrivim, ți-o
+                  ai ce construi într-o zi și care dintre cele trei e al tău; dacă nu ne potrivim, ți-o
                   spunem atunci. O cifră fără discuția asta nu îți spune nimic util — iar ce
                   primești pentru ea e scris mai sus, rând cu rând.
                 </p>
@@ -724,8 +868,8 @@ export default function Mentorat() {
               <div className="pt-6 border-t border-white/[0.06]">
                 <Eticheta ton="neon">Garanție pe livrare</Eticheta>
                 <p className="text-neutral-300 text-sm leading-relaxed mt-3">
-                  Dacă la finalul zilei 3 nu ai construit și publicat lucrul tău, scrii un email și
-                  îți returnez integral banii. Fără motive, fără dovezi. Riscul e al meu, pentru că
+                  Dacă la finalul zilei tale nu ai construit și publicat lucrul tău, scrii un email
+                  și îți returnez integral banii. Fără motive, fără dovezi. Riscul e al meu, pentru că
                   livrarea depinde de mine.
                 </p>
               </div>
@@ -781,7 +925,7 @@ export default function Mentorat() {
                     <Eticheta ton="mov">Cum arată pasul 2</Eticheta>
                     <p className="text-neutral-300 text-sm leading-relaxed mt-3">
                       20 de minute cu echipa. Te întrebăm ce vrei să construiești, îți spunem dacă
-                      se poate în trei zile, și primești toate detaliile: datele, prețul, condițiile.
+                      se poate într-o zi, și primești toate detaliile: datele, prețul, condițiile.
                       Dacă nu ne potrivim, ți-o spunem atunci.
                     </p>
                   </div>
@@ -823,7 +967,7 @@ export default function Mentorat() {
         <Secventa className="pt-16 md:pt-24">
           <Caseta className="p-8 md:p-12 text-center ring-1 ring-neon/20">
             <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-[1.1] masura-titlu mx-auto mb-5">
-              În trei zile ai construit ceva,{' '}
+              Într-o singură zi ai construit ceva,{' '}
               <span className="serif-italic text-neutral-500 text-[1.1em]">
                 sau mai trece un trimestru la fel.
               </span>
@@ -854,7 +998,7 @@ export default function Mentorat() {
             {OFERTA.numeProgram} este un program de formare practică. Nu e consultanță financiară
             sau de investiții și nu garantează niciun venit și niciun rezultat comercial. Singurul
             angajament e cel de la „Ce pleci cu", acoperit de returnarea integrală la finalul
-            zilei 3. Restul depinde de munca, piața și deciziile fiecăruia.
+            zilei tale. Restul depinde de munca, piața și deciziile fiecăruia.
           </p>
 
           {FIRMA && (
