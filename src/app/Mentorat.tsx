@@ -597,10 +597,19 @@ export default function Mentorat() {
              Stă aici, imediat după cele trei meserii: întâi vezi ce înveți,
              apoi vezi cum arată viața în care te lasă.
 
-             Fotografii reale, nu randări AI, și fără niciun om în cadru —
-             vezi nota din src/data/mentorat.ts. Tratamentul (desaturare +
-             întunecare, care se desfac la hover) le ține pe toate patru în
-             aceeași lumină, deși sunt făcute de patru oameni diferiți. */}
+             Refăcută seara pe 29.10.2026: „vreau … pozele mai vizibile si mai
+             frumoase cu oameni veseli etc ceva super expresiv."
+
+             Două schimbări, și amândouă vin din aceeași cerere. Textul a
+             coborât SUB fotografie, în loc să stea peste ea: un titlu alb
+             peste imagine cere un degrade negru care întunecă exact jumătatea
+             de jos, adică fix ce reclama el. Așa, fotografia se vede întreagă
+             și la luminozitatea ei reală, iar cele patru texte — toate de 76
+             de caractere — ocupă același număr de rânduri.
+
+             Fără desaturare și fără întunecare. Singura corecție e un contrast
+             minim, cât să nu se bată între ele patru fotografii făcute de
+             patru oameni diferiți. */}
         <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta={SOLOPRENOR.eticheta}
@@ -612,35 +621,29 @@ export default function Mentorat() {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             {SOLOPRENOR.cadre.map((c) => (
-              <div
-                key={c.titlu}
-                className="group relative overflow-hidden rounded-2xl border border-white/[0.07] shadow-[0_24px_60px_-28px_rgba(0,0,0,0.95)]"
-              >
-                <div className="aspect-[4/5] overflow-hidden bg-neutral-950">
+              <Caseta key={c.titlu} className="group overflow-hidden flex flex-col">
+                <div className="relative aspect-[4/3] overflow-hidden bg-neutral-950">
                   <ImageWithFallback
                     src={c.imagine}
                     alt=""
                     loading="lazy"
-                    className="w-full h-full object-cover grayscale-[0.3] brightness-[0.62] contrast-[1.08] group-hover:grayscale-0 group-hover:brightness-90 group-hover:scale-[1.04] transition-all duration-700"
+                    className="w-full h-full object-cover contrast-[1.03] group-hover:scale-[1.04] transition-transform duration-700"
+                  />
+                  {/* Doar atât cât fotografia să se stingă în caseta de sub ea.
+                      Fără asta, marginea de jos a imaginii taie drept și
+                      cartonașul arată ca două bucăți lipite. */}
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-neutral-950 to-transparent"
                   />
                 </div>
-                {/* Degradeul e ce face textul lizibil peste orice fotografie.
-                    Fără el, un titlu alb peste cer luminat dispare. */}
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent"
-                />
-                <div className="absolute inset-x-0 bottom-0 p-5">
+                <div className="relative p-5 flex-1">
                   <p className="text-white text-base md:text-lg font-bold leading-tight mb-1.5">
                     {c.titlu}
                   </p>
-                  <p className="text-neutral-300 text-[13px] leading-snug">{c.text}</p>
+                  <p className="text-neutral-400 text-[13px] leading-snug">{c.text}</p>
                 </div>
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                />
-              </div>
+              </Caseta>
             ))}
           </div>
         </Secventa>

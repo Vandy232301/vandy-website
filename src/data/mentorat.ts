@@ -476,40 +476,56 @@ export const OPTIUNI_BUGET = [
    ⚠️ IMAGINILE sunt fotografii reale de pe Unsplash (licență Unsplash, uz
    comercial permis, fără atribuire obligatorie), descărcate local pe
    29.10.2026 ca pagina să nu depindă de un CDN străin. NU sunt generate cu AI
-   și nu apare nimeni în ele — linia roșie a brandului e „fără AI care te
-   arată pe tine în situații reale false", iar o plajă cu un om anonim în ea
-   ar fi exact genul de stoc care ieftinește pagina.
+   — linia roșie a brandului e „fără AI care te arată pe tine în situații
+   reale false".
+
+   Pe 29.10.2026 seara setul a fost schimbat la cererea owner-ului: „vreau …
+   pozele mai vizibile si mai frumoase cu oameni veseli etc ceva super
+   expresiv." Primul set n-avea pe nimeni în cadru și era întunecat cu filtru.
+   Acum sunt patru oameni, patru locuri, lumină naturală, fără desaturare.
+
+   Ce am evitat deliberat, și de ce: pozele de tip „pumnul în aer pe plajă" și
+   „teancul de bani lângă laptop". Sunt semnătura vizuală a conținutului de
+   îmbogățire rapidă, adică exact registrul pe care pagina asta îl refuză, și
+   pun omul din fotografie în poziția de POSESOR față de privitor — cea care
+   atrage ostilitate. Oamenii de aici lucrează sau stau relaxați după ce au
+   lucrat. Nimeni nu arată ce are.
+
+   TEXTELE celor patru cadre au exact aceeași lungime (76 de caractere), tot
+   la cererea lui. Dacă schimbi unul, numără-le pe toate patru: inegale, fac
+   cartonașele să aibă trei rânduri lângă patru și se vede imediat.
    ──────────────────────────────────────────────────────────────────────── */
 
 import IMG_LAPTOP from '../assets/viziune/laptop.jpg';
-import IMG_PLAJA from '../assets/viziune/plaja.jpg';
-import IMG_MUNTE from '../assets/viziune/munte.jpg';
-import IMG_ORAS from '../assets/viziune/oras.jpg';
+import IMG_ORIUNDE from '../assets/viziune/oriunde.jpg';
+import IMG_ORA from '../assets/viziune/ora.jpg';
+import IMG_SINGUR from '../assets/viziune/singur.jpg';
 
 export const SOLOPRENOR = {
   eticheta: 'Solopreneur în era AI',
   titlu: 'Un laptop și internet. Asta e tot ce cere fiecare din cele trei.',
   text: 'Nici software, nici agenți, nici automatizări nu cer birou, marfă sau angajați. De acolo vine libertatea de mișcare — nu dintr-o promisiune, ci din felul în care e construit lucrul pe care îl vinzi.',
+  // Toate cele patru `text` au exact 76 de caractere. Vezi nota de mai sus.
   cadre: [
     {
       imagine: IMG_LAPTOP,
       titlu: 'Un laptop. Atât.',
-      text: 'Fără sediu, fără depozit, fără stoc. Doar ecranul pe care lucrezi.',
+      text: 'Fără sediu, fără depozit, fără stoc de vândut. Doar ecranul pe care lucrezi.',
     },
     {
-      imagine: IMG_PLAJA,
+      imagine: IMG_ORIUNDE,
       titlu: 'De oriunde.',
-      text: 'Clientul cumpără rezultatul, nu adresa de pe factură. Fusul orar e detaliul tău.',
+      text: 'Clientul cumpără rezultatul, nu adresa de pe factură. Restul e detaliul tău.',
     },
     {
-      imagine: IMG_MUNTE,
+      imagine: IMG_ORA,
       titlu: 'La orice oră.',
-      text: 'Lucrezi când ești bun, nu când scrie în contract. Asta e diferența față de un job.',
+      text: 'Lucrezi când ești bun, nu când scrie în contract. Niciun job nu îți dă asta.',
     },
     {
-      imagine: IMG_ORAS,
+      imagine: IMG_SINGUR,
       titlu: 'Fără echipă.',
-      text: 'AI-ul face partea pentru care altfel angajai. Unul singur livrează cât livra o firmă mică.',
+      text: 'AI-ul face partea pentru care altfel angajai. Unul singur, cât o firmă mică.',
     },
   ],
 } as const;
