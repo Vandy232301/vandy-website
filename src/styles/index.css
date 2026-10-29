@@ -53,3 +53,29 @@
 .lumina-linie {
   box-shadow: 0 0 9px rgba(var(--neon-rgb), 0.7);
 }
+
+/* Bara flotantă de CTA de pe /mentorat.
+   Pagina are `viewport-fit=cover`, deci conținutul trece pe sub indicatorul
+   de home al iPhone-ului. Instalată pe ecranul de start (standalone, fără
+   bara browserului) o valoare fixă ar pune butonul exact peste el, așa că
+   distanța de jos ocolește explicit zona sigură. Fallbackul `0px` acoperă
+   browserele care nu cunosc env(). */
+.bara-flotanta {
+  /* 1rem = exact gutierul paginii, ca bara să stea aliniată cu cardurile. */
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
+}
+
+@media (min-width: 640px) {
+  .bara-flotanta {
+    bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+    padding-left: max(1.5rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1.5rem, env(safe-area-inset-right, 0px));
+  }
+}
+
+/* Spațiul pe care pagina îl lasă sub ea, ca bara să nu acopere ultimul rând. */
+.spatiu-bara {
+  padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px));
+}

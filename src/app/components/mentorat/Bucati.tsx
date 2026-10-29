@@ -65,15 +65,19 @@ export function Buton({
   onClick,
   variant = 'neon',
   className = '',
+  padding = 'px-6 py-3.5 text-sm',
 }: {
   children: ReactNode;
   href?: string;
   onClick?: () => void;
   variant?: 'neon' | 'alb' | 'contur';
   className?: string;
+  /** Separat de className fiindcă Tailwind nu rezolvă conflictele după ordinea claselor:
+   *  un `px-4` pus în className ar pierde în fața lui `px-6` din bază. */
+  padding?: string;
 }) {
   const baza =
-    'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold tracking-tight transition-all text-center';
+    `inline-flex items-center justify-center gap-2 rounded-full font-bold tracking-tight transition-all text-center ${padding}`;
   const stil =
     variant === 'neon'
       ? 'bg-neon text-black hover:brightness-110 lumina-bloc'

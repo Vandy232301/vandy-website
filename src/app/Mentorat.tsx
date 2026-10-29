@@ -14,7 +14,15 @@ import {
 } from '../data/mentorat';
 import AVATAR_IMG from '../assets/280a05b4e7cffd644dd36f6c7453213920fff3ac.png';
 
-/** Bara de jos apare după ce treci de hero — pe telefon e singurul CTA mereu la îndemână. */
+/**
+ * CTA-ul care te urmărește după ce treci de hero — pe telefon e singurul
+ * mereu la îndemână.
+ *
+ * Flotant, nu lipit de marginea de jos: distanța și forma vin din clasa
+ * `.bara-flotanta` (styles/index.css), care ocolește zona sigură a
+ * iPhone-ului. Pagina are `viewport-fit=cover`, deci instalată pe ecranul de
+ * start bara ar sta altfel fix peste indicatorul de home.
+ */
 function BaraFixa() {
   const [vizibila, setVizibila] = useState(false);
 
@@ -27,24 +35,31 @@ function BaraFixa() {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-40 transition-transform duration-300 ${
-        vizibila ? 'translate-y-0' : 'translate-y-full'
+      aria-hidden={!vizibila}
+      className={`bara-flotanta fixed left-0 right-0 z-40 flex justify-center transition-all duration-300 ${
+        vizibila ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}
     >
-      <div className="bg-black/80 backdrop-blur-xl border-t border-neutral-800 px-4 py-3">
-        <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
-          <div className="min-w-0">
-            <p className="text-white text-sm font-bold tracking-tight truncate">
-              <span className="text-neon">{OFERTA.tip}</span> · {OFERTA.durata}
-            </p>
-            <p className="text-neutral-500 text-[11px] truncate">
-              {locuriLibere} din {OFERTA.locuriTotal} locuri libere
-            </p>
-          </div>
-          <Buton href="#aplica" className="shrink-0 px-5 py-3">
-            Vreau detalii <ArrowRight size={15} />
-          </Buton>
+      <div
+        className={`w-full max-w-xl flex items-center gap-3 rounded-2xl border border-neutral-700/70 ring-1 ring-neon/15 bg-black/70 backdrop-blur-xl shadow-2xl shadow-black/70 py-2 pl-4 pr-2 sm:py-2.5 sm:pl-5 sm:pr-2.5 ${
+          vizibila ? 'pointer-events-auto' : 'pointer-events-none'
+        }`}
+      >
+        <div className="min-w-0 flex-1">
+          <p className="text-white text-[13px] sm:text-sm font-bold tracking-tight truncate">
+            <span className="text-neon">{OFERTA.tip}</span> · {OFERTA.durata}
+          </p>
+          <p className="text-neutral-500 text-[11px] truncate">
+            {locuriLibere} din {OFERTA.locuriTotal} locuri libere
+          </p>
         </div>
+        <Buton
+          href="#aplica"
+          className="shrink-0"
+          padding="px-4 py-2.5 text-[13px] sm:px-5 sm:py-3 sm:text-sm"
+        >
+          Vreau detalii <ArrowRight size={15} />
+        </Buton>
       </div>
     </div>
   );
@@ -78,7 +93,7 @@ export default function Mentorat() {
           pagină și nu lipit pe ea. Difuz, altfel ar colora textul din hero. */}
       <div className="fixed -top-56 left-1/2 -translate-x-1/2 w-[760px] h-[440px] z-0 rounded-full bg-neon/[0.05] blur-[140px] pointer-events-none" />
 
-      <div className="w-full max-w-5xl relative z-10 flex flex-col gap-4 pb-24">
+      <div className="w-full max-w-5xl relative z-10 flex flex-col gap-4 spatiu-bara">
 
         {/* Header */}
         <header className="flex flex-row justify-between items-center py-4">
