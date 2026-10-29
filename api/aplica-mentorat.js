@@ -163,6 +163,9 @@ function emailCatreProprietar(d) {
         ${rand('Ce vrea', esc(DIRECTII[d.directie] || d.directie))}
         ${rand('Unde e acum', esc(STADII[d.stadiu] || d.stadiu))}
         ${rand('Ar investi', `<strong style="color:#39ff14">${esc(BUGETE[d.buget] || d.buget)}</strong>`)}
+        ${rand('Bonus surpriză', d.bonus === true
+          ? '<strong style="color:#39ff14">DA — a trimis în primele 10 minute</strong>'
+          : '<span style="color:#737373">nu</span>')}
       </table>
       <p style="margin:22px 0 8px;color:#737373;font-size:13px;font-family:Arial,sans-serif">Ce vrea să construiască</p>
       <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-left:3px solid #fff;padding:12px 16px;background:#0a0a0a">

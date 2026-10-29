@@ -55,8 +55,12 @@ export const OFERTA = {
   rate: { numar: 2, suma: 545 },
 
   locuriTotal: 10,
-  /** Crește-l pe măsură ce se ocupă locurile. */
-  locuriLuate: 0,
+  /** Crește-l pe măsură ce se ocupă locurile. Owner, 29.10.2026: „Pune doar 7
+   *  locuri mai sunt libere." Cifra e a lui, din vânzări — eu n-am de unde s-o
+   *  verific. Dacă nu e reală, tot ce se sprijină pe ea (punctele, `notaLocuri`,
+   *  rândul din final) devine raritate inventată, adică exact practica
+   *  interzisă de Legea 363/2007. Ține-o la zi. */
+  locuriLuate: 3,
 
   dateText: 'Pornește în noiembrie 2026',
   dateNota: 'Datele exacte se stabilesc la apel, cu cei 10 înscriși.',
@@ -70,9 +74,10 @@ export const OFERTA = {
    * viitor pe care nimic nu o susține încă, iar urgența falsă e exact ce
    * contrazice „nu există ofertă care expiră în zece minute" de pe aceeași
    * pagină — și e pe lista neagră din Directiva 2005/29/CE (Legea 363/2007).
-   * Când chiar se vând locuri, schimbă rândul ăsta și devine adevărat.
+   * 29.10.2026: s-au ocupat primele trei locuri, deci rândul poate spune acum
+   * câte au rămas. Se scrie singur din `locuriLuate` — vezi `notaLocuri` de sub
+   * `OFERTA` — ca să nu rămână o cifră veche în bară când se mai vinde unul.
    */
-  notaLocuri: 'Doar 10 locuri. Când se ocupă, se închide.',
 
   /**
    * Durata UNUI masterclass. Owner a ales pe 29.10.2026 varianta „1 zi live
@@ -86,6 +91,42 @@ export const OFERTA = {
 } as const;
 
 export const locuriLibere = OFERTA.locuriTotal - OFERTA.locuriLuate;
+
+/** Rândul al doilea din bara flotantă, scris din cifra de mai sus. */
+export const notaLocuri =
+  `Au mai rămas ${locuriLibere} locuri din ${OFERTA.locuriTotal}. Când se ocupă, se închide.`;
+
+/* ────────────────────────────────────────────────────────────────────────
+   FEREASTRA DE BONUS
+
+   Owner, 29.10.2026, verbatim: „Vreau si o oferta cu countdown timer de 10
+   minute daca se inscrie sa primeasca un Surprice Bonus."
+
+   ⚠️ Regulile care fac cronometrul legal, și de ce, sunt scrise în
+   `src/lib/fereastraBonus.ts`. Pe scurt: fereastra se aplică DOAR bonusului,
+   nu masterclass-ului și nu prețului, ceasul nu se resetează la reload, iar
+   bonusul trebuie chiar dat. Emailul intern spune, la fiecare înscriere, dacă
+   omul a intrat în fereastră.
+
+   ⚠️ Ce ESTE bonusul nu scrie nicăieri, pentru că owner nu l-a stabilit încă.
+   „Surpriză" e o alegere de marketing validă — nu promite nimic anume, deci nu
+   e nimic de dovedit — dar trebuie să existe ceva real în spate înainte de
+   prima înscriere. Când îl stabilește, nu e obligatoriu să-l scrii aici; e
+   obligatoriu să-l livreze.
+   ──────────────────────────────────────────────────────────────────────── */
+export const BONUS = {
+  eticheta: 'Bonus surpriză',
+  titlu: 'Dacă îți lași datele în următoarele',
+  text:
+    'Peste tot ce scrie mai sus, primești un bonus pe care nu îl anunț dinainte. ' +
+    'Îl afli la apel, înainte să decizi ceva.',
+  /** Rândul care ține cronometrul cinstit. Nu-l scoate. */
+  onest:
+    'Masterclass-ul nu expiră și prețul nu se schimbă când ajunge la zero. Doar bonusul ține de fereastra asta.',
+  expirat: 'Fereastra de bonus s-a închis.',
+  expiratText:
+    'Locul, prețul și tot ce scrie mai sus rămân neschimbate. Datele tot le poți lăsa — se schimbă doar bonusul.',
+} as const;
 
 /**
  * Cele trei masterclass-uri. Owner, 29.10.2026, verbatim:
@@ -176,6 +217,14 @@ export const PLECI_CU = [
  */
 export const EXPERTIZA = {
   ani: 'Peste 16 ani de experiență în',
+  /** Rândul de sub nume, în hero. Cerut de owner pe 29.10.2026: „Aici sub eu
+   *  vreau alta descriere … Ceva scurt legat de expertiza mea." Înainte scria
+   *  „11 aplicații live · peste 16 ani de experiență" — o fișă de produs, nu o
+   *  descriere a omului; aplicațiile își au oricum locul în lista de dovezi.
+   *  Trei cuvinte, nu patru și fără ani: la 11px, orice peste atât trece pe al
+   *  treilea rând sub nume și nu mai e o semnătură, e un paragraf. Anii și
+   *  lista exactă, cu toate patru domeniile, sunt în banda de dedesubt. */
+  semnatura: 'Branding, marketing și tehnologie',
   domenii: [
     { icon: 'busolă',    nume: 'Branding Strategic' },
     { icon: 'portavoce', nume: 'Marketing și Distribuție' },

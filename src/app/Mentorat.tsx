@@ -14,10 +14,11 @@ import { translations } from '../data/translations';
 import { useLoves } from './hooks/useLoves';
 import { Formular } from './components/mentorat/Formular';
 import {
-  OFERTA, DIRECTII, PLECI_CU, ZILE, NU_E_PENTRU, INTREBARI, locuriLibere,
+  OFERTA, DIRECTII, PLECI_CU, ZILE, NU_E_PENTRU, INTREBARI, locuriLibere, notaLocuri,
   CAPTURI, PRODUSE_DOVADA, PIATA, PIATA_AVERTISMENT, RECENZII, INCREDERE, FIRMA,
-  COMUNITATE, BRANDURI, PENTRU_CINE, EXPERTIZA, SOLOPRENOR,
+  COMUNITATE, BRANDURI, PENTRU_CINE, EXPERTIZA, SOLOPRENOR, BONUS,
 } from '../data/mentorat';
+import { BONUS_MINUTE, porneste, secundeRamase, format } from '../lib/fereastraBonus';
 // Portretul real, cel de pe cardurile de social media. NU randarea neagră de
 // pe prima pagină: aici vinde un om, nu un personaj.
 // Decupat pe cap, ca să nu iasă jumătate de sacou într-un cerc de 56px:
@@ -26,6 +27,87 @@ import {
 //   sips -Z 512 x.png --out src/assets/vandy-real.png
 // PNG, nu JPEG: la 512px e lossless, fără subeșantionare de culoare.
 import AVATAR_IMG from '../assets/vandy-real.png';
+
+/**
+ * Cronometrul ferestrei de bonus.
+ *
+ * Regulile care îl țin cinstit — și motivul legal pentru care contează — sunt
+ * în `src/lib/fereastraBonus.ts`. Trei lucruri care se văd în codul de aici:
+ *
+ * · Ceasul se citește din sesiune la primul render, nu se pornește de la zece
+ *   minute și apoi sare: altfel omul care revine pe filă ar vedea o clipă
+ *   „10:00" și ar crede că s-a resetat.
+ * · Cifrele sunt `aria-hidden`, cu o propoziție citibilă alături. Un cronometru
+ *   anunțat din secundă în secundă face cititorul de ecran inutilizabil.
+ * · Starea expirată nu are verde și nu are lumină. Rămâne o notă, nu o alarmă.
+ */
+function Cronometru() {
+  // Citit, nu pornit, în initializer: `secundeRamase()` doar se uită în sesiune.
+  // Scrierea momentului de start stă în efect, unde îi e locul.
+  const [ramas, setRamas] = useState(() => secundeRamase());
+
+  useEffect(() => {
+    porneste();
+    setRamas(secundeRamase());
+    const ceas = setInterval(() => setRamas(secundeRamase()), 1000);
+    return () => clearInterval(ceas);
+  }, []);
+
+  const activa = ramas > 0;
+
+  return (
+    <Caseta className={`p-6 md:p-8 mb-3 ${activa ? 'ring-1 ring-neon/20' : ''}`}>
+      <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
+        <div className="shrink-0">
+          <span className={`flex items-center gap-2 ${activa ? 'text-neon' : 'text-neutral-500'}`}>
+            <Clock size={14} strokeWidth={2.2} className="shrink-0" />
+            <Eticheta ton={activa ? 'neon' : 'neutral'}>{BONUS.eticheta}</Eticheta>
+          </span>
+          <p
+            aria-hidden
+            className={`mt-2 text-5xl md:text-6xl font-bold tracking-tight leading-none tabular-nums ${
+              activa ? 'text-neon lumina-text' : 'text-neutral-700'
+            }`}
+          >
+            {format(ramas)}
+          </p>
+          <span className="sr-only">
+            {activa
+              ? `Mai ai aproximativ ${Math.ceil(ramas / 60)} minute din fereastra de bonus.`
+              : BONUS.expirat}
+          </span>
+        </div>
+
+        <span
+          aria-hidden
+          className="hidden md:block w-px self-stretch bg-gradient-to-b from-transparent via-white/[0.12] to-transparent"
+        />
+
+        <div className="space-y-2">
+          {activa ? (
+            <>
+              <p className="text-white text-lg font-semibold leading-snug">
+                {BONUS.titlu} {BONUS_MINUTE} minute, primești ceva în plus.
+              </p>
+              <p className="text-neutral-400 text-sm leading-relaxed masura-text">{BONUS.text}</p>
+              {/* Rândul care face diferența dintre o ofertă și o minciună. */}
+              <p className="text-neutral-500 text-xs leading-relaxed masura-text pt-1">
+                {BONUS.onest}
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="text-white text-lg font-semibold leading-snug">{BONUS.expirat}</p>
+              <p className="text-neutral-400 text-sm leading-relaxed masura-text">
+                {BONUS.expiratText}
+              </p>
+            </>
+          )}
+        </div>
+      </div>
+    </Caseta>
+  );
+}
 
 /**
  * CTA-ul care te urmărește după ce treci de hero — pe telefon e singurul
@@ -62,7 +144,7 @@ function BaraFixa() {
           <p className="text-white text-[13px] sm:text-sm font-bold tracking-tight truncate">
             <span className="text-neon">{OFERTA.tip}</span> · {OFERTA.durata}
           </p>
-          <p className="text-neutral-400 text-xs truncate">{OFERTA.notaLocuri}</p>
+          <p className="text-neutral-400 text-xs truncate">{notaLocuri}</p>
         </div>
         <Buton
           href="#aplica"
@@ -187,8 +269,8 @@ export default function Mentorat() {
                 </div>
                 <div>
                   <p className="text-white text-lg font-bold tracking-wide leading-tight">VANDY</p>
-                  <p className="mt-1 text-[11px] md:text-xs text-neutral-500 uppercase tracking-widest font-semibold tabular-nums">
-                    11 aplicații live · peste 16 ani de experiență
+                  <p className="mt-1 text-[11px] md:text-xs text-neutral-500 uppercase tracking-widest font-semibold text-balance tabular-nums">
+                    {EXPERTIZA.semnatura}
                   </p>
                 </div>
               </div>
@@ -197,17 +279,12 @@ export default function Mentorat() {
                 <span className="px-4 py-1.5 rounded-full bg-neon text-black text-xs font-bold tracking-[0.18em] uppercase lumina-bloc">
                   {OFERTA.tip}
                 </span>
-                {/* Într-o singură pastilă, nu în două: patru pastile treceau pe
-                    al doilea rând și rupeau ritmul de sub nume. */}
-                <span className="px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase tabular-nums">
-                  {DIRECTII.length} masterclass-uri · {OFERTA.durata} fiecare
-                </span>
                 {/* Punctul verde spune „numărul de alături e starea de acum",
                     nu „grăbește-te". Static, nu pulsant: zece locuri chiar sunt
                     libere, dar o animație ar vinde o urgență inexistentă. */}
                 <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase tabular-nums">
                   <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-neon lumina-linie" />
-                  Doar {locuriLibere} locuri
+                  Au mai rămas {locuriLibere} locuri
                 </span>
               </div>
 
@@ -915,6 +992,7 @@ export default function Mentorat() {
         {/* ——— FORMULAR ——— */}
         <Secventa className="pt-16 md:pt-24">
           <div id="aplica" className="scroll-mt-8">
+            <Cronometru />
             <Caseta className="overflow-hidden ring-1 ring-neon/20">
               <div className="grid grid-cols-1 lg:grid-cols-5">
                 <div className="lg:col-span-3 border-b lg:border-b-0 lg:border-r border-white/[0.06]">
@@ -932,8 +1010,9 @@ export default function Mentorat() {
                   <div className="pt-6 border-t border-white/[0.06]">
                     <Eticheta ton="mov">Ce nu se întâmplă la apel</Eticheta>
                     <p className="text-neutral-300 text-sm leading-relaxed mt-3">
-                      Nu te ține nimeni o oră ca să te convingă și nu există ofertă care „expiră în
-                      zece minute". Afli prețul, închizi telefonul și te gândești.
+                      Nu te ține nimeni o oră ca să te convingă și nu ți se cere o decizie la
+                      telefon. Afli prețul, închizi și te gândești. Nici bonusul nu grăbește apelul:
+                      se decide când îți lași datele, nu în discuție.
                     </p>
                   </div>
                   <div className="pt-6 border-t border-white/[0.06]">

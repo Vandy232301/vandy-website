@@ -6,6 +6,7 @@ import {
   validNume, validEmail, validTelefon, validDescriere,
   curataNume, curataEmail, curataTelefon,
 } from '../../../lib/validare';
+import { secundeRamase } from '../../../lib/fereastraBonus';
 
 type Camp = 'nume' | 'email' | 'telefon' | 'directie' | 'stadiu' | 'ceVreiSaConstruiesti' | 'buget';
 type Stare = 'formular' | 'trimis';
@@ -105,6 +106,10 @@ export function Formular() {
           nume: curataNume(form.nume),
           email: curataEmail(form.email),
           telefon: curataTelefon(form.telefon),
+          // Citit în momentul trimiterii, nu la montarea formularului: omul poate
+          // sta zece minute pe el. Emailul intern spune apoi dacă îi datorezi
+          // bonusul — fără rândul ăsta, promisiunea n-ar avea cine s-o onoreze.
+          bonus: secundeRamase() > 0,
         }),
       });
       const date = await res.json().catch(() => ({}));
