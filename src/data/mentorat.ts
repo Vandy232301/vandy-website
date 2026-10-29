@@ -69,6 +69,7 @@ export const DIRECTII = [
     id: 'agentie',
     numar: '01',
     nume: 'AGENȚIA',
+    icon: 'mână',
     promisiune: 'Vinzi servicii făcute cu AI.',
     text: 'Cel mai scurt drum până la primul om care îți dă bani: vinzi ceva ce există din prima zi — rezultatul tău. Fără produs, fără investiție, fără așteptare.',
     pleciCu: [
@@ -81,8 +82,9 @@ export const DIRECTII = [
     id: 'produs',
     numar: '02',
     nume: 'PRODUSUL',
+    icon: 'blocuri',
     promisiune: 'Îți construiești propria aplicație.',
-    text: 'Mai greu la început decât agenția, cinstit vorbind. Dar e singura unde construiești o dată și vinzi de o sută de ori. Cele 10 aplicații de mai sus sunt direcția asta.',
+    text: 'Mai greu la început decât agenția, cinstit vorbind. Dar e singura unde construiești o dată și vinzi de o sută de ori. Cele 11 aplicații de mai sus sunt direcția asta.',
     pleciCu: [
       'O aplicație publicată, la domeniul ei',
       'Plata funcțională în ea, nu „urmează"',
@@ -93,6 +95,7 @@ export const DIRECTII = [
     id: 'creativ',
     numar: '03',
     nume: 'CREATIVUL',
+    icon: 'film',
     promisiune: 'Video cu AI pentru branduri.',
     text: 'Aici lipsa de oameni e cea mai mare: branduri cu bani, foarte puțini care livrează la calitate de difuzat. Diferența nu e tool-ul, e ce accepți să trimiți.',
     pleciCu: [
@@ -408,14 +411,15 @@ export const PIATA_AVERTISMENT =
    CAPTURI — dovada vizuală. Fiecare e un ecran real, luat de pe site-ul
    live al produsului pe 28.10.2026, nu un mockup și nu o imagine de stoc.
 
-   ⚠️ ELYA, refăcută pe 29.10.2026. Prima captură era hero-ul de marketing,
-   pe fundal deschis, care nu arăta produsul. Platforma propriu-zisă NU e
-   vizibilă public: butonul „ELYA Platform" duce la clientes.elya.app, care
-   e doar ecran de autentificare. Captura actuală e secțiunea „Your
-   intelligent commercial team" de pe elya.app — tot site de marketing, dar
-   singura parte care arată ce face platforma, și pe fundal închis, ca
-   restul rândului. Dacă primești o captură din interfața logată, înlocuiește
-   fișierul; e cea mai bună dovadă posibilă pentru produsul ăsta.
+   ⚠️ ELYA, 29.10.2026: owner a cerut explicit „design-ul paginii aplicației",
+   deci captura e acum `clientes.elya.app` — pagina proprie a aplicației.
+   E ecran de autentificare, pentru că tot ce e dincolo de el cere cont, iar
+   eu nu intru în contul lui. E cea mai slabă dovadă din cele unsprezece:
+   arată design-ul aplicației, dar nu arată ce face. Dacă trimite o captură
+   din interfața logată, înlocuiește fișierul și cardul devine dovadă reală.
+   (Site-ul de marketing elya.app are o secțiune întunecată, „Your intelligent
+   commercial team", care arată capabilitățile — a fost varianta anterioară,
+   dacă vrei să te întorci la ea.)
    ──────────────────────────────────────────────────────────────────────── */
 
 import CAP_NOWWWA from '../assets/capturi/nowwwa.jpg';
@@ -428,6 +432,9 @@ import CAP_PWAS from '../assets/capturi/pwas.jpg';
 import CAP_WIZZY from '../assets/capturi/wizzywazza.jpg';
 import CAP_DOZAIN from '../assets/capturi/dozain.jpg';
 import CAP_CHINA from '../assets/capturi/chinadirect.jpg';
+// Fișierul se numește `dynasty` pentru că ăsta e id-ul produsului în PROJECTS —
+// a fost redenumit TRINY TRADES, dar id-ul ține contorul de aprecieri.
+import CAP_TRINY from '../assets/capturi/dynasty.jpg';
 
 /**
  * Captura fiecărui produs, pe id-ul lui din PROJECTS.
@@ -435,6 +442,7 @@ import CAP_CHINA from '../assets/capturi/chinadirect.jpg';
  * doar că primesc captura ca fundal.
  */
 export const CAPTURI: Record<string, string> = {
+  dynasty: CAP_TRINY,
   nowwwa: CAP_NOWWWA,
   neotrader: CAP_NEOTRADER,
   izzy: CAP_IZZY,
@@ -449,12 +457,16 @@ export const CAPTURI: Record<string, string> = {
 
 /**
  * Ce produse apar ca dovadă pe /mentorat, în ordinea asta.
- * Lipsesc intenționat `dynasty` (comunitate de trading, nu aplicație) și
- * `consult` (serviciu) — titlul secțiunii spune „zece aplicații", deci
- * trebuie să fie exact zece aplicații.
+ *
+ * `dynasty` (TRINY TRADES) a intrat pe 29.10.2026, la cererea owner-ului.
+ * Era scos ca „comunitate de trading, nu aplicație", dar produsul e acum o
+ * aplicație propriu-zisă la app.triny.trade, deci titlul rămâne exact.
+ * ⚠️ Lipsește în continuare `consult` — ăla e serviciu, nu aplicație.
+ * Dacă mai adaugi unul, schimbă și numărul din titlul secțiunii, din rândul
+ * de sub avatar și din INCREDERE. Pagina nu îl numără singură.
  */
 export const PRODUSE_DOVADA = [
-  'nowwwa', 'neotrader', 'izzy', 'pwas', 'elya',
+  'nowwwa', 'neotrader', 'dynasty', 'izzy', 'pwas', 'elya',
   'blur', 'swagg', 'wizzywazza', 'dozain', 'chinadirect',
 ] as const;
 
@@ -503,7 +515,7 @@ export const INCREDERE = [
   { icon: 'înapoi',   titlu: 'Returnare integrală', text: 'Dacă la finalul zilei 3 nu ai construit și publicat lucrul tău, primești toți banii înapoi.' },
   { icon: 'chitanță', titlu: 'Factură fiscală', text: 'Pe firmă sau pe persoană fizică. Plata integral sau în două tranșe.' },
   { icon: 'mesaj',    titlu: 'Răspund eu, nu un chatbot', text: 'Pe Instagram și pe Telegram, la aceleași conturi de pe care postez.' },
-  { icon: 'glob',     titlu: '10 aplicații cu adresă publică', text: 'Nu capturi de ecran: adrese pe care le poți deschide acum și verifica.' },
+  { icon: 'glob',     titlu: '11 aplicații cu adresă publică', text: 'Nu capturi de ecran: adrese pe care le poți deschide acum și verifica.' },
   { icon: 'premiu',   titlu: 'Branduri mari, lucrări reale', text: 'UNTOLD, NEVERSEA, Volkswagen, Audi, Banca Transilvania. Nu lucrări de portofoliu — clienți.' },
   { icon: 'ceas',     titlu: '11 ani în branding', text: 'Nu am început cu AI. AI-ul e unealta din urmă, nu meseria.' },
 ] as const;

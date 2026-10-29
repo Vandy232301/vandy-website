@@ -1,7 +1,8 @@
 import { createElement, useEffect, useState } from 'react';
 import {
   ArrowLeft, ArrowRight, ArrowUpRight, Award, Boxes, Briefcase, Check, Clapperboard, Clock,
-  Globe, Hash, Infinity as Infinit, LifeBuoy, MessageCircle, Minus, Newspaper, PhoneCall,
+  Blocks, Film, Globe, Handshake, Hash, Infinity as Infinit, LifeBuoy, MessageCircle, Minus,
+  Newspaper, PhoneCall,
   Quote, Receipt, Rocket, Tag, Undo2, Users, Video, Wrench, Layers, User,
 } from 'lucide-react';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
@@ -122,6 +123,7 @@ const ICOANE = {
   telefon: PhoneCall, înapoi: Undo2, chitanță: Receipt, mesaj: MessageCircle,
   glob: Globe, premiu: Award, ceas: Clock,
   servietă: Briefcase, cutie: Boxes, clachetă: Clapperboard, echipă: Users,
+  mână: Handshake, blocuri: Blocks, film: Film,
 } as const;
 
 type NumeIcoana = keyof typeof ICOANE;
@@ -170,7 +172,7 @@ export default function Mentorat() {
                 <div>
                   <p className="text-white text-base font-bold tracking-wide">VANDY</p>
                   <p className="text-[11px] md:text-xs text-neutral-500 uppercase tracking-widest font-semibold tabular-nums">
-                    10 aplicații live · 11 ani în branding
+                    11 aplicații live · 11 ani în branding
                   </p>
                 </div>
               </div>
@@ -332,7 +334,7 @@ export default function Mentorat() {
         <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="Dovada"
-            titlu={<>Zece aplicații construite și publicate. Click pe oricare.</>}
+            titlu={<>Unsprezece aplicații construite și publicate. Click pe oricare.</>}
           />
           <div className="flex flex-col gap-3">
             {PRODUSE_DOVADA.map((id, i) => {
@@ -396,19 +398,37 @@ export default function Mentorat() {
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {DIRECTII.map((d) => (
-              <Caseta key={d.id} className="p-6 flex flex-col">
-                <div className="flex items-baseline gap-3 mb-4">
-                  <span className="text-mov text-base font-bold tabular-nums">{d.numar}</span>
+              <Caseta key={d.id} className="group relative overflow-hidden p-6 md:p-7 flex flex-col">
+                {/* Numărul uriaș, aproape invizibil, în spate: dă adâncime
+                    cardului și numerotează fără să ocupe un rând de text.
+                    Se aprinde ușor la hover, cât să se simtă că e viu. */}
+                <span
+                  aria-hidden
+                  className="serif pointer-events-none absolute -top-6 -right-2 text-[9rem] leading-none text-white/[0.035] group-hover:text-mov/15 transition-colors duration-500 select-none"
+                >
+                  {d.numar}
+                </span>
+
+                <div className="relative flex items-center gap-3 mb-5">
+                  <span className="shrink-0 w-11 h-11 rounded-xl bg-mov/10 border border-mov/25 flex items-center justify-center">
+                    {createElement(ICOANE[d.icon as NumeIcoana], { size: 19, className: 'text-mov', strokeWidth: 1.9 })}
+                  </span>
                   <h3 className="text-white text-xl font-bold tracking-wide">{d.nume}</h3>
                 </div>
-                <p className="text-white text-base font-semibold mb-3">{d.promisiune}</p>
-                <p className="text-neutral-400 text-sm leading-relaxed mb-6 flex-1">{d.text}</p>
-                <div className="pt-5 border-t border-white/[0.06] space-y-2.5">
-                  <Eticheta ton="mov">Pleci cu</Eticheta>
+
+                <p className="relative text-white text-lg font-semibold leading-snug mb-3">
+                  {d.promisiune}
+                </p>
+                <p className="relative text-neutral-400 text-sm leading-relaxed mb-7 flex-1">{d.text}</p>
+
+                <div className="relative pt-5 border-t border-white/[0.06] space-y-3">
+                  <Eticheta ton="neon">Pleci cu</Eticheta>
                   {d.pleciCu.map((x) => (
                     <div key={x} className="flex items-start gap-2.5">
-                      <Check size={14} className="text-neon mt-0.5 shrink-0" strokeWidth={2.5} />
-                      <span className="text-neutral-300 text-sm leading-snug">{x}</span>
+                      <span className="shrink-0 mt-0.5 w-5 h-5 rounded-md bg-neon/15 flex items-center justify-center">
+                        <Check size={12} className="text-neon" strokeWidth={3} />
+                      </span>
+                      <span className="text-neutral-200 text-sm leading-snug">{x}</span>
                     </div>
                   ))}
                 </div>
