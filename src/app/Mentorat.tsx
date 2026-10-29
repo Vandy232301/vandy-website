@@ -16,7 +16,7 @@ import {
 // Portretul real, cel de pe cardurile de social media. NU randarea neagră de
 // pe prima pagină: aici vinde un om, nu un personaj.
 // Decupat pe cap, ca să nu iasă jumătate de sacou într-un cerc de 56px:
-//   sips -c 1600 1600 --cropOffset 0 140 \
+//   sips -c 1600 1600 --cropOffset 0 190 \
 //     ~/vandy_quotes/surse/personaj/avatar-real-2048.png --out x.png
 //   sips -Z 512 x.png --out src/assets/vandy-real.png
 // PNG, nu JPEG: la 512px e lossless, fără subeșantionare de culoare.
