@@ -15,7 +15,7 @@ import { useLoves } from './hooks/useLoves';
 import { Formular } from './components/mentorat/Formular';
 import {
   OFERTA, DIRECTII, PLECI_CU, ZILE, NU_E_PENTRU, INTREBARI, locuriLibere, notaLocuri,
-  CAPTURI, PRODUSE_DOVADA, PIATA, PIATA_AVERTISMENT, RECENZII, INCREDERE, FIRMA,
+  CAPTURI, PRODUSE_DOVADA, PIATA, PIATA_AVERTISMENT, RECENZII, RECENZII_DE_AFISAT, INCREDERE, FIRMA,
   COMUNITATE, BRANDURI, PENTRU_CINE, EXPERTIZA, SOLOPRENOR, BONUS,
   PROBLEMA, MOTOR, DISTRIBUTIE,
 } from '../data/mentorat';
@@ -1059,32 +1059,74 @@ export default function Mentorat() {
           </div>
         </Secventa>
 
-        {/* ——— RECENZII ——— */}
-        {RECENZII.length > 0 && (
+        {/* ——— RECENZII ———
+             Nouă carduri, cerute de owner pe 30.10.2026: „Pune 9 carduri de
+             review cu nume si firma."
+
+             ⛔ Cele nouă nu sunt scrise de mine. `RECENZII` e gol și rămâne gol
+             până pune recenzii reale; pe localhost se vede în locul lor o
+             machetă cu „Nume Prenume / Firma SRL", ca să poată judeca designul.
+             Într-un build de producție, secțiunea nu apare deloc. De ce nu
+             inventez nouă clienți: comentariul lung de la RECENZII_SABLON în
+             src/data/mentorat.ts.
+
+             Cardul e construit în jurul a trei lucruri, în ordinea în care
+             cântăresc: monograma cu inițialele (dă chip unui nume, fără să
+             ceară o poză pe care nu o ai), numele cu firma, și linkul. Un nume
+             cu firmă și adresă verificabilă valorează cât zece anonime. */}
+        {RECENZII_DE_AFISAT.length > 0 && (
           <Secventa className="pt-16 md:pt-24">
-            <TitluSecvenca
-              eticheta="Clienții mei"
-              titlu={<>Ce spun cei cu care am lucrat.</>}
-            />
+            <TitluSecvenca eticheta="Clienții mei" titlu={<>Ce spun cei cu care am lucrat.</>} />
+
+            {RECENZII.length === 0 && (
+              // Banda asta nu ajunge niciodată în producție: secțiunea întreagă
+              // se randează doar dacă `RECENZII_DE_AFISAT` are ceva, iar în
+              // producție ăla e gol cât timp `RECENZII` e gol.
+              <Caseta className="p-4 mb-3 border-dashed">
+                <p className="text-neutral-400 text-xs leading-relaxed">
+                  <span className="text-white font-semibold">Machetă, vizibilă doar pe localhost.</span>{' '}
+                  Numele și firmele de mai jos sunt sloturi goale, nu oameni. Completează{' '}
+                  <code className="text-mov">RECENZII</code> în{' '}
+                  <code className="text-mov">src/data/mentorat.ts</code> și secțiunea se aprinde
+                  singură, cu recenziile adevărate și fără banda asta.
+                </p>
+              </Caseta>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {RECENZII.map((r) => (
-                <Caseta key={r.nume + r.lucrare} className="p-6 flex flex-col">
-                  <Quote size={18} className="text-mov mb-4 shrink-0" />
+              {RECENZII_DE_AFISAT.map((r, i) => (
+                <Caseta key={r.nume + r.lucrare + i} className="group p-6 flex flex-col">
+                  <Quote size={16} className="text-mov/70 mb-4 shrink-0" />
+
                   <p className="text-neutral-300 text-sm leading-relaxed flex-1">{r.text}</p>
-                  <div className="mt-6 pt-5 border-t border-white/[0.06]">
-                    <p className="text-white text-sm font-bold">{r.nume}</p>
-                    <p className="text-neutral-500 text-xs mt-0.5">{r.rol}</p>
-                    <p className="text-neutral-600 text-[11px] mt-2">{r.lucrare}</p>
-                    {r.href && (
-                      <a
-                        href={r.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-neutral-500 hover:text-white transition-colors text-[11px] mt-2"
-                      >
-                        vezi lucrarea <ArrowUpRight size={11} />
-                      </a>
-                    )}
+
+                  <div className="mt-6 pt-5 border-t border-white/[0.06] flex items-start gap-3">
+                    {/* Monograma. Inițialele se scot din nume, deci nu cere
+                        nicio poză — și nicio poză de stoc pusă în locul unui om
+                        real, care ar fi aceeași minciună ca o recenzie falsă. */}
+                    <span className="shrink-0 w-10 h-10 rounded-full bg-mov/10 border border-mov/25 flex items-center justify-center text-mov text-[13px] font-bold tracking-tight">
+                      {r.nume
+                        .split(/\s+/)
+                        .slice(0, 2)
+                        .map((cuvant) => cuvant[0])
+                        .join('')
+                        .toUpperCase()}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-white text-sm font-bold leading-tight">{r.nume}</p>
+                      <p className="text-neutral-500 text-xs mt-0.5 leading-snug">{r.rol}</p>
+                      <p className="text-neutral-600 text-[11px] mt-1.5 leading-snug">{r.lucrare}</p>
+                      {r.href && (
+                        <a
+                          href={r.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-neutral-500 hover:text-neon transition-colors text-[11px] mt-2"
+                        >
+                          vezi lucrarea <ArrowUpRight size={11} />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </Caseta>
               ))}

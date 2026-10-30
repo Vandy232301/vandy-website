@@ -801,6 +801,45 @@ export interface Recenzie {
 export const RECENZII: Recenzie[] = [];
 
 /* ────────────────────────────────────────────────────────────────────────
+   ȘABLONUL DE RECENZII — nouă sloturi, ca să vezi macheta
+
+   Owner, 30.10.2026: „Pune 9 carduri de review cu nume si firma."
+
+   ⛔ Nu am scris nouă recenzii. Nu există niciun client real în fișierul
+   ăsta, deci ar fi însemnat nouă oameni inventați cu nouă firme inventate,
+   pe o pagină care vinde un produs de 990 €. Aia nu e copywriting, e
+   fabricare de dovezi — și e exact lucrul pe care publicul românesc îl
+   caută: 60,1% presupun deja că e ceva necurat la mijloc
+   ([[vandy-reactia-ro-la-bogatie]]). O recenzie prinsă ca falsă nu strică
+   doar secțiunea, strică toate celelalte nouă carduri de încredere.
+
+   Ce e mai jos e MACHETA, nu conținut: nume „Nume Prenume", firmă
+   „Firma SRL". Se vede DOAR pe localhost (`import.meta.env.DEV`), ca să
+   poți judeca designul. Într-un build de producție nu se randează niciodată,
+   oricât ai uita-o aici.
+
+   Ca să intre recenziile adevărate: completează `RECENZII` de mai sus cu
+   obiecte reale și secțiunea se aprinde singură, cu aceleași carduri.
+   Șablonul dispare în momentul în care `RECENZII` nu mai e gol.
+   ──────────────────────────────────────────────────────────────────────── */
+export const RECENZII_SABLON: Recenzie[] = Array.from({ length: 9 }, (_, i) => ({
+  nume: 'Nume Prenume',
+  rol: 'fondator, Firma SRL',
+  text:
+    i % 3 === 0
+      ? 'Aici intră ce a spus clientul, în cuvintele lui, nerescrise de tine. Două-trei rânduri sunt de ajuns.'
+      : i % 3 === 1
+        ? 'Cea mai puternică recenzie spune ce avea înainte, ce are acum, și în cât timp.'
+        : 'Scurtă și concretă bate lungă și entuziastă. O cifră verificabilă valorează cât un paragraf.',
+  lucrare: 'ce i-ai construit',
+  href: undefined,
+}));
+
+/** Macheta se vede doar în dezvoltare. Vezi comentariul de mai sus. */
+export const RECENZII_DE_AFISAT: Recenzie[] =
+  RECENZII.length > 0 ? RECENZII : import.meta.env.DEV ? RECENZII_SABLON : [];
+
+/* ────────────────────────────────────────────────────────────────────────
    ÎNCREDERE — numai lucruri verificabile sau pe care le controlezi tu.
    ──────────────────────────────────────────────────────────────────────── */
 
