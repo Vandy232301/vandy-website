@@ -19,7 +19,7 @@ import {
   COMUNITATE, BRANDURI, PENTRU_CINE, EXPERTIZA, SOLOPRENOR, BONUS,
   PROBLEMA, MOTOR, DISTRIBUTIE,
 } from '../data/mentorat';
-import { BONUS_SECUNDE, porneste, secundeRamase, format } from '../lib/fereastraBonus';
+import { porneste, secundeRamase, format } from '../lib/fereastraBonus';
 // Portretul real, cel de pe cardurile de social media. NU randarea neagră de
 // pe prima pagină: aici vinde un om, nu un personaj.
 // Decupat pe cap, ca să nu iasă jumătate de sacou într-un cerc de 56px:
@@ -68,26 +68,12 @@ function useFereastra() {
 function Cronometru() {
   const ramas = useFereastra();
   const activa = ramas > 0;
-  // Cât a mai rămas, ca lățime. Un cronometru care doar numără e o cifră; unul
-  // care se golește se citește dintr-o privire, fără să aduni în cap.
-  const procent = Math.max(0, Math.min(100, (ramas / BONUS_SECUNDE) * 100));
 
   return (
     <Caseta
       radius="rounded-3xl"
       className={`overflow-hidden mb-3 ${activa ? 'ring-1 ring-neon/25' : ''}`}
     >
-      {/* Bara care se golește, lipită de muchia de sus a casetei. Pe lățimea
-          întreagă, nu într-un colț: e primul lucru care se mișcă pe pagină. */}
-      <span aria-hidden className="absolute inset-x-0 top-0 h-[3px] bg-white/[0.04]">
-        <span
-          className={`block h-full transition-[width] duration-1000 ease-linear ${
-            activa ? 'bg-neon lumina-linie' : 'bg-transparent'
-          }`}
-          style={{ width: `${procent}%` }}
-        />
-      </span>
-
       <div className="relative flex flex-col sm:flex-row sm:items-stretch">
         {/* Ceasul. Coloană proprie, cu fundal mai întunecat: arată ca un afișaj,
             nu ca un număr scris în paragraf. */}
@@ -157,7 +143,6 @@ function BaraFixa() {
   // nu o a doua fereastră care ar bate-o pe prima.
   const ramas = useFereastra();
   const activa = ramas > 0;
-  const procent = Math.max(0, Math.min(100, (ramas / BONUS_SECUNDE) * 100));
 
   useEffect(() => {
     const laScroll = () => setVizibila(window.scrollY > 700);
@@ -178,18 +163,6 @@ function BaraFixa() {
           vizibila ? 'pointer-events-auto' : 'pointer-events-none'
         }`}
       >
-        {/* Aceeași bară care se golește ca la cronometrul mare, pe muchia de
-            sus. E singurul element care se mișcă în bară, deci spune „mai e
-            puțin" fără să mai scrie un rând de text. */}
-        {activa && (
-          <span aria-hidden className="absolute inset-x-0 top-0 h-[2px] bg-white/[0.05]">
-            <span
-              className="block h-full bg-neon lumina-linie transition-[width] duration-1000 ease-linear"
-              style={{ width: `${procent}%` }}
-            />
-          </span>
-        )}
-
         <div className="min-w-0 flex-1">
           <p className="text-white text-[13px] sm:text-sm font-bold tracking-tight truncate">
             <span className="text-neon">{OFERTA.tip}</span> · {locuriLibere} locuri

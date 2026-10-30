@@ -32,8 +32,7 @@
  */
 
 export const BONUS_MINUTE = 10;
-/** Exportat ca pagina să poată desena cât a mai rămas ca bară, nu doar ca cifre. */
-export const BONUS_SECUNDE = BONUS_MINUTE * 60;
+const BONUS_SECUNDE = BONUS_MINUTE * 60;
 const CHEIE = 'vandy-mentorat-bonus';
 
 /** Rezerva pentru navigare privată sau cookie-uri blocate, unde `sessionStorage` aruncă. */
