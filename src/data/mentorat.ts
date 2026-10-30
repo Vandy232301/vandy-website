@@ -116,16 +116,15 @@ export const notaLocuri =
    ──────────────────────────────────────────────────────────────────────── */
 export const BONUS = {
   eticheta: 'Bonus surpriză',
-  titlu: 'Dacă îți lași datele în următoarele',
-  text:
-    'Peste tot ce scrie mai sus, primești un bonus pe care nu îl anunț dinainte. ' +
-    'Îl afli la apel, înainte să decizi ceva.',
+  /** Owner, 30.10.2026: „textul mai scurt si mai la obiect". Trei rânduri, nu
+   *  trei paragrafe: ce primești, ce nu-ți spun dinainte, și rândul cinstit.
+   *  Minutele nu se mai scriu în titlu — le arată ceasul de lângă. */
+  titlu: 'Lași datele până la zero, primești un bonus.',
+  text: 'Nu anunț dinainte ce e. Îl afli la apel, înainte să decizi ceva.',
   /** Rândul care ține cronometrul cinstit. Nu-l scoate. */
-  onest:
-    'Masterclass-ul nu expiră și prețul nu se schimbă când ajunge la zero. Doar bonusul ține de fereastra asta.',
+  onest: 'Masterclass-ul nu expiră și prețul nu se schimbă. Doar bonusul ține de fereastra asta.',
   expirat: 'Fereastra de bonus s-a închis.',
-  expiratText:
-    'Locul, prețul și tot ce scrie mai sus rămân neschimbate. Datele tot le poți lăsa — se schimbă doar bonusul.',
+  expiratText: 'Locul și prețul rămân neschimbate. Datele tot le poți lăsa.',
 } as const;
 
 /**
@@ -225,11 +224,16 @@ export const EXPERTIZA = {
    *  treilea rând sub nume și nu mai e o semnătură, e un paragraf. Anii și
    *  lista exactă, cu toate patru domeniile, sunt în banda de dedesubt. */
   semnatura: 'Branding, marketing și tehnologie',
+  /** Owner, 30.10.2026, despre banda asta: „sa fie mai bine aranjat". Rândul
+   *  al doilea e ce face diferența: patru nume singure sunt patru etichete,
+   *  patru nume cu câte trei lucruri sub ele sunt un CV. Nu e nicio promisiune
+   *  nouă aici — enumeră ce conține fiecare meserie, nu ce obții din ea.
+   *  Toate cele patru `ce` au între 23 și 29 de caractere, ca să stea pe un rând. */
   domenii: [
-    { icon: 'busolă',    nume: 'Branding Strategic' },
-    { icon: 'portavoce', nume: 'Marketing și Distribuție' },
-    { icon: 'țintă',     nume: 'Vânzări și Persuasiune' },
-    { icon: 'cod',       nume: 'Dezvoltare Tehnologie' },
+    { icon: 'busolă',    nume: 'Branding Strategic',       ce: 'Identitate, poziționare, nume' },
+    { icon: 'portavoce', nume: 'Marketing și Distribuție', ce: 'Canale, campanii, audiență' },
+    { icon: 'țintă',     nume: 'Vânzări și Persuasiune',   ce: 'Ofertă, preț, închidere' },
+    { icon: 'cod',       nume: 'Dezvoltare Tehnologie',    ce: 'Aplicații, automatizări, AI' },
   ],
 } as const;
 
@@ -351,6 +355,95 @@ export const COMUNITATE = {
       text: 'Șabloanele și prompturile noi intră acolo pe măsură ce le fac. Fără să plătești iar.',
     },
   ],
+} as const;
+
+/* ────────────────────────────────────────────────────────────────────────
+   PROBLEMA — diagnosticul de la începutul paginii.
+
+   Textele stăteau în JSX până pe 30.10.2026. Au venit aici fiindcă fișierul
+   ăsta e locul unde owner-ul le caută, iar cele trei trebuie ținute la aceeași
+   lungime ca să nu iasă trei cartonașe inegale: toate au 99 sau 100 de
+   caractere. Dacă rescrii unul, remăsoară.
+   ──────────────────────────────────────────────────────────────────────── */
+export const PROBLEMA = [
+  {
+    icon: 'cod',
+    titlu: 'Ai testat',
+    text: 'Ai deschis ChatGPT, ai cerut ceva, ai primit ceva aproape bun. A rămas un tab deschis, nu un proces.',
+  },
+  {
+    icon: 'echipă',
+    titlu: 'Ai delegat',
+    text: 'Ai pus pe cineva din echipă să se uite peste AI. S-a întors cu entuziasm și cu niciun flux schimbat.',
+  },
+  {
+    icon: 'ceas',
+    titlu: 'Și cifrele sunt aceleași',
+    text: 'Aceleași costuri, aceleași termene, aceiași oameni pe aceleași task-uri. Nimic de pus pe masă acum.',
+  },
+] as const;
+
+/* ────────────────────────────────────────────────────────────────────────
+   MOTORUL — cele trei piese ale mecanismului.
+
+   Aduse din JSX pe 30.10.2026, la cererea owner-ului ca textele să aibă
+   „numarul de caractere la fel": toate trei au 111–112 caractere, deci cele
+   trei coloane se termină pe același rând. Ține măsura dacă le rescrii.
+   ──────────────────────────────────────────────────────────────────────── */
+export const MOTOR = [
+  {
+    numar: '1',
+    titlu: 'Traduci cererea',
+    text: 'Cum transformi o cerere vagă în caiet de sarcini pe care AI-ul îl execută corect din prima, nu din a douăzecea.',
+  },
+  {
+    numar: '2',
+    titlu: 'Construiești de livrat',
+    text: 'Diferența dintre un demo care impresionează și un lucru pentru care cineva plătește. Aici se pierde toată lumea.',
+  },
+  {
+    numar: '3',
+    titlu: 'Publici și ceri bani',
+    text: 'Cum pui lucrul în fața oamenilor, cum se formează prețul și cum îl ceri fără să te scuzi, pentru că face treaba.',
+  },
+] as const;
+
+/* ────────────────────────────────────────────────────────────────────────
+   DISTRIBUȚIA ȘI VÂNZAREA — partea a treia a motorului, desfăcută.
+
+   Cerută de owner pe 30.10.2026, verbatim: „sa inteleaga clientul ca il
+   sistemul prezentat in masterclass include si partea de distributie si
+   vanzare care este cea mai grea chestie de facut adica sa stie ce sa faca ca
+   sa isi vanda mai departe produsul sau serviciile ca sa faca baniu."
+
+   ⚠️ Linia roșie, aceeași ca în tot fișierul: secțiunea asta promite CE PLECI
+   CU la capitolul vânzare — oferta scrisă, lista de nume, mesajul, prețul,
+   planul de 30 de zile — și NU promite că vinzi, că faci bani sau cât. Un
+   venit promis în scris e afirmație comercială reglementată (Legea 363/2007),
+   iar aici tentația e cea mai mare, fiindcă exact asta vrea omul să audă.
+   Rândul `onest` de la final e cel care ține secțiunea cinstită; nu-l scoate.
+
+   Fiecare pas e deja promis altundeva pe pagină (PLECI_CU și ZILE partea 3) —
+   aici sunt doar așezate în ordinea în care se întâmplă.
+   ──────────────────────────────────────────────────────────────────────── */
+export const DISTRIBUTIE = {
+  eticheta: 'Distribuție și vânzare',
+  titlu: 'Partea grea nu e să construiești.',
+  intro:
+    'Să construiești ceva poate oricine, acum. Greul e să știi cui îl vinzi, cu ce cuvinte și la ce preț — ' +
+    'și ăsta e motivul pentru care majoritatea rămân cu un lucru bun pe care nu îl cumpără nimeni. ' +
+    'A treia parte a zilei e despre exact asta, și e jumătate din motor, nu un bonus de la final.',
+  pasi: [
+    { icon: 'etichetă',  titlu: 'Oferta',                 text: 'Ce vinzi, în cuvintele clientului, nu în ale tale. Scrisă, nu ținută în cap.' },
+    { icon: 'oameni',    titlu: 'Lista',                  text: 'Zece nume reale: firme sau oameni care au deja problema pe care o rezolvi.' },
+    { icon: 'portavoce', titlu: 'Mesajul',                text: 'Primul mesaj de contact, scris în sală. Îl trimiți înainte să pleci acasă.' },
+    { icon: 'țintă',     titlu: 'Prețul',                 text: 'Cum se formează cifra și cum o ceri fără să te scuzi că ai cerut-o.' },
+    { icon: 'busolă',    titlu: 'Următoarele 30 de zile', text: 'Ce faci luni, ce urmărești săptămâna a doua, când schimbi mesajul.' },
+  ],
+  /** Rândul care ține secțiunea pe partea bună a legii. Nu-l scoate. */
+  onest:
+    'Nu îți garantez că vinzi — asta depinde de ce construiești și de câte mesaje trimiți. ' +
+    'Îți dau exact ce ai de trimis, cui, și la ce preț.',
 } as const;
 
 /**
@@ -503,7 +596,7 @@ import IMG_SINGUR from '../assets/viziune/singur.jpg';
 
 export const SOLOPRENOR = {
   eticheta: 'Solopreneur în era AI',
-  titlu: 'Un laptop și internet. Asta e tot ce cere fiecare din cele trei.',
+  titlu: 'Un laptop și internet. Atât.',
   text: 'Nici software, nici agenți, nici automatizări nu cer birou, marfă sau angajați. De acolo vine libertatea de mișcare — nu dintr-o promisiune, ci din felul în care e construit lucrul pe care îl vinzi.',
   // Toate cele patru `text` au exact 76 de caractere. Vezi nota de mai sus.
   cadre: [
@@ -714,12 +807,29 @@ export const RECENZII: Recenzie[] = [];
 /** Completeaz-o și apare în subsol. În România, datele firmei pe pagină cântăresc mult. */
 export const FIRMA: { denumire: string; cui: string; sediu: string } | null = null;
 
+/**
+ * Owner, 30.10.2026: „sa fie 9 categorii". Nouă, nu șapte, din două motive:
+ * cele șapte lăsau doi orfani pe ultimul rând al grilei de trei, iar cele două
+ * adăugate erau oricum promisiuni pe care pagina le făcea deja altundeva, fără
+ * să le numere la încredere — accesul care nu se reînnoiește și înregistrarea
+ * care rămâne la om (vezi COMUNITATE.acces și răspunsul din FAQ).
+ *
+ * ⚠️ Regula fișierului rămâne: numai lucruri verificabile sau pe care le
+ * controlezi tu. Nu adăuga aici „garantăm rezultate", „mii de cursanți" sau
+ * orice cifră pe care nu o poți arăta. Un rând inventat aici strică toate
+ * celelalte opt.
+ *
+ * Toate cele nouă `text` au între 85 și 90 de caractere, ca celulele grilei să
+ * aibă aceeași înălțime. Dacă rescrii unul, ține-te de măsură.
+ */
 export const INCREDERE = [
-  { icon: 'telefon',  titlu: 'Nu plătești până nu vorbim', text: 'Îți lași datele, te sună echipa, și abia după ce îți confirmăm locul se discută plata.' },
-  { icon: 'înapoi',   titlu: 'Returnare integrală', text: 'Dacă la finalul zilei tale nu ai construit și publicat lucrul tău, primești toți banii înapoi.' },
-  { icon: 'chitanță', titlu: 'Factură fiscală', text: 'Pe firmă sau pe persoană fizică. Plata integral sau în două tranșe.' },
-  { icon: 'mesaj',    titlu: 'Răspund eu, nu un chatbot', text: 'Pe Instagram și pe Telegram, la aceleași conturi de pe care postez.' },
-  { icon: 'glob',     titlu: '11 aplicații cu adresă publică', text: 'Nu capturi de ecran: adrese pe care le poți deschide acum și verifica.' },
-  { icon: 'premiu',   titlu: 'Branduri mari, lucrări reale', text: 'UNTOLD, NEVERSEA, Volkswagen, Audi, Banca Transilvania. Nu lucrări de portofoliu — clienți.' },
-  { icon: 'ceas',     titlu: 'Peste 16 ani de experiență', text: 'Nu am început cu AI. AI-ul e unealta din urmă, nu meseria.' },
+  { icon: 'telefon',  titlu: 'Nu plătești până nu vorbim',      text: 'Îți lași datele, te sună echipa, și abia după ce îți confirmăm locul se discută plata.' },
+  { icon: 'înapoi',   titlu: 'Returnare integrală',             text: 'Dacă la finalul zilei tale nu ai construit și publicat lucrul tău, primești banii înapoi.' },
+  { icon: 'chitanță', titlu: 'Factură fiscală',                 text: 'Pe firmă sau pe persoană fizică, integral sau în două tranșe. Alegi la apel, nu acum.' },
+  { icon: 'mesaj',    titlu: 'Răspund eu, nu un chatbot',       text: 'Pe Instagram și pe Telegram, de pe aceleași conturi de pe care postez. Scrii, răspund eu.' },
+  { icon: 'glob',     titlu: '11 aplicații cu adresă publică',  text: 'Nu capturi de ecran: adrese pe care le poți deschide acum, din pagina asta, și verifica.' },
+  { icon: 'premiu',   titlu: 'Branduri mari, lucrări reale',    text: 'UNTOLD, NEVERSEA, Volkswagen, Audi, Banca Transilvania. Nu portofoliu — clienți plătitori.' },
+  { icon: 'ceas',     titlu: 'Peste 16 ani de experiență',      text: 'Nu am început cu AI. Era meseria mea cu mult înainte să existe; AI-ul e unealta din urmă.' },
+  { icon: 'infinit',  titlu: 'Plătești o dată, nu lunar',       text: 'Accesul la comunitate nu expiră și nu se reînnoiește. Niciun abonament după masterclass.' },
+  { icon: 'video',    titlu: 'Înregistrarea rămâne la tine',    text: 'E live, dar ziua ta se înregistrează și rămâne la tine. Nu pierzi un pas dacă-l revezi.' },
 ] as const;

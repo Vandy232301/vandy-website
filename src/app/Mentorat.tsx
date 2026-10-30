@@ -17,8 +17,9 @@ import {
   OFERTA, DIRECTII, PLECI_CU, ZILE, NU_E_PENTRU, INTREBARI, locuriLibere, notaLocuri,
   CAPTURI, PRODUSE_DOVADA, PIATA, PIATA_AVERTISMENT, RECENZII, INCREDERE, FIRMA,
   COMUNITATE, BRANDURI, PENTRU_CINE, EXPERTIZA, SOLOPRENOR, BONUS,
+  PROBLEMA, MOTOR, DISTRIBUTIE,
 } from '../data/mentorat';
-import { BONUS_MINUTE, porneste, secundeRamase, format } from '../lib/fereastraBonus';
+import { BONUS_SECUNDE, porneste, secundeRamase, format } from '../lib/fereastraBonus';
 // Portretul real, cel de pe cardurile de social media. NU randarea neagră de
 // pe prima pagină: aici vinde un om, nu un personaj.
 // Decupat pe cap, ca să nu iasă jumătate de sacou într-un cerc de 56px:
@@ -41,7 +42,15 @@ import AVATAR_IMG from '../assets/vandy-real.png';
  *   anunțat din secundă în secundă face cititorul de ecran inutilizabil.
  * · Starea expirată nu are verde și nu are lumină. Rămâne o notă, nu o alarmă.
  */
-function Cronometru() {
+/**
+ * Fereastra de bonus, citită o dată pe secundă.
+ *
+ * Stă într-un hook fiindcă de pe 30.10.2026 o citesc doi consumatori:
+ * cronometrul mare de lângă formular și bara flotantă. `porneste()` e
+ * idempotent — scrie momentul o singură dată, apoi doar îl întoarce — deci doi
+ * apelanți nu dau două ferestre.
+ */
+function useFereastra() {
   // Citit, nu pornit, în initializer: `secundeRamase()` doar se uită în sesiune.
   // Scrierea momentului de start stă în efect, unde îi e locul.
   const [ramas, setRamas] = useState(() => secundeRamase());
@@ -53,19 +62,51 @@ function Cronometru() {
     return () => clearInterval(ceas);
   }, []);
 
+  return ramas;
+}
+
+function Cronometru() {
+  const ramas = useFereastra();
   const activa = ramas > 0;
+  // Cât a mai rămas, ca lățime. Un cronometru care doar numără e o cifră; unul
+  // care se golește se citește dintr-o privire, fără să aduni în cap.
+  const procent = Math.max(0, Math.min(100, (ramas / BONUS_SECUNDE) * 100));
 
   return (
-    <Caseta className={`p-6 md:p-8 mb-3 ${activa ? 'ring-1 ring-neon/20' : ''}`}>
-      <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
-        <div className="shrink-0">
-          <span className={`flex items-center gap-2 ${activa ? 'text-neon' : 'text-neutral-500'}`}>
-            <Clock size={14} strokeWidth={2.2} className="shrink-0" />
+    <Caseta
+      radius="rounded-3xl"
+      className={`overflow-hidden mb-3 ${activa ? 'ring-1 ring-neon/25' : ''}`}
+    >
+      {/* Bara care se golește, lipită de muchia de sus a casetei. Pe lățimea
+          întreagă, nu într-un colț: e primul lucru care se mișcă pe pagină. */}
+      <span aria-hidden className="absolute inset-x-0 top-0 h-[3px] bg-white/[0.04]">
+        <span
+          className={`block h-full transition-[width] duration-1000 ease-linear ${
+            activa ? 'bg-neon lumina-linie' : 'bg-transparent'
+          }`}
+          style={{ width: `${procent}%` }}
+        />
+      </span>
+
+      <div className="relative flex flex-col sm:flex-row sm:items-stretch">
+        {/* Ceasul. Coloană proprie, cu fundal mai întunecat: arată ca un afișaj,
+            nu ca un număr scris în paragraf. */}
+        <div
+          className={`shrink-0 flex flex-col justify-center px-6 md:px-8 py-6 md:py-7 bg-black/30 border-b sm:border-b-0 sm:border-r border-white/[0.06] ${
+            activa ? '' : 'opacity-70'
+          }`}
+        >
+          <span className="flex items-center gap-2">
+            <Clock
+              size={13}
+              strokeWidth={2.4}
+              className={`shrink-0 ${activa ? 'text-neon' : 'text-neutral-500'}`}
+            />
             <Eticheta ton={activa ? 'neon' : 'neutral'}>{BONUS.eticheta}</Eticheta>
           </span>
           <p
             aria-hidden
-            className={`mt-2 text-5xl md:text-6xl font-bold tracking-tight leading-none tabular-nums ${
+            className={`mt-2.5 text-[3.25rem] md:text-6xl font-bold tracking-[-0.04em] leading-[0.9] tabular-nums ${
               activa ? 'text-neon lumina-text' : 'text-neutral-700'
             }`}
           >
@@ -78,33 +119,24 @@ function Cronometru() {
           </span>
         </div>
 
-        <span
-          aria-hidden
-          className="hidden md:block w-px self-stretch bg-gradient-to-b from-transparent via-white/[0.12] to-transparent"
-        />
-
-        <div className="space-y-2">
-          {activa ? (
-            <>
-              <p className="text-white text-lg font-semibold leading-snug">
-                {BONUS.titlu} {BONUS_MINUTE} minute, primești ceva în plus.
-              </p>
-              <p className="text-neutral-400 text-sm leading-relaxed masura-text">{BONUS.text}</p>
-              {/* Rândul care face diferența dintre o ofertă și o minciună. */}
-              <p className="text-neutral-500 text-xs leading-relaxed masura-text pt-1">
-                {BONUS.onest}
-              </p>
-            </>
-          ) : (
-            <>
-              <p className="text-white text-lg font-semibold leading-snug">{BONUS.expirat}</p>
-              <p className="text-neutral-400 text-sm leading-relaxed masura-text">
-                {BONUS.expiratText}
-              </p>
-            </>
-          )}
+        <div className="flex-1 px-6 md:px-8 py-6 md:py-7 flex flex-col justify-center gap-1.5">
+          <p className="text-white text-lg md:text-xl font-bold leading-snug tracking-tight text-balance">
+            {activa ? BONUS.titlu : BONUS.expirat}
+          </p>
+          <p className="text-neutral-400 text-sm leading-relaxed masura-lat">
+            {activa ? BONUS.text : BONUS.expiratText}
+          </p>
         </div>
       </div>
+
+      {/* Rândul care face diferența dintre o ofertă și o minciună. Mutat pe
+          soclul casetei, unde se citește ca o notă de subsol — dar rămâne pe
+          pagină, lângă ceas, cum cere regula din fereastraBonus.ts. */}
+      {activa && (
+        <p className="relative px-6 md:px-8 py-3 border-t border-white/[0.06] bg-black/20 text-neutral-500 text-[11px] md:text-xs leading-relaxed">
+          {BONUS.onest}
+        </p>
+      )}
     </Caseta>
   );
 }
@@ -120,6 +152,12 @@ function Cronometru() {
  */
 function BaraFixa() {
   const [vizibila, setVizibila] = useState(false);
+  // Owner, 30.10.2026: „Vreau aia cu bonusul surpriza sa apara si pe bara
+  // asta." Același hook ca la cronometrul mare, deci aceleași zece minute —
+  // nu o a doua fereastră care ar bate-o pe prima.
+  const ramas = useFereastra();
+  const activa = ramas > 0;
+  const procent = Math.max(0, Math.min(100, (ramas / BONUS_SECUNDE) * 100));
 
   useEffect(() => {
     const laScroll = () => setVizibila(window.scrollY > 700);
@@ -136,15 +174,39 @@ function BaraFixa() {
       }`}
     >
       <div
-        className={`w-full max-w-xl flex items-center gap-3 rounded-2xl border border-neutral-700/70 ring-1 ring-neon/15 bg-black/70 backdrop-blur-xl shadow-2xl shadow-black/70 py-2 pl-4 pr-2 sm:py-2.5 sm:pl-5 sm:pr-2.5 ${
+        className={`relative w-full max-w-xl overflow-hidden flex items-center gap-3 rounded-2xl border border-neutral-700/70 ring-1 ring-neon/15 bg-black/75 backdrop-blur-xl shadow-2xl shadow-black/70 py-2.5 pl-4 pr-2 sm:py-3 sm:pl-5 sm:pr-2.5 ${
           vizibila ? 'pointer-events-auto' : 'pointer-events-none'
         }`}
       >
+        {/* Aceeași bară care se golește ca la cronometrul mare, pe muchia de
+            sus. E singurul element care se mișcă în bară, deci spune „mai e
+            puțin" fără să mai scrie un rând de text. */}
+        {activa && (
+          <span aria-hidden className="absolute inset-x-0 top-0 h-[2px] bg-white/[0.05]">
+            <span
+              className="block h-full bg-neon lumina-linie transition-[width] duration-1000 ease-linear"
+              style={{ width: `${procent}%` }}
+            />
+          </span>
+        )}
+
         <div className="min-w-0 flex-1">
           <p className="text-white text-[13px] sm:text-sm font-bold tracking-tight truncate">
-            <span className="text-neon">{OFERTA.tip}</span> · {OFERTA.durata}
+            <span className="text-neon">{OFERTA.tip}</span> · {locuriLibere} locuri
           </p>
-          <p className="text-neutral-400 text-xs truncate">{notaLocuri}</p>
+          {/* Rândul al doilea spune un singur lucru, cel mai urgent dintre
+              cele două. Cât timp fereastra e deschisă, ăla e bonusul; după,
+              se întoarce la locuri. Owner, 30.10.2026: „textul mai scurt si
+              mai la obiect". */}
+          {activa ? (
+            <p className="text-neutral-300 text-xs truncate flex items-center gap-1.5">
+              <Clock size={11} strokeWidth={2.4} className="shrink-0 text-neon" />
+              <span className="text-neon font-bold tabular-nums">{format(ramas)}</span>
+              <span className="text-neutral-400">· bonus surpriză</span>
+            </p>
+          ) : (
+            <p className="text-neutral-400 text-xs truncate">{notaLocuri}</p>
+          )}
         </div>
         <Buton
           href="#aplica"
@@ -289,11 +351,16 @@ export default function Mentorat() {
               </div>
 
               <h2 className="text-4xl md:text-[3rem] font-bold leading-[1.06] text-white tracking-tight mb-8 text-balance">
-                Nu te învăț să folosești AI.<br />
+                Nu te învăț tool-uri.<br />
                 <span className="text-neutral-400">
-                  Te învăț să construiești cu AI lucruri{' '}
-                  <span className="serif-italic text-neon lumina-text text-[1.1em]">
-                    pentru care oamenii plătesc
+                  {/* Rândurile sunt rupte de mână, nu lăsate să curgă: owner,
+                      30.10.2026, „ce se plateste pune-l pe al 3lea rand".
+                      `whitespace-nowrap` e plasa de siguranță — fără el, pe o
+                      fereastră îngustă fraza cu serif s-ar rupe din nou în
+                      „ce se" și „plătește", exact ce am scos. */}
+                  Te învăț să construiești<br />
+                  <span className="serif-italic text-neon lumina-text text-[1.1em] whitespace-nowrap">
+                    ce se plătește
                   </span>
                   .
                 </span>
@@ -306,7 +373,7 @@ export default function Mentorat() {
                   aria-hidden
                   className="absolute left-0 top-1 bottom-1 w-px bg-gradient-to-b from-neon via-neon/40 to-transparent"
                 />
-                <p className="text-white text-lg md:text-xl font-semibold leading-snug masura-intro">
+                <p className="text-white text-lg md:text-xl font-semibold leading-snug masura-intro echilibrat">
                   {OFERTA.pentruCine}
                 </p>
               </div>
@@ -381,23 +448,40 @@ export default function Mentorat() {
               coloane: îi dă hero-ului un soclu și scoate cele patru meserii
               din rândul de 11px de sub nume, unde nu le-ar fi citit nimeni. */}
           <div className="relative border-t border-white/[0.06] bg-black/30">
-            <div className="px-6 md:px-10 pt-5 pb-4">
+            {/* Eticheta are acum un fir mov care pleacă din ea spre dreapta:
+                leagă rândul de bandă în loc să-l lase plutind deasupra ei. */}
+            <div className="flex items-center gap-4 px-6 md:px-10 pt-6 pb-5">
               <Eticheta ton="mov">{EXPERTIZA.ani}</Eticheta>
+              <span
+                aria-hidden
+                className="hidden sm:block flex-1 h-px bg-gradient-to-r from-mov/30 to-transparent"
+              />
             </div>
+            {/* Owner, 30.10.2026: „sa fie mai bine aranjat". Patru celule
+                egale, nu patru etichete într-un rând: pastila cu iconița sus,
+                meseria dedesubt, și ce conține pe al treilea rând. Așezat pe
+                verticală, fiecare meserie are aceeași înălțime oricât de lung
+                i-ar fi numele — în varianta pe orizontală, „Marketing și
+                Distribuție" trecea pe două rânduri și strâmba tot rândul. */}
             <div className="grid grid-cols-2 md:grid-cols-4">
               {EXPERTIZA.domenii.map((d, i) => (
                 <div
                   key={d.nume}
-                  className={`flex items-center gap-3 px-6 md:px-5 py-5 border-white/[0.06] ${
+                  className={`group px-6 md:px-6 pb-6 pt-1 border-white/[0.06] ${
                     i % 2 === 1 ? 'border-l ' : ''
                   }${i >= 2 ? 'border-t md:border-t-0 ' : ''}${i === 2 ? 'md:border-l' : ''}`}
                 >
-                  {createElement(ICOANE[d.icon as NumeIcoana], {
-                    size: 17, className: 'text-mov shrink-0', strokeWidth: 1.9,
-                  })}
-                  <span className="text-neutral-200 text-[13px] font-semibold leading-tight">
-                    {d.nume}
+                  <span className="inline-flex w-9 h-9 rounded-lg bg-mov/10 border border-mov/25 items-center justify-center mb-3.5">
+                    {createElement(ICOANE[d.icon as NumeIcoana], {
+                      size: 16, className: 'text-mov', strokeWidth: 1.9,
+                    })}
                   </span>
+                  <p className="text-white text-[13px] md:text-sm font-bold leading-tight tracking-tight">
+                    {d.nume}
+                  </p>
+                  <p className="text-neutral-500 text-[11px] md:text-xs leading-snug mt-1">
+                    {d.ce}
+                  </p>
                 </div>
               ))}
             </div>
@@ -425,26 +509,52 @@ export default function Mentorat() {
           </div>
         </Secventa>
 
-        {/* ——— PROBLEMA ——— */}
+        {/* ——— PROBLEMA ———
+             Owner, 30.10.2026: „sa fie mai vizual totul cu elemente" și titlu
+             pe un singur rând. Cele trei cartonașe plate au devenit trei pași
+             ai aceleiași căderi, legați de un fir care se stinge de la mov
+             spre nimic — pentru că asta descriu: un traseu care nu ajunge
+             nicăieri. Concluzia nu mai e un paragraf într-o casetă, ci o
+             casetă cu propriul ei accent, ca să se vadă că e răsturnarea. */}
         <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="De ce AI-ul nu ți-a schimbat încă cifrele"
-            titlu={<>Problema nu e că nu știi destule. E că nimic din ce ai testat n-a intrat în firmă.</>}
+            titlu={<>Nimic din ce ai testat n-a rămas.</>}
           />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {[
-              { t: 'Ai testat', d: 'Ai deschis ChatGPT, ai cerut ceva, ai primit ceva aproape bun. A rămas un tab deschis, nu un proces.' },
-              { t: 'Ai delegat', d: 'Ai pus pe cineva din echipă „să se uite peste AI". S-a întors cu entuziasm și cu niciun flux de lucru schimbat.' },
-              { t: 'Și cifrele sunt aceleași', d: 'Aceleași costuri, aceleași termene, aceiași oameni pe aceleași task-uri. Nimic de pus pe masă la final de trimestru.' },
-            ].map((x) => (
-              <Caseta key={x.t} className="p-6">
-                <p className="text-white text-base font-bold mb-2">{x.t}</p>
-                <p className="text-neutral-400 text-sm leading-relaxed">{x.d}</p>
-              </Caseta>
-            ))}
+
+          <div className="relative">
+            {/* Firul care leagă cei trei pași, la înălțimea pastilelor. */}
+            <span
+              aria-hidden
+              className="hidden md:block absolute top-px left-[8%] right-[8%] h-px bg-gradient-to-r from-mov/40 via-mov/20 to-transparent"
+            />
+            <div className="relative grid grid-cols-1 md:grid-cols-3 gap-3">
+              {PROBLEMA.map((x, i) => (
+                <Caseta key={x.titlu} className="p-6 pt-0">
+                  {/* Pastila iese deasupra muchiei casetei, ca să stea pe fir. */}
+                  <span className="relative -mt-[26px] mb-4 inline-flex items-center gap-2.5 rounded-full border border-mov/25 bg-neutral-950 pl-2 pr-3.5 py-1.5">
+                    <span className="inline-flex w-6 h-6 rounded-full bg-mov/15 items-center justify-center">
+                      {createElement(ICOANE[x.icon as NumeIcoana], {
+                        size: 13, className: 'text-mov', strokeWidth: 2.1,
+                      })}
+                    </span>
+                    <span className="text-mov text-[11px] font-bold uppercase tracking-[0.14em] tabular-nums">
+                      0{i + 1}
+                    </span>
+                  </span>
+                  <p className="text-white text-base font-bold mb-2 tracking-tight">{x.titlu}</p>
+                  <p className="text-neutral-400 text-sm leading-relaxed">{x.text}</p>
+                </Caseta>
+              ))}
+            </div>
           </div>
-          <Caseta className="p-6 md:p-8 mt-3">
-            <p className="text-neutral-300 text-base leading-relaxed masura-text">
+
+          {/* Răsturnarea. Bordura verde din stânga e singurul loc din secțiune
+              unde apare accentul de acțiune: până aici totul a fost diagnostic. */}
+          <Caseta className="relative overflow-hidden p-6 md:p-8 mt-3">
+            <span aria-hidden className="absolute inset-y-0 left-0 w-[3px] bg-neon/70" />
+            <span aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-neon/[0.05] to-transparent" />
+            <p className="relative text-neutral-300 text-base md:text-lg leading-relaxed masura-lat">
               Nu e o problemă de inteligență, e una de format. Aproape tot ce se vinde te învață{' '}
               <span className="text-white font-semibold">tool-uri</span>, iar tool-ul se schimbă în
               trei luni. Lucrul pe care îl livrezi, nu. Masterclass-ul e construit invers față de un
@@ -460,7 +570,7 @@ export default function Mentorat() {
         <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="Pentru cine e"
-            titlu={<>Patru oameni. Dacă ești unul dintre ei, e pentru tine.</>}
+            titlu={<>Patru oameni. Unul ești tu.</>}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {PENTRU_CINE.map((x) => (
@@ -481,7 +591,7 @@ export default function Mentorat() {
         <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="Dovada"
-            titlu={<>Unsprezece aplicații construite și publicate. Click pe oricare.</>}
+            titlu={<>Unsprezece aplicații, live acum.</>}
           />
           <div className="flex flex-col gap-3">
             {PRODUSE_DOVADA.map((id, i) => {
@@ -502,37 +612,112 @@ export default function Mentorat() {
               );
             })}
           </div>
-          <p className="text-neutral-500 text-sm leading-relaxed mt-4 masura-text">
+          <p className="text-neutral-500 text-sm leading-relaxed mt-4 masura-lat md:columns-2 md:gap-10">
             Fiecare ecran e luat de pe site-ul live, nu e machetă. Deschide oricare și verifică.
             Toate sunt construite cu metoda din masterclass.
           </p>
         </Secventa>
 
-        {/* ——— MOTORUL ——— */}
+        {/* ——— MOTORUL ———
+             Owner, 30.10.2026: „un design mai superb si numarul de caractere
+             la fel". Cele trei piese stau acum pe un ax care le leagă — un
+             motor are piese prinse una de alta, nu trei coloane alăturate.
+             Textele s-au mutat în MOTOR (src/data/mentorat.ts) și au toate
+             111–112 caractere, deci cele trei coloane se termină la fel. */}
         <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="Motorul"
-            titlu={<>Un singur mecanism, trei feluri de a-l vinde.</>}
+            titlu={<>Un motor, trei feluri de a-l vinde.</>}
           />
           <Caseta className="p-6 md:p-8">
-            <p className="text-neutral-400 text-sm leading-relaxed masura-text mb-8">
+            <p className="text-neutral-400 text-sm md:text-base leading-relaxed masura-lat mb-9">
               Cele trei masterclass-uri folosesc același motor, iar motorul are trei piese. Le înveți o
               dată, în ziua 1; de acolo se schimbă doar ce vinzi.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-              {[
-                { n: '1', t: 'Traduci cererea', d: 'Cum transformi o cerere vagă în caiet de sarcini pe care AI-ul îl execută corect din prima, nu din a douăzecea.' },
-                { n: '2', t: 'Construiești de livrat', d: 'Diferența dintre un demo care impresionează și un lucru pentru care cineva plătește. Aici se pierde toată lumea.' },
-                { n: '3', t: 'Publici și ceri bani', d: 'Cum pui lucrul în fața oamenilor, cum se formează prețul și cum îl ceri fără să te scuzi.' },
-              ].map((p) => (
-                <div key={p.n} className="space-y-3">
-                  <span className="inline-flex items-center justify-center w-11 h-11 rounded-full border border-mov/50 text-mov text-lg font-bold tabular-nums lumina-bloc-mov">
-                    {p.n}
-                  </span>
-                  <p className="text-white text-base font-bold">{p.t}</p>
-                  <p className="text-neutral-400 text-sm leading-relaxed">{p.d}</p>
-                </div>
-              ))}
+
+            <div className="relative">
+              {/* Axul. Pleacă din centrul primei pastile și se oprește în
+                  centrul ultimei, deci pare că le leagă, nu că trece pe sub
+                  ele. Pastilele sunt opace și îl taie unde trebuie. */}
+              <span
+                aria-hidden
+                className="hidden md:block absolute top-[23px] left-[23px] right-[23px] h-px bg-gradient-to-r from-mov/50 via-mov/25 to-mov/10"
+              />
+              <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-7">
+                {MOTOR.map((piesa) => (
+                  <div key={piesa.numar}>
+                    <span className="relative inline-flex items-center justify-center w-[46px] h-[46px] rounded-full bg-neutral-950 border border-mov/50 text-mov text-lg font-bold tabular-nums lumina-bloc-mov">
+                      {piesa.numar}
+                    </span>
+                    <p className="text-white text-base font-bold mt-4 mb-2 tracking-tight">
+                      {piesa.titlu}
+                    </p>
+                    <p className="text-neutral-400 text-sm leading-relaxed">{piesa.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Caseta>
+        </Secventa>
+
+        {/* ——— DISTRIBUȚIA ———
+             Cerută de owner pe 30.10.2026: omul trebuie să înțeleagă că
+             sistemul include partea de distribuție și vânzare, „cea mai grea
+             chestie de facut". Stă imediat după MOTOR fiindcă desface piesa a
+             treia a lui — și e construită ca un traseu, nu ca o grilă: cinci
+             stații pe un ax vertical, în ordinea în care se întâmplă.
+             ⚠️ Rândul `onest` de la final e cel care o ține pe partea bună a
+             legii: promite ce pleci cu, nu că vinzi. Vezi DISTRIBUTIE în
+             src/data/mentorat.ts. */}
+        <Secventa className="pt-16 md:pt-24">
+          <TitluSecvenca eticheta={DISTRIBUTIE.eticheta} titlu={<>{DISTRIBUTIE.titlu}</>} />
+
+          <Caseta radius="rounded-3xl" className="overflow-hidden">
+            <span aria-hidden className="lumina-hero pointer-events-none absolute inset-0" />
+
+            <div className="relative p-6 md:p-8 border-b border-white/[0.06]">
+              <p className="text-neutral-300 text-base md:text-lg leading-relaxed masura-lat">
+                {DISTRIBUTIE.intro}
+              </p>
+            </div>
+
+            <div className="relative p-6 md:p-8">
+              {/* Axul vertical al traseului, de la prima stație la ultima. */}
+              <span
+                aria-hidden
+                className="absolute top-[3.1rem] bottom-[3.6rem] left-[44px] md:left-[52px] w-px bg-gradient-to-b from-neon/60 via-neon/25 to-neon/5"
+              />
+              <ol className="relative space-y-6">
+                {DISTRIBUTIE.pasi.map((pas, i) => (
+                  <li key={pas.titlu} className="flex items-start gap-4 md:gap-5">
+                    <span className="relative shrink-0 w-10 h-10 rounded-xl bg-neutral-950 border border-neon/30 flex items-center justify-center">
+                      {createElement(ICOANE[pas.icon as NumeIcoana], {
+                        size: 16, className: 'text-neon', strokeWidth: 1.9,
+                      })}
+                      {/* Numărul stației, mic, în colț: ordinea contează aici
+                          mai mult decât în orice altă listă de pe pagină. */}
+                      <span className="absolute -top-1.5 -right-1.5 w-[18px] h-[18px] rounded-full bg-neon text-black text-[10px] font-bold flex items-center justify-center tabular-nums">
+                        {i + 1}
+                      </span>
+                    </span>
+                    <div className="pt-0.5 min-w-0">
+                      <p className="text-white text-[15px] md:text-base font-bold tracking-tight">
+                        {pas.titlu}
+                      </p>
+                      <p className="text-neutral-400 text-sm leading-relaxed mt-1">{pas.text}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            {/* Rândul cinstit. Pe soclu, cu scut: e o limită asumată, nu o
+                scuză ascunsă la subsol. */}
+            <div className="relative flex items-start gap-3 px-6 md:px-8 py-5 border-t border-white/[0.06] bg-black/25">
+              <ShieldCheck size={15} className="text-neutral-500 shrink-0 mt-0.5" strokeWidth={1.9} />
+              <p className="text-neutral-500 text-xs md:text-[13px] leading-relaxed">
+                {DISTRIBUTIE.onest}
+              </p>
             </div>
           </Caseta>
         </Secventa>
@@ -541,7 +726,7 @@ export default function Mentorat() {
         <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="Cele trei masterclass-uri"
-            titlu={<>Trei meserii. Îl iei pe cel care te privește.</>}
+            titlu={<>Trei meserii. Îl iei pe al tău.</>}
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {DIRECTII.map((d) => (
@@ -583,7 +768,7 @@ export default function Mentorat() {
             ))}
           </div>
           <Caseta className="p-6 mt-3">
-            <p className="text-neutral-300 text-sm leading-relaxed masura-text">
+            <p className="text-neutral-300 text-sm leading-relaxed masura-lat md:columns-2 md:gap-10">
               <span className="text-neon font-semibold">Fiecare se cumpără separat.</span>{' '}
               Unul singur e un masterclass întreg, de o zi, cu lucrul tău publicat la final. Dacă le
               iei pe două sau pe toate trei, prețul pe bucată scade. Care anume ți se potrivește și
@@ -615,7 +800,7 @@ export default function Mentorat() {
             eticheta={SOLOPRENOR.eticheta}
             titlu={<>{SOLOPRENOR.titlu}</>}
           />
-          <p className="text-neutral-400 text-base leading-relaxed masura-text -mt-3 mb-8">
+          <p className="text-neutral-400 text-base md:text-lg leading-relaxed masura-lat -mt-3 mb-8">
             {SOLOPRENOR.text}
           </p>
 
@@ -652,7 +837,7 @@ export default function Mentorat() {
         <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="Cât se vinde pe piață"
-            titlu={<>Prețurile sunt publice. Uite-le, ca să știi ce vinzi.</>}
+            titlu={<>Prețurile pieței sunt publice.</>}
           />
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
             {PIATA.map((d) => (
@@ -678,13 +863,13 @@ export default function Mentorat() {
 
           <Caseta className="p-6 md:p-8 mt-3">
             <Eticheta ton="neon">Când îți acoperi investiția</Eticheta>
-            <p className="text-neutral-300 text-base leading-relaxed masura-text mt-3 mb-5">
+            <p className="text-neutral-300 text-base md:text-lg leading-relaxed masura-lat mt-3 mb-5">
               Din prima zi ai ce să vinzi: lucrul construit, oferta, prețul și primii zece clienți pe
               nume. La prețurile de mai sus,{' '}
               <span className="text-neon font-semibold">un singur proiect livrat acoperă investiția
               în masterclass</span>, pe oricare din cele trei.
             </p>
-            <p className="text-neutral-500 text-xs leading-relaxed masura-mic">
+            <p className="text-neutral-500 text-xs leading-relaxed masura-lat md:columns-2 md:gap-10">
               {PIATA_AVERTISMENT}
             </p>
           </Caseta>
@@ -694,7 +879,7 @@ export default function Mentorat() {
         <Secventa className="pt-16 md:pt-24">
           <TitluSecvenca
             eticheta="Ce pleci cu"
-            titlu={<>Șase lucruri pe care le poți arăta cuiva luni dimineață.</>}
+            titlu={<>Șase lucruri de arătat luni.</>}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {PLECI_CU.map((x, i) => (
@@ -718,7 +903,7 @@ export default function Mentorat() {
           <div id="zile" className="scroll-mt-8">
             <TitluSecvenca
               eticheta="Structura unei zile"
-              titlu={<>O zi, trei părți. La fel în fiecare dintre cele trei.</>}
+              titlu={<>O zi, trei părți.</>}
             />
           </div>
           <div className="flex flex-col gap-3">
@@ -731,12 +916,12 @@ export default function Mentorat() {
                     </span>
                     <p className="text-white text-xl md:text-2xl font-bold tracking-wide mt-1.5">{z.nume}</p>
                   </div>
-                  <p className="text-neutral-400 text-sm leading-relaxed masura-text flex-1">{z.text}</p>
+                  <p className="text-neutral-400 text-sm leading-relaxed masura-lat flex-1">{z.text}</p>
                 </div>
               </Caseta>
             ))}
           </div>
-          <p className="text-neutral-500 text-sm leading-relaxed mt-4 masura-text">
+          <p className="text-neutral-500 text-sm leading-relaxed mt-4 masura-lat md:columns-2 md:gap-10">
             Live, cu camera pornită, și înregistrat. Aceeași structură indiferent pe care dintre cele
             trei o iei. {OFERTA.dateNota}
           </p>
@@ -773,13 +958,13 @@ export default function Mentorat() {
               <div className="relative grid grid-cols-1 lg:grid-cols-[1.15fr_1fr]">
                 <div className="p-6 md:p-10 flex flex-col justify-center">
                   <h2 className="text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-[1.12] mb-5 masura-titlu">
-                    Masterclass-ul se termină într-o zi.{' '}
+                    Comunitatea{' '}
                     <span className="serif-italic text-neon lumina-text text-[1.1em]">
-                      Comunitatea, niciodată.
+                      rămâne.
                     </span>
                   </h2>
 
-                  <p className="text-neutral-300 text-base leading-relaxed masura-text">
+                  <p className="text-neutral-300 text-base leading-relaxed masura-lat">
                     Problemele nu apar în ziua masterclass-ului, apar în săptămâna 4. De asta accesul nu e bonus și
                     nu e abonament: îl cumperi o dată, cu masterclass-ul, și rămâne al tău.
                   </p>
@@ -879,7 +1064,7 @@ export default function Mentorat() {
           <Secventa className="pt-16 md:pt-24">
             <TitluSecvenca
               eticheta="Clienții mei"
-              titlu={<>Ce spun oamenii pentru care am construit.</>}
+              titlu={<>Ce spun cei cu care am lucrat.</>}
             />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {RECENZII.map((r) => (
@@ -910,73 +1095,158 @@ export default function Mentorat() {
         {/* ——— INVESTIȚIA ———
              Prețul NU apare aici. Decizie owner, 29.10.2026: se spune la apel.
              Secțiunea răspunde în schimb la întrebarea pe care o ridică absența
-             lui, pentru că a o ocoli ar arăta mai rău decât o cifră. */}
+             lui, pentru că a o ocoli ar arăta mai rău decât o cifră.
+
+             Owner, 30.10.2026: „un design mai superb" și fraza „Și e
+             intenționat" scoasă din titlu. Cele două casete alăturate au
+             devenit un singur obiect cu trei etaje — contorul, explicația, și
+             garanția lată jos, cu butonul — fiindcă aici se ia decizia, deci
+             merită să arate ca un singur lucru, nu ca două carduri.
+
+             ⚠️ Cele trei variante se randează DOAR cu `eticheta` și `bucati`
+             din OFERTA.pachete. `pret` nu se atinge și nu se calculează nimic
+             din el; punctele arată câte masterclass-uri intră în variantă, nu
+             cât costă. Dacă adaugi aici o cifră, încalci decizia de mai sus. */}
         <Secventa className="pt-16 md:pt-24">
-          <TitluSecvenca
-            eticheta="Investiția"
-            titlu={<>Prețul îl afli la apel. Și e intenționat.</>}
-          />
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-            <Caseta className="md:col-span-2 p-6 md:p-8">
-              <Eticheta>Locuri în prima serie</Eticheta>
-              <p className="text-6xl md:text-7xl font-bold text-neon tracking-tight leading-none mt-3 mb-2 tabular-nums lumina-text">
-                {locuriLibere}<span className="text-neutral-700 text-3xl">/{OFERTA.locuriTotal}</span>
-              </p>
-              <p className="text-neutral-500 text-sm mb-6">{OFERTA.dateText}</p>
-              <Locuri />
+          <TitluSecvenca eticheta="Investiția" titlu={<>Prețul îl afli la apel.</>} />
 
-              <div className="mt-6 pt-5 border-t border-white/[0.06]">
-                <p className="text-white text-sm font-semibold">Trei prețuri, nu unul</p>
-                <p className="text-neutral-500 text-xs mt-1">
-                  Unul singur, oricare două, sau toate trei — pe bucată costă din ce în ce mai puțin.
-                  Integral sau în două tranșe, factură pe firmă sau pe persoană fizică. Nimic nu se
-                  plătește înainte de apel.
-                </p>
-              </div>
-            </Caseta>
+          <Caseta radius="rounded-3xl" className="overflow-hidden">
+            <span aria-hidden className="lumina-hero pointer-events-none absolute inset-0" />
 
-            <Caseta className="md:col-span-3 p-6 md:p-8 space-y-6">
-              <div>
-                <Eticheta ton="mov">De ce nu scrie prețul aici</Eticheta>
-                <p className="text-neutral-300 text-sm leading-relaxed mt-3">
-                  Pentru că nu vindem un loc oricui plătește. Sunt zece. La apel ne uităm întâi dacă
-                  ai ce construi într-o zi și care dintre cele trei e al tău; dacă nu ne potrivim, ți-o
-                  spunem atunci. O cifră fără discuția asta nu îți spune nimic util — iar ce
-                  primești pentru ea e scris mai sus, rând cu rând.
-                </p>
+            <div className="relative grid grid-cols-1 md:grid-cols-5">
+              {/* Contorul. Coloană proprie, pe fundal mai închis: e un afișaj,
+                  nu un paragraf cu o cifră mare în el. */}
+              <div className="md:col-span-2 p-6 md:p-8 bg-black/25 border-b md:border-b-0 md:border-r border-white/[0.06]">
+                <Eticheta>Locuri în prima serie</Eticheta>
+
+                <div className="relative mt-4 mb-5">
+                  {/* Haloul din spatele cifrei. Difuz și lat, ca lumina să
+                      pară că vine din cifră, nu că e un chenar în jurul ei. */}
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute -left-6 -top-8 w-44 h-44 rounded-full bg-neon/[0.09] blur-3xl"
+                  />
+                  <p className="relative text-[5rem] md:text-[5.5rem] font-bold text-neon tracking-[-0.055em] leading-[0.82] tabular-nums lumina-text">
+                    {locuriLibere}
+                    <span className="text-neutral-700 text-3xl md:text-4xl tracking-tight">
+                      /{OFERTA.locuriTotal}
+                    </span>
+                  </p>
+                </div>
+
+                <Locuri />
+
+                <div className="mt-5 flex items-center gap-2 text-neutral-500 text-xs">
+                  <Clock size={12} strokeWidth={2.2} className="shrink-0" />
+                  {OFERTA.dateText}
+                </div>
               </div>
-              <div className="pt-6 border-t border-white/[0.06]">
-                <Eticheta ton="neon">Garanție pe livrare</Eticheta>
-                <p className="text-neutral-300 text-sm leading-relaxed mt-3">
-                  Dacă la finalul zilei tale nu ai construit și publicat lucrul tău, scrii un email
-                  și îți returnez integral banii. Fără motive, fără dovezi. Riscul e al meu, pentru că
-                  livrarea depinde de mine.
-                </p>
+
+              {/* De ce nu scrie prețul, și care sunt cele trei variante. */}
+              <div className="md:col-span-3 p-6 md:p-8 space-y-6">
+                <div>
+                  <Eticheta ton="mov">De ce nu scrie prețul aici</Eticheta>
+                  <p className="text-neutral-300 text-sm leading-relaxed mt-3">
+                    Pentru că nu vindem un loc oricui plătește. Sunt zece. La apel ne uităm întâi dacă
+                    ai ce construi într-o zi și care dintre cele trei e al tău; dacă nu ne potrivim,
+                    ți-o spunem atunci. O cifră fără discuția asta nu îți spune nimic util — iar ce
+                    primești pentru ea e scris mai sus, rând cu rând.
+                  </p>
+                </div>
+
+                <div className="pt-6 border-t border-white/[0.06]">
+                  <Eticheta ton="mov">Trei variante, nu una</Eticheta>
+                  <div className="grid grid-cols-3 gap-2 mt-4">
+                    {OFERTA.pachete.map((pachet) => (
+                      <div
+                        key={pachet.bucati}
+                        className="rounded-xl border border-white/[0.07] bg-white/[0.02] px-2 py-3.5 text-center"
+                      >
+                        {/* Câte masterclass-uri intră în variantă, desenate.
+                            Fără cifre: trei liniuțe din care se aprind atâtea
+                            câte iei. */}
+                        <span aria-hidden className="flex justify-center gap-1 mb-2.5">
+                          {[0, 1, 2].map((j) => (
+                            <span
+                              key={j}
+                              className={`h-1.5 w-3.5 rounded-full ${
+                                j < pachet.bucati ? 'bg-mov' : 'bg-white/[0.08]'
+                              }`}
+                            />
+                          ))}
+                        </span>
+                        <span className="block text-neutral-300 text-[11px] md:text-xs font-semibold leading-tight">
+                          {pachet.eticheta}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-neutral-500 text-xs leading-relaxed mt-4">
+                    Pe bucată costă din ce în ce mai puțin. Integral sau în două tranșe, factură pe
+                    firmă sau pe persoană fizică. Nimic nu se plătește înainte de apel.
+                  </p>
+                </div>
               </div>
-              <div className="pt-6 border-t border-white/[0.06]">
-                <Buton href="#aplica" className="w-full sm:w-auto">
+            </div>
+
+            {/* Garanția, pe toată lățimea, cu butonul în capăt. E ultimul lucru
+                citit înainte de decizie, deci e singurul rând din secțiune cu
+                verde în fundal. */}
+            <div className="relative border-t border-white/[0.06] bg-neon/[0.03] p-6 md:p-8">
+              <div className="flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10">
+                <div className="flex-1">
+                  <span className="flex items-center gap-2 mb-3">
+                    <ShieldCheck size={15} className="text-neon shrink-0" strokeWidth={2} />
+                    <Eticheta ton="neon">Garanție pe livrare</Eticheta>
+                  </span>
+                  <p className="text-neutral-300 text-sm leading-relaxed masura-lat">
+                    Dacă la finalul zilei tale nu ai construit și publicat lucrul tău, scrii un email
+                    și îți returnez integral banii. Fără motive, fără dovezi. Riscul e al meu, pentru
+                    că livrarea depinde de mine.
+                  </p>
+                </div>
+                <Buton href="#aplica" className="shrink-0 w-full sm:w-auto">
                   Lasă-ți datele pentru detalii <ArrowRight size={16} />
                 </Buton>
               </div>
-            </Caseta>
-          </div>
+            </div>
+          </Caseta>
         </Secventa>
 
-        {/* ——— ÎNCREDERE ——— */}
+        {/* ——— ÎNCREDERE ———
+             Owner, 30.10.2026: „un design superb si sa fie 9 categorii".
+             Nouă celule într-o singură casetă, despărțite de fire de lumină —
+             nu nouă cartonașe care plutesc. Diferența se vede cel mai bine pe
+             ultimul rând: la șapte bucăți rămâneau două orfane, iar la nouă
+             într-un singur obiect nu mai există noțiunea de orfan.
+
+             Firele interioare se fac dintr-un singur truc: fiecare celulă are
+             bordură sus și la stânga, iar grila e trasă cu un pixel în sus și
+             în stânga într-o casetă cu `overflow-hidden`. Așa dispar bordurile
+             de pe margine și rămân doar cele dintre celule, fără nth-child. */}
         <Secventa className="pt-16 md:pt-24">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {INCREDERE.map((x) => (
-              <Caseta key={x.titlu} className="p-5 flex items-start gap-3.5">
-                <span className="shrink-0 w-9 h-9 rounded-lg bg-mov/10 border border-mov/25 flex items-center justify-center">
-                  {createElement(ICOANE[x.icon as NumeIcoana], { size: 16, className: 'text-mov', strokeWidth: 1.9 })}
-                </span>
-                <div>
-                  <p className="text-white text-[15px] font-bold mb-1">{x.titlu}</p>
+          <TitluSecvenca eticheta="Încredere" titlu={<>Pe ce te bazezi.</>} />
+
+          <Caseta radius="rounded-3xl" className="overflow-hidden">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 -mt-px -ml-px">
+              {INCREDERE.map((x) => (
+                <div
+                  key={x.titlu}
+                  className="group relative border-t border-l border-white/[0.06] p-6 md:p-7 transition-colors hover:bg-white/[0.015]"
+                >
+                  <span className="inline-flex w-10 h-10 rounded-xl bg-mov/10 border border-mov/25 items-center justify-center mb-4 transition-colors group-hover:bg-mov/15 group-hover:border-mov/40">
+                    {createElement(ICOANE[x.icon as NumeIcoana], {
+                      size: 17, className: 'text-mov', strokeWidth: 1.9,
+                    })}
+                  </span>
+                  <p className="text-white text-[15px] font-bold mb-1.5 tracking-tight leading-tight">
+                    {x.titlu}
+                  </p>
                   <p className="text-neutral-400 text-[13px] leading-relaxed">{x.text}</p>
                 </div>
-              </Caseta>
-            ))}
-          </div>
+              ))}
+            </div>
+          </Caseta>
         </Secventa>
 
         {/* ——— NU E PENTRU TINE ——— */}
@@ -1049,9 +1319,9 @@ export default function Mentorat() {
         <Secventa className="pt-16 md:pt-24">
           <Caseta className="p-8 md:p-12 text-center ring-1 ring-neon/20">
             <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-[1.1] masura-titlu mx-auto mb-5">
-              Într-o singură zi ai construit ceva,{' '}
+              O zi, sau{' '}
               <span className="serif-italic text-neutral-500 text-[1.1em]">
-                sau mai trece un trimestru la fel.
+                încă un trimestru.
               </span>
             </h2>
             <p className="text-neutral-400 text-base leading-relaxed masura-intro mx-auto mb-8 tabular-nums">
@@ -1076,7 +1346,7 @@ export default function Mentorat() {
               garantează venit sau rezultat comercial (Legea 363/2007) · singurul
               angajament e „Ce pleci cu", acoperit de returnare · restul depinde de om.
               Dacă îl mai scurtezi, nu scoate niciunul din cele patru. */}
-          <p className="text-neutral-500 text-[11px] leading-relaxed masura-mic mx-auto text-center">
+          <p className="text-neutral-500 text-[11px] leading-relaxed masura-lat mx-auto text-center md:columns-2 md:gap-10 md:text-left">
             {OFERTA.numeProgram} este un program de formare practică. Nu e consultanță financiară
             sau de investiții și nu garantează niciun venit și niciun rezultat comercial. Singurul
             angajament e cel de la „Ce pleci cu", acoperit de returnarea integrală la finalul

@@ -62,7 +62,7 @@ export function Intrebare({ q, a, deschisaInitial = false }: IntrebareProps) {
             transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
             className="overflow-hidden"
           >
-            <p className="px-6 pb-6 text-neutral-400 text-sm md:text-[15px] leading-relaxed masura-text">
+            <p className="px-6 pb-6 text-neutral-400 text-sm md:text-[15px] leading-relaxed masura-lat md:columns-2 md:gap-10">
               {a}
             </p>
           </motion.div>

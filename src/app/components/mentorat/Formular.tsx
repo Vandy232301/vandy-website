@@ -135,11 +135,11 @@ export function Formular() {
           strokeWidth={1.5}
         />
         <h3 className="text-2xl font-bold text-white tracking-tight">Am primit datele tale.</h3>
-        <p className="text-neutral-400 text-sm leading-relaxed masura-text">
+        <p className="text-neutral-400 text-sm leading-relaxed masura-lat">
           Te contactează echipa în 48 de ore, de pe un număr din România. Primești toate detaliile
           și abia după aceea decizi.
         </p>
-        <p className="text-neutral-600 text-xs masura-mic">
+        <p className="text-neutral-600 text-xs masura-lat">
           Dacă nu prinzi apelul, te căutăm încă o dată. Ți-am trimis și un email de confirmare —
           verifică și în Spam.
         </p>
@@ -174,7 +174,7 @@ export function Formular() {
         <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
           Lasă-ți datele și te contactăm
         </h3>
-        <p className="text-neutral-400 text-sm leading-relaxed masura-text">
+        <p className="text-neutral-400 text-sm leading-relaxed masura-lat">
           Durează 30 de secunde. Te caută echipa în 48 de ore cu toate detaliile: datele,
           masterclass-ul potrivit și cum se face plata. Nu plătești nimic acum.
         </p>
@@ -287,7 +287,7 @@ export function Formular() {
           </select>
           <Mesaj camp="buget" />
           {!erori.buget && (
-            <p className="text-neutral-600 text-[11px] mt-2 masura-mic">
+            <p className="text-neutral-600 text-[11px] mt-2 masura-lat">
               Răspunsul nu stabilește prețul — prețul e fix și îl afli la apel.
             </p>
           )}
@@ -325,7 +325,7 @@ export function Formular() {
           )}
         </button>
 
-        <p className="text-neutral-600 text-[11px] text-center masura-mic mx-auto">
+        <p className="text-neutral-600 text-[11px] text-center masura-lat mx-auto">
           Nu îți cerem cardul și nu plătești nimic acum. Plata se discută la apel.
         </p>
       </div>

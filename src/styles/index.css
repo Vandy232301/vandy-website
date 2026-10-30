@@ -175,6 +175,44 @@
   text-wrap: pretty;
 }
 
+/* Excepția de la regula de mai sus, cerută de owner pe 30.10.2026: „vezi unde
+   sunt textele asa in stanga in box pe versiunea web si pune textul sa fie in
+   tot box-ul."
+
+   Are dreptate la ce se vede: un paragraf singur într-o casetă lată de 1024px,
+   tăiat la 56ch, lasă jumătate de casetă goală și arată ca o greșeală, nu ca o
+   măsură. Măsura rămâne bună acolo unde textul stă într-o coloană dintr-o
+   grilă — acolo coloana e oricum mai îngustă decât plafonul, deci clasa asta
+   nu schimbă nimic. Se aplică doar paragrafelor care ocupă singure o casetă.
+
+   ⚠️ Compromisul, scris ca să nu fie redescoperit peste trei luni: pe o casetă
+   de 958px, un rând de 16px ajunge la ~105 caractere, peste optimul de 66 și
+   peste pragul de 80 de la care ochiul începe să piardă rândul următor. De
+   aceea paragrafele lungi care au trecut aici au primit și o treaptă de
+   mărime în plus (text-base → text-lg): la 18–20px, aceeași lățime înseamnă
+   ~90 de caractere, iar interlinia relaxată ține rândul. Dacă adaugi un
+   paragraf nou, lat ȘI mic, o să fie greu de citit — crește-i mărimea. */
+.masura-lat {
+  max-width: 100%;
+  text-wrap: pretty;
+}
+
+/* `text-wrap: balance` împarte rândurile egal; `pretty`, moștenit de la
+   clasele de mai sus, repară doar ultimul rând. Owner, 30.10.2026, despre
+   rândul de poziționare din hero: „vreau sa fie mai multe caractere pe al
+   doilea rand, eventul muta de pe primul pe al doilea" — exact ce face
+   `balance`.
+
+   Scrisă aici, imediat după clasele de măsură, și nu ca `text-balance` de la
+   Tailwind: foaia asta e neîncadrată într-un layer, deci bate utilitarele
+   Tailwind, care sunt. Un `text-balance` pus în className ar pierde în fața
+   lui `text-wrap: pretty` de mai sus și n-ar face nimic. Ordinea din fișier
+   e cea care decide între două reguli cu aceeași specificitate, deci clasa
+   asta trebuie să rămână DUPĂ .masura-*. */
+.echilibrat {
+  text-wrap: balance;
+}
+
 /* ────────────────────────────────────────────────────────────────────────
    ACCENTUL SERIF
 
