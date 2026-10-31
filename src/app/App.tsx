@@ -20,8 +20,16 @@ import { ProjectCard } from './components/ProjectCard';
 import { PromoFlags } from './components/PromoFlags';
 import { PROJECTS } from '../data/projects';
 import { useLoves } from './hooks/useLoves';
-import AVATAR_IMG from '../assets/280a05b4e7cffd644dd36f6c7453213920fff3ac.png';
-import HERO_IMG from '../assets/280a05b4e7cffd644dd36f6c7453213920fff3ac.png';
+// Personajul negru, varianta din 22.10.2026 (semi-profil, ținuta B). Owner,
+// 29.10.2026: „Pe vandy.ro este imagine aia neagra cu mine negru, vrau sa o
+// inlocuiesti cu imagine noua cu mine negru si la fel si la favicon sa o pui."
+// Sursa, 4096²: ~/art-cinematic-video-ai/projects/personaj_v2/avatar_semi_v3.png
+//   sips -Z 1024 avatar_semi_v3.png --out src/assets/vandy-personaj.png
+// Aceeași imagine a plecat și în public/og-image.png (1024², cât scrie în meta),
+// iar decupajul pe față în favicon-uri și apple-touch-icon.
+// Randarea veche (280a05b4…png) rămâne în repo, nefolosită, dacă vrei înapoi.
+import AVATAR_IMG from '../assets/vandy-personaj.png';
+import HERO_IMG from '../assets/vandy-personaj.png';
 
 // Unsplash Images
 const TRADING_IMG = "https://images.unsplash.com/photo-1649848964263-2666b0c355a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdG9jayUyMG1hcmtldCUyMHRyYWRpbmclMjBjaGFydCUyMGRhcmslMjBuZW9ufGVufDF8fHx8MTc3MDg4NjI3NXww&ixlib=rb-4.1.0&q=80&w=1080";
