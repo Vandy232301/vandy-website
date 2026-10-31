@@ -1361,7 +1361,15 @@ export default function Mentorat() {
               garantează venit sau rezultat comercial (Legea 363/2007) · singurul
               angajament e „Ce pleci cu", acoperit de returnare · restul depinde de om.
               Dacă îl mai scurtezi, nu scoate niciunul din cele patru. */}
-          <p className="text-neutral-500 text-[11px] leading-relaxed masura-lat mx-auto text-center md:columns-2 md:gap-10 md:text-left">
+          {/* Un bloc, nu două coloane. Owner, 31.10.2026: „vreau sa fie legat si
+              centrat." Avea dreptate la ce se vedea: pe două coloane fraza se
+              rupea la mijloc („Singurul angajament e cel de la «Ce" | "pleci
+              cu»…"), iar ochiul citea o frază tăiată, nu un layout. Pe un singur
+              bloc centrat măsura trebuie pusă la loc — de aia `masura-mic` în
+              locul lui `masura-lat`, altfel rândul ar trece de 150 de caractere.
+              `echilibrat` împarte rândurile egal, ceea ce pe text centrat e
+              diferența dintre îngrijit și întâmplător. */}
+          <p className="text-neutral-500 text-[11px] leading-relaxed masura-mic echilibrat mx-auto text-center">
             {OFERTA.numeProgram} este un program de formare practică. Nu e consultanță financiară
             sau de investiții și nu garantează niciun venit și niciun rezultat comercial. Singurul
             angajament e cel de la „Ce pleci cu", acoperit de returnarea integrală la finalul
