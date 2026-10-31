@@ -537,6 +537,24 @@ export const OPTIUNI_STADIU = [
 ] as const;
 
 /**
+ * Pozele oamenilor din Seria 1, pentru rândul de sub „Comunitatea rămâne".
+ *
+ * Owner, 31.10.2026: „Aici pune poze cu oameni nu cu mine." Poza lui a ieșit.
+ * Poze cu alții n-am pus pentru că **nu există încă**: Seria 1 n-a rulat, deci
+ * n-am pe cine să arăt. Chipuri de stoc sau generate ar fi exact aceeași
+ * fabricare ca nouă recenzii inventate — vezi comentariul de la RECENZII.
+ *
+ * Până atunci, rândul arată LOCURI, nu oameni, și se citește din
+ * `OFERTA.locuriLuate`: luate pline, libere goale. Nu afirmă nimic ce pagina
+ * nu afirmă deja.
+ *
+ * Ca să intre pozele reale: pune aici obiecte cu `src` (import din
+ * `src/assets/`) și `nume`. Fiecare poză înlocuiește, în ordine, câte un loc
+ * ocupat. Doar cu acordul omului — e chipul lui pe o pagină de vânzare.
+ */
+export const MEMBRI: { src: string; nume: string }[] = [];
+
+/**
  * Antetul formularului de înscriere.
  *
  * Owner, 31.10.2026: „Acest titlu trebuia sa fie pe formularul de inscriere pe

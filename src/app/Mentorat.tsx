@@ -17,7 +17,7 @@ import {
   OFERTA, DIRECTII, PLECI_CU, ZILE, NU_E_PENTRU, INTREBARI, locuriLibere, notaLocuri,
   CAPTURI, PRODUSE_DOVADA, PIATA, PIATA_AVERTISMENT, RECENZII, RECENZII_DE_AFISAT, INCREDERE, FIRMA,
   COMUNITATE, BRANDURI, PENTRU_CINE, EXPERTIZA, SOLOPRENOR, BONUS,
-  PROBLEMA, MOTOR, DISTRIBUTIE,
+  PROBLEMA, MOTOR, DISTRIBUTIE, MEMBRI,
 } from '../data/mentorat';
 import { porneste, secundeRamase, format } from '../lib/fereastraBonus';
 // Portretul real, cel de pe cardurile de social media. NU randarea neagră de
@@ -1000,30 +1000,56 @@ export default function Mentorat() {
               </div>
 
               {/* BANDA 4 — seria.
-                  ⚠️ Locurile sunt goale DINADINS — sunt locuri, nu oameni.
-                  Chipuri de stoc aici ar fi exact aceeași minciună ca o
-                  recenzie inventată. Când există poze reale, intră aici. */}
+                  ⚠️ Owner, 31.10.2026: „Aici pune poze cu oameni nu cu mine."
+                  Poza lui a ieșit. Poze cu alții nu sunt, pentru că Seria 1
+                  n-a rulat — chipuri de stoc sau generate ar fi exact aceeași
+                  minciună ca o recenzie inventată.
+
+                  Deci rândul arată ce chiar există: LOCURILE. Luate pline,
+                  libere goale, numărate din `OFERTA.locuriLuate`, adică din
+                  cifra pe care pagina o afirmă deja în altă parte. Când apar
+                  poze reale în MEMBRI, fiecare acoperă în ordine câte un loc
+                  ocupat, fără altă schimbare aici. */}
               <div className="relative flex flex-wrap items-center justify-between gap-x-6 gap-y-4 px-6 md:px-10 py-6 border-t border-white/[0.07] bg-black/40">
-                <div className="flex items-center gap-4">
-                  <div className="flex -space-x-2.5">
-                    <span className="w-9 h-9 rounded-full overflow-hidden border-2 border-neutral-950 ring-1 ring-neon/40 shrink-0">
-                      <ImageWithFallback src={AVATAR_IMG} alt="VANDY" className="w-full h-full object-cover" />
-                    </span>
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <span
-                        key={i}
-                        className="w-9 h-9 rounded-full bg-neutral-900 border-2 border-neutral-950 ring-1 ring-neutral-800 flex items-center justify-center shrink-0"
-                      >
-                        <User size={13} className="text-neutral-700" />
-                      </span>
-                    ))}
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-3 min-w-0">
+                  <div className="flex gap-1 md:gap-1.5 shrink-0" role="img" aria-label={`${OFERTA.locuriLuate} locuri luate din ${OFERTA.locuriTotal}`}>
+                    {Array.from({ length: OFERTA.locuriTotal }).map((_, i) => {
+                      const membru = MEMBRI[i];
+                      const luat = i < OFERTA.locuriLuate;
+                      if (membru) {
+                        return (
+                          <span
+                            key={i}
+                            className="w-6 h-6 md:w-7 md:h-7 rounded-full overflow-hidden ring-1 ring-neon/40 shrink-0"
+                          >
+                            <ImageWithFallback
+                              src={membru.src}
+                              alt={membru.nume}
+                              className="w-full h-full object-cover"
+                            />
+                          </span>
+                        );
+                      }
+                      return (
+                        <span
+                          key={i}
+                          className={`w-6 h-6 md:w-7 md:h-7 rounded-full shrink-0 flex items-center justify-center ${
+                            luat
+                              ? 'bg-neon/[0.12] ring-1 ring-neon/40'
+                              : 'ring-1 ring-neutral-800'
+                          }`}
+                        >
+                          {luat && <User size={12} className="text-neon/70" />}
+                        </span>
+                      );
+                    })}
                   </div>
                   <p className="text-neutral-400 text-sm leading-snug">
-                    tu și încă{' '}
                     <span className="text-white font-semibold tabular-nums">
-                      {OFERTA.locuriTotal - 1}
-                    </span>
-                    , plus eu
+                      {OFERTA.locuriTotal - OFERTA.locuriLuate}
+                    </span>{' '}
+                    locuri libere din{' '}
+                    <span className="tabular-nums">{OFERTA.locuriTotal}</span>
                   </p>
                 </div>
                 <Eticheta ton="mov">Seria 1</Eticheta>
