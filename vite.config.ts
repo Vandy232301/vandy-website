@@ -17,13 +17,16 @@ export default defineConfig({
     },
   },
 
-  // Două pagini separate, nu un SPA cu router: /mentorat are propriile
-  // meta tag-uri de share și se încarcă fără codul paginii principale.
+  // Trei pagini separate, nu un SPA cu router: fiecare are propriile meta
+  // tag-uri de share și se încarcă fără codul celorlalte. /ghid e magnetul —
+  // trebuie să pornească instant, deci cu atât mai puțin are voie să care
+  // după el pagina principală.
   build: {
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, 'index.html'),
         mentorat: path.resolve(__dirname, 'mentorat/index.html'),
+        ghid: path.resolve(__dirname, 'ghid/index.html'),
       },
     },
   },
