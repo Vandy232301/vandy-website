@@ -38,21 +38,36 @@ function Video() {
             className="absolute inset-0 w-full h-full"
           />
         ) : (
-          /* Locul gol, arătat ca atare. Vezi comentariul de pe VIDEO în
-             data/prezentare.ts: fără înregistrare nu există funnel, iar o
-             pagină care pretinde că livrează ceva inexistent e chiar problema. */
+          /* Fără înregistrare nu există VSL. Două mesaje diferite, deliberat:
+             pe localhost scrie dezvoltatorului unde pune linkul; în producție
+             scrie OMULUI ce urmează. Un vizitator care tocmai și-a lăsat
+             datele nu are ce căuta în fața unui nume de variabilă — ar vedea
+             pagina pe dos și ar pleca. */
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center px-6">
             <span className="w-16 h-16 rounded-full border border-neon/30 bg-neon/10 flex items-center justify-center">
               <Play size={22} className="text-neon ml-1" />
             </span>
-            <p className="text-neutral-300 text-base font-bold">
-              Aici intră VSL-ul de {VIDEO.durata}
-            </p>
-            <p className="text-neutral-600 text-xs max-w-sm leading-relaxed">
-              Nu e încă înregistrat. Pune linkul de embed în{' '}
-              <code className="text-neutral-500">VIDEO.url</code>, în{' '}
-              <code className="text-neutral-500">src/data/prezentare.ts</code>, și se aprinde singur.
-            </p>
+            {import.meta.env.DEV ? (
+              <>
+                <p className="text-neutral-300 text-base font-bold">
+                  Aici intră VSL-ul de {VIDEO.durata}
+                </p>
+                <p className="text-neutral-600 text-xs max-w-sm leading-relaxed">
+                  Nu e încă înregistrat. Pune linkul de embed în{' '}
+                  <code className="text-neutral-500">VIDEO.url</code>, în{' '}
+                  <code className="text-neutral-500">src/data/prezentare.ts</code>, și se aprinde
+                  singur.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-neutral-300 text-base font-bold">Prezentarea video urmează.</p>
+                <p className="text-neutral-500 text-sm max-w-sm leading-relaxed">
+                  O înregistrez zilele astea și îți trimit linkul pe email, la adresa pe care
+                  tocmai ai lăsat-o. Până atunci te caută echipa, cu toate detaliile.
+                </p>
+              </>
+            )}
           </div>
         )}
       </div>
@@ -163,6 +178,40 @@ function Oferta() {
   );
 }
 
+/**
+ * Ce se arată în locul ofertei cât timp nu există link de plată.
+ *
+ * Nu e o variantă „mai slabă", e singura variantă corectă: un ceas care
+ * numără spre un buton inexistent e exact urgența falsă pe care tot
+ * lib/fereastraOferta.ts încearcă s-o evite. Fără cale de plată nu afirmăm
+ * niciun termen limită — spunem ce urmează, și atât.
+ */
+function FaraPlata() {
+  return (
+    <Caseta radius="rounded-3xl" className="overflow-hidden">
+      <span aria-hidden className="lumina-hero pointer-events-none absolute inset-0" />
+      <div className="relative p-6 md:p-8">
+        <Eticheta ton="neon">Ce urmează</Eticheta>
+        <p className="mt-3 text-white text-xl md:text-2xl font-bold tracking-tight leading-snug">
+          Te caută echipa în 48 de ore.
+        </p>
+        <p className="mt-2.5 text-neutral-400 text-sm md:text-base leading-relaxed masura-lat">
+          Douăzeci de minute: te întrebăm ce vrei să construiești, îți spunem cinstit dacă se poate
+          într-o zi, și primești toate detaliile — datele, prețul și condițiile. Decizi după, nu
+          acum. Sunt {locuriLibere} {locuriLibere === 1 ? 'loc liber' : 'locuri libere'} din{' '}
+          {OFERTA.locuriTotal}.
+        </p>
+      </div>
+      <div className="relative flex items-start gap-3 px-6 md:px-8 py-4 border-t border-white/[0.06] bg-black/30">
+        <ShieldCheck size={15} className="text-neutral-600 shrink-0 mt-0.5" />
+        <p className="text-neutral-500 text-[11px] md:text-xs leading-relaxed masura-lat">
+          Nu plătești nimic acum și nu te-ai angajat la nimic lăsându-ți datele.
+        </p>
+      </div>
+    </Caseta>
+  );
+}
+
 export default function Prezentare() {
   return (
     <div className="min-h-screen bg-black text-white selection:bg-neon/30 font-sans tracking-tight p-4 md:p-6 lg:p-8 flex justify-center">
@@ -191,8 +240,12 @@ export default function Prezentare() {
 
         {/* Oferta stă imediat sub video, nu la subsol. Omul care termină VSL-ul
             trebuie să poată apăsa fără să caute: fiecare derulare în plus e o
-            secundă în care se răzgândește. */}
-        <Oferta />
+            secundă în care se răzgândește.
+
+            Dar se arată DOAR dacă există cale de plată. Pe localhost o vedem
+            oricum, ca să poată fi lucrată; în producție, fără link, ar fi un
+            termen limită spre nicăieri. Vezi FaraPlata de mai sus. */}
+        {PLATA.url || import.meta.env.DEV ? <Oferta /> : <FaraPlata />}
 
         <Secventa>
           <div className="grid md:grid-cols-2 gap-4">
