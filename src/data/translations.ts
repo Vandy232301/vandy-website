@@ -10,7 +10,7 @@ export const translations = {
         title1: "Un mare iubitor de Artă și Lucruri Frumoase,",
         title2: "foarte pasionat de Trading, Tehnologie și",
         title3: "Construirea de Afaceri.",
-        desc: "Cu +11 ani de experiență în Branding Strategic, Growth Hacking Marketing și Design Thinking, combin Creativitatea cu Tehnologia, AI-ul și Datele pentru a oferi Lumii Servicii și Proiecte valoroase.",
+        desc: "Cu peste 16 ani de experiență în Branding Strategic, Marketing și Distribuție, Vânzări și Persuasiune și dezvoltare Tehnologie, combin Creativitatea cu Tehnologia, AI-ul și Datele pentru a oferi Lumii Servicii și Proiecte valoroase.",
         mobileTitle: "Experiență Mobile First",
         mobileDesc: "Optimizat pentru orice dispozitiv.",
         connect: "Urmărește-mă:"
@@ -53,7 +53,7 @@ export const translations = {
         title1: "I'm a big lover of Art & Beautiful Things,",
         title2: "very passionate about Trading, Technology and",
         title3: "Building Businesses.",
-        desc: "With +11 years of experience in Strategic Branding, Growth Hacking Marketing, & Design Thinking, I combine Creativity with Technology, AI & Datas to offer to the World valuable Services & Projects.",
+        desc: "With over 16 years of experience in Strategic Branding, Marketing & Distribution, Sales & Persuasion, and Technology development, I combine Creativity with Technology, AI & Data to offer to the World valuable Services & Projects.",
         mobileTitle: "Mobile First Experience",
         mobileDesc: "Optimized for every device.",
         connect: "Follow Me:"
@@ -96,7 +96,7 @@ export const translations = {
         title1: "Un gran amante del Arte y las Cosas Bellas,",
         title2: "muy apasionado por el Trading, la Tecnología y",
         title3: "la Creación de Empresas.",
-        desc: "Con +11 años de experiencia en Branding Estratégico, Growth Hacking Marketing y Design Thinking, combino Creatividad con Tecnología, IA y Datos para ofrecer al Mundo Servicios y Proyectos valiosos.",
+        desc: "Con más de 16 años de experiencia en Branding Estratégico, Marketing y Distribución, Ventas y Persuasión, y desarrollo de Tecnología, combino Creatividad con Tecnología, IA y Datos para ofrecer al Mundo Servicios y Proyectos valiosos.",
         mobileTitle: "Experiencia Mobile First",
         mobileDesc: "Optimizado para cada dispositivo.",
         connect: "Sígueme:"
@@ -139,7 +139,7 @@ export const translations = {
         title1: "Un grand amateur d'Art et de Belles Choses,",
         title2: "très passionné par le Trading, la Technologie et",
         title3: "la Création d'Entreprises.",
-        desc: "Avec +11 ans d'expérience en Branding Stratégique, Growth Hacking Marketing et Design Thinking, je combine Créativité, Technologie, IA et Données pour offrir au Monde des Services et Projets précieux.",
+        desc: "Avec plus de 16 ans d'expérience en Branding Stratégique, Marketing et Distribution, Vente et Persuasion, et développement Technologique, je combine Créativité, Technologie, IA et Données pour offrir au Monde des Services et Projets précieux.",
         mobileTitle: "Expérience Mobile First",
         mobileDesc: "Optimisé pour tous les appareils.",
         connect: "Suivez-moi :"
@@ -182,7 +182,7 @@ export const translations = {
         title1: "Ein großer Liebhaber von Kunst und schönen Dingen,",
         title2: "sehr leidenschaftlich für Trading, Technologie und",
         title3: "den Aufbau von Unternehmen.",
-        desc: "Mit +11 Jahren Erfahrung in Strategischem Branding, Growth Hacking Marketing und Design Thinking, kombiniere ich Kreativität mit Technologie, KI & Daten, um der Welt wertvolle Dienstleistungen & Projekte anzubieten.",
+        desc: "Mit über 16 Jahren Erfahrung in Strategischem Branding, Marketing und Distribution, Vertrieb und Überzeugung sowie Technologieentwicklung kombiniere ich Kreativität mit Technologie, KI & Daten, um der Welt wertvolle Dienstleistungen & Projekte anzubieten.",
         mobileTitle: "Mobile First Erlebnis",
         mobileDesc: "Optimiert für jedes Gerät.",
         connect: "Folge mir:"
@@ -225,7 +225,7 @@ export const translations = {
         title1: "Большой ценитель Искусства и Красивых Вещей,",
         title2: "очень увлечен Трейдингом, Технологиями и",
         title3: "Построением Бизнеса.",
-        desc: "С более чем 11-летним опытом в Стратегическом Брендинге, Growth Hacking Маркетинге и Дизайн-мышлении, я сочетаю Креативность с Технологиями, ИИ и Данными, чтобы предложить Миру ценные Услуги и Проекты.",
+        desc: "С более чем 16-летним опытом в Стратегическом Брендинге, Маркетинге и Дистрибуции, Продажах и Убеждении, а также в разработке Технологий, я сочетаю Креативность с Технологиями, ИИ и Данными, чтобы предложить Миру ценные Услуги и Проекты.",
         mobileTitle: "Mobile First Опыт",
         mobileDesc: "Оптимизировано для любого устройства.",
         connect: "Подпишись:"
