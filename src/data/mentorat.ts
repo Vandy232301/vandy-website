@@ -537,6 +537,26 @@ export const OPTIUNI_STADIU = [
 ] as const;
 
 /**
+ * Antetul formularului de înscriere.
+ *
+ * Owner, 31.10.2026: „Acest titlu trebuia sa fie pe formularul de inscriere pe
+ * pagina masterclass-ului." Titlul e al lui, cuvânt cu cuvânt, inclusiv cifra
+ * de venit — i-am contestat-o de două ori, a decis „Lasa cum iti spun eu".
+ * Nu-l rescrie fără el. Contextul complet e în memoria proiectului, la
+ * vandy-lead-magnet.
+ *
+ * ⚠️ `text` descrie ce se întâmplă DUPĂ trimitere, iar acum omul ajunge
+ * direct pe /prezentare, la video. Dacă schimbi redirectul din Formular.tsx,
+ * schimbă și rândul ăsta — altfel pagina promite un lucru și face altul.
+ */
+export const FORMULAR = {
+  pas: 'Pasul 1 din 2',
+  titlu: 'Învață cum poți face 200–300 $ pe zi creând și vânzând site-uri simple.',
+  subtitlu: 'Pentru clienți care ar plăti chiar și mai mult pentru asta.',
+  text: 'Durează 30 de secunde. Imediat ce trimiți, intri pe pagina unde îți arăt pas cu pas tot conceptul, pe video. Nu plătești nimic ca să intri.',
+} as const;
+
+/**
  * Bugetul. Owner, 29.10.2026: „Vreau sa fie pretul in formular gen cat ar plati
  * pentru asta" + „Si sa fie 3 optiuni".
  *

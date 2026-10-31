@@ -1,12 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { Loader2, CheckCircle2, ArrowRight, AlertCircle } from 'lucide-react';
-import { OPTIUNI_DIRECTIE, OPTIUNI_STADIU, OPTIUNI_BUGET } from '../../../data/mentorat';
+import { FORMULAR, OPTIUNI_DIRECTIE, OPTIUNI_STADIU, OPTIUNI_BUGET } from '../../../data/mentorat';
 import { Eticheta } from './Bucati';
 import {
   validNume, validEmail, validTelefon, validDescriere,
   curataNume, curataEmail, curataTelefon,
 } from '../../../lib/validare';
 import { secundeRamase } from '../../../lib/fereastraBonus';
+
+/** Pasul 2: pagina cu VSL-ul și oferta. Rută definită în vercel.json. */
+const DESTINATIE = '/prezentare';
 
 type Camp = 'nume' | 'email' | 'telefon' | 'directie' | 'stadiu' | 'ceVreiSaConstruiesti' | 'buget';
 type Stare = 'formular' | 'trimis';
@@ -114,7 +117,12 @@ export function Formular() {
       });
       const date = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(date?.error || 'Trimiterea a eșuat.');
+      // Pasul 2 e o pagină, nu un mesaj: omul care tocmai s-a înscris pleacă
+      // direct la video. Starea „trimis" rămâne desenată pentru fracțiunea de
+      // secundă până se schimbă pagina — și ca plasă, dacă navigarea e blocată
+      // de browser, omul vede un drum mai departe în loc de un formular gol.
       setStare('trimis');
+      window.location.href = DESTINATIE;
     } catch (err) {
       setEroareGenerala(
         err instanceof Error && err.message !== 'Failed to fetch'
@@ -134,15 +142,16 @@ export function Formular() {
           className="text-neon drop-shadow-[0_0_18px_rgba(57,255,20,0.55)]"
           strokeWidth={1.5}
         />
-        <h3 className="text-2xl font-bold text-white tracking-tight">Am primit datele tale.</h3>
+        <h3 className="text-2xl font-bold text-white tracking-tight">Ești înăuntru.</h3>
         <p className="text-neutral-400 text-sm leading-relaxed masura-lat">
-          Te contactează echipa în 48 de ore, de pe un număr din România. Primești toate detaliile
-          și abia după aceea decizi.
+          Te duc la video. Dacă nu se deschide singur în câteva secunde, apasă aici.
         </p>
-        <p className="text-neutral-600 text-xs masura-lat">
-          Dacă nu prinzi apelul, te căutăm încă o dată. Ți-am trimis și un email de confirmare —
-          verifică și în Spam.
-        </p>
+        <a
+          href={DESTINATIE}
+          className="text-neon text-sm font-bold hover:underline inline-flex items-center gap-1.5"
+        >
+          Deschide prezentarea <ArrowRight size={15} />
+        </a>
       </div>
     );
   }
@@ -170,13 +179,13 @@ export function Formular() {
   return (
     <div className="p-6 md:p-8">
       <div className="space-y-2 mb-7">
-        <Eticheta ton="mov">Pasul 1 din 2</Eticheta>
-        <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-          Lasă-ți datele și te contactăm
+        <Eticheta ton="mov">{FORMULAR.pas}</Eticheta>
+        <h3 className="text-2xl md:text-[1.75rem] font-bold text-white tracking-tight leading-[1.15] echilibrat">
+          {FORMULAR.titlu}
         </h3>
-        <p className="text-neutral-400 text-sm leading-relaxed masura-lat">
-          Durează 30 de secunde. Te caută echipa în 48 de ore cu toate detaliile: datele,
-          masterclass-ul potrivit și cum se face plata. Nu plătești nimic acum.
+        <p className="text-neutral-300 text-sm font-semibold">{FORMULAR.subtitlu}</p>
+        <p className="text-neutral-400 text-sm leading-relaxed masura-lat pt-1">
+          {FORMULAR.text}
         </p>
       </div>
 

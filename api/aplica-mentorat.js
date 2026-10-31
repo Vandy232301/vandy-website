@@ -16,6 +16,8 @@ const EXPEDITOR = process.env.MENTORAT_FROM || 'VANDY <noreply@vandy.ro>';
 // dar numai către adresa proprietarului contului — exact ce ne trebuie ca
 // notificarea să ajungă chiar dacă vandy.ro nu e (încă) verificat pe cheia din producție.
 const EXPEDITOR_REZERVA = 'ATELIER AI <onboarding@resend.dev>';
+/** Pasul 2: pagina cu VSL-ul și oferta. Aceeași destinație ca redirectul din Formular.tsx. */
+const PREZENTARE = process.env.PREZENTARE_URL || 'https://vandy.ro/prezentare';
 
 const DIRECTII = {
   software: 'SOFTWARE — site-uri, aplicații, software la comandă',
@@ -190,8 +192,9 @@ function emailCatreAplicant(nume) {
     </td></tr>
     <tr><td style="height:1px;background:#333;font-size:1px;line-height:1px">&nbsp;</td></tr>
     <tr><td style="padding-top:28px">
-      <p style="margin:0 0 16px;color:#fff;font-size:22px;font-weight:700;line-height:1.35;font-family:Arial,sans-serif">${prenume}, am primit datele tale.</p>
-      <p style="margin:0 0 14px;color:#a3a3a3;font-size:15px;line-height:1.7;font-family:Arial,sans-serif">Te contactează echipa în maximum 48 de ore, de pe un număr din România. Apelul durează 20 de minute.</p>
+      <p style="margin:0 0 16px;color:#fff;font-size:22px;font-weight:700;line-height:1.35;font-family:Arial,sans-serif">${prenume}, ești înăuntru.</p>
+      <p style="margin:0 0 14px;color:#a3a3a3;font-size:15px;line-height:1.7;font-family:Arial,sans-serif">Prezentarea te așteaptă — îți arăt pas cu pas tot conceptul și, la final, cum îți ții locul. Butonul de mai jos o deschide. Dacă nu ajungi acum la ea, emailul ăsta rămâne linkul tău.</p>
+      <p style="margin:0 0 14px;color:#a3a3a3;font-size:15px;line-height:1.7;font-family:Arial,sans-serif">Separat de asta, te contactează echipa în maximum 48 de ore, de pe un număr din România. Apelul durează 20 de minute.</p>
       <p style="margin:0 0 14px;color:#a3a3a3;font-size:15px;line-height:1.7;font-family:Arial,sans-serif">Te întrebăm ce vrei să construiești, îți spunem cinstit dacă se poate într-o zi, stabilim pe care din cele trei masterclass-uri intri — unul, două sau toate — și primești toate detaliile: datele exacte, prețul și condițiile. Dacă nu ne potrivim, ți-o spunem la telefon și nu ai pierdut nimic.</p>
     </td></tr>
     <tr><td style="padding:8px 0 20px">
@@ -202,7 +205,7 @@ function emailCatreAplicant(nume) {
     </td></tr>
     <tr><td align="center" style="padding-bottom:24px">
       <table cellpadding="0" cellspacing="0" border="0"><tr><td align="center" bgcolor="#39ff14" style="background:#39ff14;border-radius:50px">
-        <a href="https://vandy.ro/mentorat" style="display:inline-block;background:#39ff14;color:#000;font-size:15px;font-weight:800;padding:15px 36px;border-radius:50px;text-decoration:none;font-family:Arial,sans-serif">Recitește ce pleci cu</a>
+        <a href="${esc(PREZENTARE)}" style="display:inline-block;background:#39ff14;color:#000;font-size:15px;font-weight:800;padding:15px 36px;border-radius:50px;text-decoration:none;font-family:Arial,sans-serif">Deschide prezentarea</a>
       </td></tr></table>
     </td></tr>
     <tr><td style="height:1px;background:#333;font-size:1px;line-height:1px">&nbsp;</td></tr>

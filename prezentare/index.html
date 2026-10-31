@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+
+    <!-- Pasul 2 din funnel: se ajunge aici doar după înscrierea de pe /mentorat.
+         `noindex` nu e o preferință, e ce ține regula prețului în picioare:
+         pagina arată cifra, iar /mentorat nu are voie s-o arate. Dacă Google o
+         indexează, prețul devine public pe la spate — exact ce a cerut owner-ul
+         să nu se întâmple (29.10.2026: „Pretul nu l-as pune la vedere").
+         Din același motiv nu are og:image și nici descriere de share. -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <title>Prezentarea ta — MASTERCLASS ATELIER AI | VANDY</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
+    />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <script type="module" src="/src/prezentare.tsx"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
