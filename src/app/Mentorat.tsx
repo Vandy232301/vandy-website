@@ -335,10 +335,21 @@ export default function Mentorat() {
 
                   De aia „exact" stă jos, lângă fraza verde, la ORICE lățime —
                   owner, 02.11.2026: „si pe desktop exact ce se plateste pe al
-                  treilea rand". Rândul limitator se scurtează cu un sfert, deci
-                  corpul crește cu un sfert peste tot: 45px → 56px pe desktop,
-                  21px → 28px pe telefon, la aceleași trei rânduri.
-                  Un singur `<br>`, deci, nu o pereche care se schimbă la md.
+                  treilea rand". Un sfert mai scurt, un sfert mai mare: pe
+                  desktop 45px → 56px.
+
+                  Pe TELEFON merge un rând mai departe, tot la cererea lui
+                  („pune pe 4 randuri pe telefon"): „Te învăț să" și
+                  „construiești" se despart, iar limitatorul devine primul rând,
+                  „Nu te învăț tool-uri." (8,62). De acolo 33px în loc de 27 la
+                  375 — plafonul celor trei rânduri era 28, deci nu mai era
+                  nimic de stors fără al patrulea.
+                  Dintre despărțirile posibile am ales-o pe asta fiindcă dă
+                  rândurile cele mai egale: 8,62 / 4,73 / 5,41 / 7,53.
+                  Alternativa („Te învăț" / „să construiești") dă același corp,
+                  dar rânduri mai inegale.
+                  Al doilea `<br>` apare doar sub md; cel care desparte „exact"
+                  rămâne peste tot.
 
                   Coloanele, măsurate: sub md e `viewport − 82px`; la md SCADE
                   brusc la 394px, fiindcă hero-ul se desface în două coloane, și
@@ -347,7 +358,7 @@ export default function Mentorat() {
                   nu-l poate traversa.
                   `text-balance` a ieșit: cu rândurile rupte de mână n-are ce
                   echilibra, dar rearanja rupturile pe care le-am pus noi. */}
-              <h2 className="text-[clamp(1.375rem,calc(9.4vw_-_8px),3.5rem)] md:text-[clamp(2.25rem,4.9vw,3.5rem)] font-bold leading-[1.06] text-white tracking-tight mb-8">
+              <h2 className="text-[clamp(1.6875rem,calc(11.3vw_-_9px),3.5rem)] md:text-[clamp(2.25rem,4.9vw,3.5rem)] font-bold leading-[1.06] text-white tracking-tight mb-8">
                 Nu te învăț tool-uri.<br />
                 <span className="text-neutral-400">
                   {/* Rândurile sunt rupte de mână, nu lăsate să curgă: owner,
@@ -362,7 +373,10 @@ export default function Mentorat() {
                       telefon, iar `whitespace-nowrap` l-ar fi lăsat să iasă din
                       pagină în loc să-l rupă. Rândul al treilea rămâne cum l-a
                       cerut. */}
-                  Te învăț să construiești<br />
+                  Te învăț să{' '}
+                  {/* Al patrulea rând, doar pe telefon. Vezi nota de la corp. */}
+                  <br className="md:hidden" />
+                  construiești<br />
                   exact{' '}
                   <span className="serif-italic text-neon lumina-text text-[1.1em] whitespace-nowrap">
                     ce se plătește
