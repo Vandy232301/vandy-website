@@ -330,8 +330,15 @@ export default function Mentorat() {
                       30.10.2026, „ce se plateste pune-l pe al 3lea rand".
                       `whitespace-nowrap` e plasa de siguranță — fără el, pe o
                       fereastră îngustă fraza cu serif s-ar rupe din nou în
-                      „ce se" și „plătește", exact ce am scos. */}
-                  Te învăț să construiești<br />
+                      „ce se" și „plătește", exact ce am scos.
+
+                      „exact" adăugat de owner pe 02.11.2026, și pus AICI, în
+                      gri, nu în fraza verde: în serif italic la 1.1em,
+                      „exact ce se plătește" ar fi depășit lățimea ecranului pe
+                      telefon, iar `whitespace-nowrap` l-ar fi lăsat să iasă din
+                      pagină în loc să-l rupă. Rândul al treilea rămâne cum l-a
+                      cerut. */}
+                  Te învăț să construiești exact<br />
                   <span className="serif-italic text-neon lumina-text text-[1.1em] whitespace-nowrap">
                     ce se plătește
                   </span>
@@ -496,11 +503,15 @@ export default function Mentorat() {
           />
 
           <div className="relative">
-            {/* Firul care leagă cei trei pași, la înălțimea pastilelor. */}
-            <span
-              aria-hidden
-              className="hidden md:block absolute top-px left-[8%] right-[8%] h-px bg-gradient-to-r from-mov/40 via-mov/20 to-transparent"
-            />
+            {/* Aici era un fir mov care trebuia să lege cele trei pastile.
+                Scos de owner pe 02.11.2026: „linia aia care nu are sens".
+                Avea dreptate, și se poate și măsura — firul stătea la `top-px`,
+                adică pe muchia de sus a casetelor, în timp ce centrul pastilelor
+                e cu 11px mai sus (pastila e trasă cu `-mt-[26px]`). Deci nu
+                trecea prin pastile, ci le rata pe dedesubt și se citea ca o
+                linie rătăcită între casete.
+                Dacă îl repui vreodată, pune-l pe centrul pastilei, nu pe muchie
+                — vezi axul din secțiunea MOTORUL, care e la decalaj 0. */}
             <div className="relative grid grid-cols-1 md:grid-cols-3 gap-3">
               {PROBLEMA.map((x, i) => (
                 <Caseta key={x.titlu} className="p-6 pt-0">
