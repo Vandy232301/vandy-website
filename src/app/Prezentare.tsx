@@ -447,7 +447,14 @@ export default function Prezentare() {
       <div className="granulatie fixed inset-0 z-0 pointer-events-none" />
 
       <div className="w-full max-w-4xl relative z-10 flex flex-col gap-4 pb-16">
-        <header className="flex flex-row justify-between items-center py-4">
+        {/* Centrat, una sub alta — owner, 2026-11-02. Pe pagina asta e singura
+            variantă coerentă: titlul, caseta cu lacăt și subsolul sunt toate
+            pe centru, iar un antet întins în colțurile opuse trăgea ochiul în
+            lateral înainte ca omul să ajungă la titlu.
+            ⚠️ Pe /mentorat antetul rămâne pe două capete, fiindcă acolo toată
+            pagina e aliniată stânga; centrat acolo ar fi singurul element pe
+            centru din tot documentul. */}
+        <header className="flex flex-col items-center gap-2.5 py-5 md:py-7">
           <h1 className="text-2xl font-bold text-white tracking-wide">VANDY</h1>
           <Eticheta ton="mov">{OFERTA.tip} · {OFERTA.numeProgram}</Eticheta>
         </header>
