@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+
+    <!-- Pagina de aterizare pentru RECLAME. `noindex` din două motive:
+         1. o pagină care primește trafic plătit nu are nevoie de SEO, deci
+            indexarea n-aduce nimic;
+         2. titlul conține o cifră de venit, și aia n-are ce căuta în indexul
+            Google — unde ar rămâne și după ce campania se oprește.
+         ⚠️ `noindex` NU o ascunde de Meta: pagina e verificată la aprobarea
+         reclamei oricum. Vezi nota lungă din src/data/gratuit.ts.
+         Din același motiv nu are og:image și nici descriere de share. -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <title>Sesiune live gratuită — site-uri performante cu AI | VANDY</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
+    />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <script type="module" src="/src/gratuit.tsx"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

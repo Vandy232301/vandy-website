@@ -27,6 +27,7 @@ export default defineConfig({
         main: path.resolve(__dirname, 'index.html'),
         mentorat: path.resolve(__dirname, 'mentorat/index.html'),
         prezentare: path.resolve(__dirname, 'prezentare/index.html'),
+        gratuit: path.resolve(__dirname, 'gratuit/index.html'),
       },
     },
   },

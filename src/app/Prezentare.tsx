@@ -1,18 +1,25 @@
 import { useEffect, useState } from 'react';
-import { Play, Check, Clock, ShieldCheck, ArrowRight, CreditCard } from 'lucide-react';
+import {
+  Play, Check, Clock, ShieldCheck, ArrowRight, CreditCard,
+  CalendarPlus, Radio, CalendarClock,
+} from 'lucide-react';
 import { Caseta, Secventa, Eticheta, Buton } from './components/mentorat/Bucati';
 import {
-  ANTET, VIDEO, OFERTA_AVANS, PLATA, INCLUDE, DUPA_PLATA, DISCLAIMER,
+  ANTETE, VIDEO, OFERTA_AVANS, PLATA, INCLUDE, DUPA_PLATA, DISCLAIMER,
 } from '../data/prezentare';
 import { OFERTA } from '../data/mentorat';
+import {
+  EVENIMENT, ACOPERA, stareEveniment, secundePanaLa, dataScrisa, linkCalendar, formatRamas,
+} from '../data/eveniment';
 import { porneste, secundeRamase, format, OFERTA_ORE } from '../lib/fereastraOferta';
+import { trimite as pixel } from '../lib/pixel';
 
 const locuriLibere = OFERTA.locuriTotal - OFERTA.locuriLuate;
 
 /**
- * Ceasul ofertei. Pornește la prima vizită și se ține minte 48 de ore — vezi
- * regulile din lib/fereastraOferta.ts. `porneste()` e idempotent, deci nu
- * contează de câte ori se montează componenta.
+ * Ceasul ofertei de avans. Pornește la prima vizită și se ține minte 48 de ore
+ * — vezi regulile din lib/fereastraOferta.ts. `porneste()` e idempotent, deci
+ * nu contează de câte ori se montează componenta.
  */
 function useFereastra() {
   const [ramas, setRamas] = useState(() => secundeRamase());
@@ -25,6 +32,24 @@ function useFereastra() {
   return ramas;
 }
 
+/**
+ * Ceasul până la sesiunea live.
+ *
+ * Ăsta e singurul cronometru din tot funnelul care e adevărat prin construcție:
+ * nu ține minte nimic, nu pornește la vizită, nu se poate reseta. Numără spre
+ * o dată fixă din `eveniment.ts`. Dacă sesiunea e joi la 19:00, atât arată —
+ * pentru toată lumea, pe orice dispozitiv.
+ */
+function useCeasSesiune() {
+  const [ramas, setRamas] = useState(() => secundePanaLa());
+  useEffect(() => {
+    const ceas = setInterval(() => setRamas(secundePanaLa()), 1000);
+    return () => clearInterval(ceas);
+  }, []);
+  return ramas;
+}
+
+/** Înregistrarea sesiunii. Se arată doar în starea `trecut`. */
 function Video() {
   return (
     <Caseta radius="rounded-3xl" className="overflow-hidden">
@@ -32,17 +57,16 @@ function Video() {
         {VIDEO.url ? (
           <iframe
             src={VIDEO.url}
-            title={ANTET.titlu}
+            title={ANTETE.trecut.titlu}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; fullscreen"
             allowFullScreen
             className="absolute inset-0 w-full h-full"
           />
         ) : (
-          /* Fără înregistrare nu există VSL. Două mesaje diferite, deliberat:
-             pe localhost scrie dezvoltatorului unde pune linkul; în producție
-             scrie OMULUI ce urmează. Un vizitator care tocmai și-a lăsat
-             datele nu are ce căuta în fața unui nume de variabilă — ar vedea
-             pagina pe dos și ar pleca. */
+          /* Sesiunea a trecut, dar înregistrarea nu e încă pusă. Două mesaje
+             diferite, deliberat: pe localhost scrie dezvoltatorului unde pune
+             linkul; în producție scrie OMULUI ce urmează. Un vizitator n-are
+             ce căuta în fața unui nume de variabilă. */
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center px-6">
             <span className="w-16 h-16 rounded-full border border-neon/30 bg-neon/10 flex items-center justify-center">
               <Play size={22} className="text-neon ml-1" />
@@ -50,10 +74,10 @@ function Video() {
             {import.meta.env.DEV ? (
               <>
                 <p className="text-neutral-300 text-base font-bold">
-                  Aici intră VSL-ul de {VIDEO.durata}
+                  Aici intră înregistrarea de {VIDEO.durata}
                 </p>
                 <p className="text-neutral-600 text-xs max-w-sm leading-relaxed">
-                  Nu e încă înregistrat. Pune linkul de embed în{' '}
+                  Pune linkul de embed în{' '}
                   <code className="text-neutral-500">VIDEO.url</code>, în{' '}
                   <code className="text-neutral-500">src/data/prezentare.ts</code>, și se aprinde
                   singur.
@@ -61,10 +85,10 @@ function Video() {
               </>
             ) : (
               <>
-                <p className="text-neutral-300 text-base font-bold">Prezentarea video urmează.</p>
+                <p className="text-neutral-300 text-base font-bold">Înregistrarea urmează.</p>
                 <p className="text-neutral-500 text-sm max-w-sm leading-relaxed">
-                  O înregistrez zilele astea și îți trimit linkul pe email, la adresa pe care
-                  tocmai ai lăsat-o. Până atunci te caută echipa, cu toate detaliile.
+                  O urc în câteva zile și îți trimit linkul pe email, la adresa cu care te-ai
+                  înscris.
                 </p>
               </>
             )}
@@ -72,6 +96,124 @@ function Video() {
         )}
       </div>
     </Caseta>
+  );
+}
+
+/**
+ * Starea de dinainte de sesiune: confirmare, când e, ce se acoperă, cum intri.
+ *
+ * Aici NU se vinde nimic. Vezi nota de la ANTETE în data/prezentare.ts.
+ */
+function InainteDeSesiune() {
+  const ramas = useCeasSesiune();
+  const cand = dataScrisa();
+  const calendar = linkCalendar();
+
+  return (
+    <>
+      <Caseta radius="rounded-3xl" className="overflow-hidden ring-1 ring-neon/20">
+        <span aria-hidden className="lumina-hero pointer-events-none absolute inset-0" />
+
+        <div className="relative flex flex-col sm:flex-row sm:items-stretch">
+          {/* Cronometrul, în coloana lui întunecată. Doar dacă există dată —
+              altfel ar fi un afișaj care numără spre nimic. */}
+          {cand && (
+            <div className="shrink-0 flex flex-col justify-center px-6 md:px-8 py-6 md:py-7 bg-black/40 border-b sm:border-b-0 sm:border-r border-white/[0.06]">
+              <span className="flex items-center gap-2">
+                <Clock size={13} strokeWidth={2.4} className="shrink-0 text-neon" />
+                <Eticheta ton="neon">Începe în</Eticheta>
+              </span>
+              <p
+                aria-hidden
+                className="mt-2.5 text-[2.3rem] md:text-[2.75rem] font-bold tracking-[-0.04em] leading-[0.95] tabular-nums text-neon lumina-text"
+              >
+                {formatRamas(ramas)}
+              </p>
+              <span className="sr-only">Sesiunea începe {cand}.</span>
+              <p className="mt-2 text-neutral-600 text-[11px]">ora României</p>
+            </div>
+          )}
+
+          <div className="flex-1 px-6 md:px-8 py-6 md:py-7 flex flex-col justify-center gap-3">
+            <span className="flex items-center gap-2">
+              {cand ? (
+                <CalendarClock size={15} className="text-neon shrink-0" />
+              ) : (
+                <Radio size={15} className="text-neon shrink-0" />
+              )}
+              <p className="text-white text-lg md:text-xl font-bold leading-snug tracking-tight">
+                {cand ? `Live ${cand}` : 'Data se anunță în câteva zile'}
+              </p>
+            </span>
+            <p className="text-neutral-400 text-sm leading-relaxed masura-text">
+              {EVENIMENT.durata}
+              {EVENIMENT.platforma ? ` · ${EVENIMENT.platforma}` : ''}
+              {'. '}
+              {EVENIMENT.linkIntrare
+                ? 'Linkul de intrare e mai jos și îl primești și pe email.'
+                : 'Linkul de intrare vine pe email înainte de sesiune.'}
+            </p>
+
+            <div className="flex flex-wrap gap-3 mt-1">
+              {EVENIMENT.linkIntrare && (
+                <Buton href={EVENIMENT.linkIntrare} padding="px-6 py-3.5 text-sm">
+                  <Radio size={16} /> Linkul de intrare
+                </Buton>
+              )}
+              {calendar && (
+                <Buton
+                  href={calendar}
+                  variant={EVENIMENT.linkIntrare ? 'contur' : 'neon'}
+                  padding="px-6 py-3.5 text-sm"
+                >
+                  <CalendarPlus size={16} /> Adaugă în calendar
+                </Buton>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="relative flex items-start gap-3 px-6 md:px-8 py-4 border-t border-white/[0.06] bg-black/30">
+          <ShieldCheck size={15} className="text-neutral-600 shrink-0 mt-0.5" />
+          <p className="text-neutral-500 text-[11px] md:text-xs leading-relaxed masura-mic">
+            Sesiunea e gratuită, fără nicio condiție. Nu ți-am cerut cardul și nu te-ai angajat la
+            nimic înscriindu-te.
+          </p>
+        </div>
+      </Caseta>
+
+      <Secventa>
+        <Caseta radius="rounded-3xl" className="overflow-hidden">
+          <div className="relative p-6 md:p-7">
+            <Eticheta ton="mov">Ce vezi în sesiune</Eticheta>
+            <ul className="mt-4 flex flex-col gap-3">
+              {ACOPERA.map((a) => (
+                <li key={a} className="flex items-start gap-2.5 text-neutral-300 text-sm leading-relaxed">
+                  <Check size={15} className="text-neon shrink-0 mt-0.5" strokeWidth={2.6} />
+                  <span className="masura-mic">{a}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Caseta>
+      </Secventa>
+
+      <Secventa>
+        <Caseta radius="rounded-3xl" className="overflow-hidden">
+          <div className="relative p-6 md:p-7">
+            <Eticheta ton="mov">Un lucru, până atunci</Eticheta>
+            <p className="mt-3 text-white text-lg md:text-xl font-bold tracking-tight leading-snug masura-titlu">
+              Vino cu un caz concret al tău.
+            </p>
+            <p className="mt-2.5 text-neutral-400 text-sm leading-relaxed masura-text">
+              O firmă pe care o cunoști, un lucru pe care ai vrea să-l vinzi, o problemă pe care ai
+              văzut-o la cineva. Cu cât e mai precis, cu atât ce arăt live îți folosește mai mult —
+              și dacă îl pui în întrebări, lucrez pe el.
+            </p>
+          </div>
+        </Caseta>
+      </Secventa>
+    </>
   );
 }
 
@@ -144,9 +286,13 @@ function Oferta() {
       {activa && (
         <div className="relative px-6 md:px-8 py-5 border-t border-white/[0.06] bg-black/25 flex flex-col sm:flex-row sm:items-center gap-4">
           {PLATA.url ? (
-            <Buton href={PLATA.url} padding="px-7 py-4 text-base" className="shrink-0">
+            <a
+              href={PLATA.url}
+              onClick={() => pixel('InitiateCheckout', { value: OFERTA_AVANS.avans, currency: 'EUR' })}
+              className="shrink-0 inline-flex items-center justify-center gap-2 rounded-full font-bold tracking-tight transition-all text-center px-7 py-4 text-base bg-neon text-black hover:brightness-110 hover:-translate-y-0.5 lumina-bloc shadow-[inset_0_1px_0_0_rgba(255,255,255,0.4)]"
+            >
               <CreditCard size={17} /> Plătesc avansul de {OFERTA_AVANS.avans} €
-            </Buton>
+            </a>
           ) : (
             /* Fără procesator nu există plată automată. Butonul mort ar fi mai
                rău decât lipsa lui: omul apasă, nu se întâmplă nimic, și ai
@@ -212,7 +358,85 @@ function FaraPlata() {
   );
 }
 
+/** Partea de vânzare. Se arată DOAR după ce sesiunea a avut loc. */
+function DupaSesiune() {
+  return (
+    <>
+      <Video />
+
+      {/* Oferta stă imediat sub înregistrare, nu la subsol: omul care termină
+          de ascultat trebuie să poată apăsa fără să caute.
+
+          Dar se arată DOAR dacă există cale de plată. Pe localhost o vedem
+          oricum, ca să poată fi lucrată; în producție, fără link, ar fi un
+          termen limită spre nicăieri. Vezi FaraPlata mai sus. */}
+      {PLATA.url || import.meta.env.DEV ? <Oferta /> : <FaraPlata />}
+
+      <Secventa>
+        <div className="grid md:grid-cols-2 gap-4">
+          <Caseta radius="rounded-3xl" className="overflow-hidden">
+            <div className="relative p-6 md:p-7">
+              <Eticheta ton="mov">Ce intră în preț</Eticheta>
+              <ul className="mt-4 flex flex-col gap-3">
+                {INCLUDE.map((r) => (
+                  <li key={r} className="flex items-start gap-2.5 text-neutral-300 text-sm leading-relaxed">
+                    <Check size={15} className="text-neon shrink-0 mt-0.5" strokeWidth={2.6} />
+                    <span className="masura-lat">{r}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Caseta>
+
+          <Caseta radius="rounded-3xl" className="overflow-hidden">
+            <div className="relative p-6 md:p-7">
+              <Eticheta ton="mov">Ce se întâmplă după plată</Eticheta>
+              <ol className="mt-4 flex flex-col gap-4">
+                {DUPA_PLATA.map((p, i) => (
+                  <li key={p.titlu} className="flex items-start gap-3">
+                    <span className="shrink-0 w-6 h-6 rounded-full border border-mov/35 bg-mov/10 text-mov text-[11px] font-bold flex items-center justify-center tabular-nums">
+                      {i + 1}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-white text-sm font-bold leading-snug">{p.titlu}</p>
+                      <p className="text-neutral-500 text-xs leading-relaxed mt-0.5 masura-lat">
+                        {p.text}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </Caseta>
+        </div>
+      </Secventa>
+
+      <Secventa>
+        <Caseta radius="rounded-3xl" className="overflow-hidden">
+          <div className="relative p-6 md:p-8 flex flex-col sm:flex-row sm:items-center gap-5">
+            <p className="flex-1 text-neutral-300 text-sm leading-relaxed masura-lat">
+              Vrei să recitești ce pleci cu, înainte să decizi? Pagina masterclass-ului e tot
+              acolo, cu totul explicat pe larg.
+            </p>
+            <Buton href="/mentorat" variant="contur" className="shrink-0">
+              Recitesc detaliile <ArrowRight size={15} />
+            </Buton>
+          </div>
+        </Caseta>
+      </Secventa>
+    </>
+  );
+}
+
 export default function Prezentare() {
+  /* Starea e citită o dată, la montare. Dacă sesiunea începe exact cât omul
+     stă pe pagină, cronometrul ajunge la zero și o reîncărcare îl trece pe
+     partea cealaltă — nu schimbăm pagina sub el în secunda aia. */
+  const stare = stareEveniment();
+  const antet = ANTETE[stare];
+
+  useEffect(() => { pixel('ViewContent'); }, []);
+
   return (
     <div className="min-h-screen bg-black text-white selection:bg-neon/30 font-sans tracking-tight p-4 md:p-6 lg:p-8 flex justify-center">
       <div className="fixed inset-0 z-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-neutral-900 via-black to-black pointer-events-none" />
@@ -227,80 +451,18 @@ export default function Prezentare() {
         </header>
 
         <div className="px-1 md:px-2">
-          <Eticheta ton="neon">{ANTET.eticheta}</Eticheta>
+          <Eticheta ton="neon">{antet.eticheta}</Eticheta>
           <h2 className="mt-3 text-[1.9rem] md:text-[2.6rem] font-bold text-white tracking-tight leading-[1.1] echilibrat">
-            {ANTET.titlu}
+            {antet.titlu}
           </h2>
-          <p className="mt-4 text-neutral-400 text-base md:text-lg leading-relaxed masura-lat">
-            {ANTET.text}
+          <p className="mt-4 text-neutral-400 text-base md:text-lg leading-relaxed masura-text">
+            {antet.text}
           </p>
         </div>
 
-        <Video />
+        {stare === 'trecut' ? <DupaSesiune /> : <InainteDeSesiune />}
 
-        {/* Oferta stă imediat sub video, nu la subsol. Omul care termină VSL-ul
-            trebuie să poată apăsa fără să caute: fiecare derulare în plus e o
-            secundă în care se răzgândește.
-
-            Dar se arată DOAR dacă există cale de plată. Pe localhost o vedem
-            oricum, ca să poată fi lucrată; în producție, fără link, ar fi un
-            termen limită spre nicăieri. Vezi FaraPlata de mai sus. */}
-        {PLATA.url || import.meta.env.DEV ? <Oferta /> : <FaraPlata />}
-
-        <Secventa>
-          <div className="grid md:grid-cols-2 gap-4">
-            <Caseta radius="rounded-3xl" className="overflow-hidden">
-              <div className="relative p-6 md:p-7">
-                <Eticheta ton="mov">Ce intră în preț</Eticheta>
-                <ul className="mt-4 flex flex-col gap-3">
-                  {INCLUDE.map((r) => (
-                    <li key={r} className="flex items-start gap-2.5 text-neutral-300 text-sm leading-relaxed">
-                      <Check size={15} className="text-neon shrink-0 mt-0.5" strokeWidth={2.6} />
-                      <span className="masura-lat">{r}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Caseta>
-
-            <Caseta radius="rounded-3xl" className="overflow-hidden">
-              <div className="relative p-6 md:p-7">
-                <Eticheta ton="mov">Ce se întâmplă după plată</Eticheta>
-                <ol className="mt-4 flex flex-col gap-4">
-                  {DUPA_PLATA.map((p, i) => (
-                    <li key={p.titlu} className="flex items-start gap-3">
-                      <span className="shrink-0 w-6 h-6 rounded-full border border-mov/35 bg-mov/10 text-mov text-[11px] font-bold flex items-center justify-center tabular-nums">
-                        {i + 1}
-                      </span>
-                      <div className="min-w-0">
-                        <p className="text-white text-sm font-bold leading-snug">{p.titlu}</p>
-                        <p className="text-neutral-500 text-xs leading-relaxed mt-0.5 masura-lat">
-                          {p.text}
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </Caseta>
-          </div>
-        </Secventa>
-
-        <Secventa>
-          <Caseta radius="rounded-3xl" className="overflow-hidden">
-            <div className="relative p-6 md:p-8 flex flex-col sm:flex-row sm:items-center gap-5">
-              <p className="flex-1 text-neutral-300 text-sm leading-relaxed masura-lat">
-                Vrei să recitești ce pleci cu, înainte să decizi? Pagina masterclass-ului e tot
-                acolo, cu totul explicat pe larg.
-              </p>
-              <Buton href="/mentorat" variant="contur" className="shrink-0">
-                Recitesc detaliile <ArrowRight size={15} />
-              </Buton>
-            </div>
-          </Caseta>
-        </Secventa>
-
-        <p className="px-2 pt-2 text-neutral-600 text-[11px] leading-relaxed masura-lat">
+        <p className="px-2 pt-2 text-neutral-600 text-[11px] leading-relaxed masura-mic">
           {DISCLAIMER}
         </p>
       </div>

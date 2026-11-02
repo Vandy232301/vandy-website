@@ -19,12 +19,38 @@
  */
 
 import { OFERTA } from './mentorat';
+import type { StareEveniment } from './eveniment';
 
-export const ANTET = {
-  eticheta: 'Pasul 2 din 2 · acces deschis',
-  titlu: 'Ești înăuntru. Uită-te la asta înainte de orice.',
-  text: 'Îți arăt pas cu pas conceptul: ce construiești, cum ajunge la clienți și cum se plătește. La final ai o ofertă pe care o poți accepta direct de aici.',
-} as const;
+/**
+ * Antetul, pe cele trei stări ale sesiunii live.
+ *
+ * Owner-ul a trecut funnelul pe sesiune live gratuită pe 2026-11-02, deci
+ * pagina asta are două vieți: înainte de sesiune e confirmarea înscrierii,
+ * după sesiune e înregistrarea plus oferta. Aceeași adresă în ambele cazuri,
+ * ca linkul din emailuri să rămână valabil pentru totdeauna.
+ *
+ * ⛔ Înainte de sesiune nu se vinde nimic. Omul s-a înscris acum trei minute la
+ * un lucru gratuit; o ofertă de 990 € pusă în fața lui acum îl învață că
+ * „gratuit" era un pretext. Oferta apare în starea `trecut`, după ce a primit
+ * ce i-ai promis.
+ */
+export const ANTETE: Record<StareEveniment, { eticheta: string; titlu: string; text: string }> = {
+  nestabilit: {
+    eticheta: 'Ești înscris · intrare liberă',
+    titlu: 'Ești pe listă. Îți scriu data în câteva zile.',
+    text: 'Sesiunea e în pregătire. Fixez data, apoi îți trimit pe email ziua, ora și linkul de intrare — la adresa pe care ai lăsat-o. Nu trebuie să faci nimic până atunci.',
+  },
+  viitor: {
+    eticheta: 'Ești înscris · intrare liberă',
+    titlu: 'Locul tău e prins. Pune-ți un memento.',
+    text: 'Îți trimit linkul de intrare pe email înainte de sesiune. Intru live, construiesc în fața ta și răspund la întrebări — deci vino cu una.',
+  },
+  trecut: {
+    eticheta: 'Înregistrarea sesiunii',
+    titlu: 'Uite înregistrarea. Și ce urmează, dacă vrei mai departe.',
+    text: 'Sesiunea e mai jos, întreagă. După ea găsești singurul pas care mai există: cum intri în masterclass și cum îți ții locul.',
+  },
+};
 
 /**
  * Videoul. `url` e null până îl înregistrează owner-ul.

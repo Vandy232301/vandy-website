@@ -8,8 +8,19 @@ import {
 } from '../../../lib/validare';
 import { secundeRamase } from '../../../lib/fereastraBonus';
 
-/** Pasul 2: pagina cu VSL-ul și oferta. Rută definită în vercel.json. */
-const DESTINATIE = '/prezentare';
+/*
+ * ⚠️ Formularul ăsta NU mai redirectează.
+ *
+ * Până pe 2026-11-02 ducea pe `/prezentare`. Nu mai poate: odată ce funnelul a
+ * trecut pe sesiune live gratuită, `/prezentare` e pagina de confirmare a
+ * ÎNSCRIERII LA SESIUNE. Cineva care cere detalii despre masterclass de aici ar
+ * fi aterizat pe „ești înscris la sesiunea gratuită" — un mesaj despre un lucru
+ * la care nu s-a înscris.
+ *
+ * Două funnele, două destinații:
+ *   · trafic rece din reclame → `/gratuit` → `/prezentare` (sesiunea)
+ *   · trafic cald, de aici    → rămâne pe loc, și îl caută echipa
+ */
 
 type Camp = 'nume' | 'email' | 'telefon' | 'directie' | 'stadiu' | 'ceVreiSaConstruiesti' | 'buget';
 type Stare = 'formular' | 'trimis';
@@ -117,12 +128,7 @@ export function Formular() {
       });
       const date = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(date?.error || 'Trimiterea a eșuat.');
-      // Pasul 2 e o pagină, nu un mesaj: omul care tocmai s-a înscris pleacă
-      // direct la video. Starea „trimis" rămâne desenată pentru fracțiunea de
-      // secundă până se schimbă pagina — și ca plasă, dacă navigarea e blocată
-      // de browser, omul vede un drum mai departe în loc de un formular gol.
       setStare('trimis');
-      window.location.href = DESTINATIE;
     } catch (err) {
       setEroareGenerala(
         err instanceof Error && err.message !== 'Failed to fetch'
@@ -142,16 +148,16 @@ export function Formular() {
           className="text-neon drop-shadow-[0_0_18px_rgba(57,255,20,0.55)]"
           strokeWidth={1.5}
         />
-        <h3 className="text-2xl font-bold text-white tracking-tight">Ești înăuntru.</h3>
-        <p className="text-neutral-400 text-sm leading-relaxed masura-lat">
-          Te duc la video. Dacă nu se deschide singur în câteva secunde, apasă aici.
+        <h3 className="text-2xl font-bold text-white tracking-tight">Am primit datele.</h3>
+        <p className="text-neutral-400 text-sm leading-relaxed masura-text">
+          Te caută echipa în maximum 48 de ore, de pe un număr din România. Douăzeci de minute: ce
+          vrei să construiești, dacă se poate într-o zi, și toate detaliile — datele, prețul și
+          condițiile. Ți-a plecat și un email cu ce urmează.
         </p>
-        <a
-          href={DESTINATIE}
-          className="text-neon text-sm font-bold hover:underline inline-flex items-center gap-1.5"
-        >
-          Deschide prezentarea <ArrowRight size={15} />
-        </a>
+        <p className="text-neutral-600 text-xs leading-relaxed masura-text">
+          Până atunci, gândește-te la un singur lucru concret pe care ai vrea să-l ai gata la
+          finalul zilei. Cu cât e mai precis, cu atât apelul e mai scurt și mai util.
+        </p>
       </div>
     );
   }

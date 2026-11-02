@@ -57,6 +57,25 @@ export function validNume(brut: string): string | null {
   return null;
 }
 
+/**
+ * Doar prenumele, pentru formularul scurt de pe /gratuit.
+ *
+ * Separat de `validNume` fiindcă acela cere nume ȘI prenume — corect pe
+ * formularul de pe /mentorat, unde urmează un apel telefonic, dar greșit pe
+ * trafic rece din reclame: acolo fiecare cerință în plus costă înscrieri, iar
+ * un prenume e tot ce trebuie ca să scrii „Andrei, uite linkul".
+ */
+export function validPrenume(brut: string): string | null {
+  const v = curataNume(brut);
+  if (!v) return 'Scrie-ți prenumele.';
+  if (/\d/.test(v)) return 'Prenumele nu poate conține cifre.';
+  if (!DOAR_LITERE.test(v)) return 'Prenumele poate conține doar litere, cratimă și apostrof.';
+  if (v.replace(/[^\p{L}]/gu, '').length < 2) return 'Prenumele e prea scurt.';
+  if (v.length > 40) return 'Prenumele e prea lung.';
+  if (areLiterePrelungite(v) || areTastaturaApasata(v)) return 'Prenumele ăsta nu pare real.';
+  return null;
+}
+
 export function curataEmail(v: string) {
   return v.trim().toLowerCase();
 }
