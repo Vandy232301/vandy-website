@@ -1,97 +1,110 @@
 /**
- * /prezentare — pagina pe care aterizează omul imediat ce s-a înscris pe
- * /mentorat. Nu e o pagină de aterizare, e pasul 2 dintr-un funnel.
+ * /prezentare — pagina cu videoul educativ. Pasul 2 din funnel.
  *
- * Arhitectura, cerută de owner pe 31.10.2026, verbatim:
+ * Arhitectura, owner, 2026-11-02, verbatim:
  *
- *   „vreau pe pagina asta sa fie sa apara titlul ala, apoi dupa ce omul se
- *   inscrie sa ajunga pe o pagina dedicata unde poate vedea acel video VSL
- *   unde ii prezint pas cu pas conceptul si tot si dupa aia ii voi face o
- *   oferta in video de nerefuzat pentru a se inscrie la masterclass cu termen
- *   limita si cu plata unui avans automat."
+ *   „reclame / content pentru trafic > website complet cu elemente de trust tot
+ *   ce trebuie cum e acum si formularul cu titlul mare cum faci intre 200/300$
+ *   > isi lasa datele > ajunge la Video Educativ pagina dedicata (video-ul nu
+ *   trebuie sa aibe progress bar sa vada cat dureaza sau sa poata derula, de
+ *   asemenea as pune video disponibil doar 48 de ore si dupa ce aprcurge tot
+ *   video-ul sa ii dam oferta de acces la masterclass cu un bonus + plata
+ *   imediata de rezervare a locului de 99 de euro care se va scade din suma
+ *   finala)"
+ *
+ * Landing page-ul e `/mentorat` — „website complet … cum e acum". Reclamele duc
+ * acolo, formularul cu titlul mare e acolo, iar înscrierea aterizează aici.
  *
  * ⛔ AICI prețul SE AFIȘEAZĂ, spre deosebire de /mentorat. Nu e o scăpare:
  * regula owner-ului din 29.10.2026 („Pretul nu l-as pune la vedere") e despre
  * pagina publică, unde cifra ar speria înainte să existe context. Pagina asta
- * e privată, se vede doar după înscriere, iar un avans nu poate fi cerut fără
- * să spui cât e. Dacă vreodată /prezentare devine publică, regula se aplică
- * din nou și pagina trebuie regândită.
+ * e privată (`noindex`), se vede doar după înscriere, iar o rezervare nu poate
+ * fi cerută fără să spui din ce se scade. Dacă /prezentare devine vreodată
+ * publică, regula se aplică din nou și pagina trebuie regândită.
  */
 
 import { OFERTA } from './mentorat';
-import type { StareEveniment } from './eveniment';
+
+export const ANTET = {
+  eticheta: 'Pasul 2 din 2 · acces deschis 48 de ore',
+  titlu: 'Ești înăuntru. Uită-te la asta înainte de orice.',
+  text: 'Îți arăt pas cu pas tot procesul: ce construiești, cum ajunge la clienți și cum se plătește. Uită-te la el cap-coadă — la final îți spun și singurul pas care mai există după.',
+} as const;
 
 /**
- * Antetul, pe cele trei stări ale sesiunii live.
+ * Videoul.
  *
- * Owner-ul a trecut funnelul pe sesiune live gratuită pe 2026-11-02, deci
- * pagina asta are două vieți: înainte de sesiune e confirmarea înscrierii,
- * după sesiune e înregistrarea plus oferta. Aceeași adresă în ambele cazuri,
- * ca linkul din emailuri să rămână valabil pentru totdeauna.
+ * `url` e null până îl înregistrează owner-ul. Cât timp e null pagina nu are ce
+ * livra — nu există VSL, deci nu există funnel. Zona arată locul gol, explicit.
+ * Aceeași regulă ca la cele 9 carduri de recenzie de pe /mentorat: nu inventăm
+ * și nu pretindem ce nu avem.
  *
- * ⛔ Înainte de sesiune nu se vinde nimic. Omul s-a înscris acum trei minute la
- * un lucru gratuit; o ofertă de 990 € pusă în fața lui acum îl învață că
- * „gratuit" era un pretext. Oferta apare în starea `trecut`, după ce a primit
- * ce i-ai promis.
+ * ┌─ De ce `vimeo` și nu YouTube ───────────────────────────────────────────┐
+ * │ Owner-ul cere video FĂRĂ bară de progres, fără durată vizibilă și fără   │
+ * │ derulare. YouTube nu poate face asta: `controls=0` ascunde bara, dar     │
+ * │ durata rămâne vizibilă la hover și derularea de la tastatură merge.      │
+ * │ Vimeo, cu `controls=0` plus SDK-ul lor, raportează poziția și o poate    │
+ * │ corecta — singura combinație care chiar respectă cerința.                │
+ * │ Alternativă, mai ieftină la volum: Bunny Stream. Pentru ea pune          │
+ * │ `provider: 'embed'`: videoul merge, dar blocarea derulării nu, fiindcă   │
+ * │ n-avem de unde citi poziția. Atunci oferta se dezvăluie pe ceas, de la   │
+ * │ primul play, și e o aproximare — nu o verificare.                        │
+ * └─────────────────────────────────────────────────────────────────────────┘
+ *
+ * `dezvaluieLaSecunda`: null înseamnă „la finalul videoului" (evenimentul
+ * `ended`), adică exact ce a cerut owner-ul. Pune o secundă aici doar dacă vrei
+ * oferta mai devreme — de pus fix la momentul în care, în video, o explici.
  */
-export const ANTETE: Record<StareEveniment, { eticheta: string; titlu: string; text: string }> = {
-  nestabilit: {
-    eticheta: 'Ești înscris · intrare liberă',
-    titlu: 'Ești pe listă. Îți scriu data în câteva zile.',
-    text: 'Sesiunea e în pregătire. Fixez data, apoi îți trimit pe email ziua, ora și linkul de intrare — la adresa pe care ai lăsat-o. Nu trebuie să faci nimic până atunci.',
-  },
-  viitor: {
-    eticheta: 'Ești înscris · intrare liberă',
-    titlu: 'Locul tău e prins. Pune-ți un memento.',
-    text: 'Îți trimit linkul de intrare pe email înainte de sesiune. Intru live, construiesc în fața ta și răspund la întrebări — deci vino cu una.',
-  },
-  trecut: {
-    eticheta: 'Înregistrarea sesiunii',
-    titlu: 'Uite înregistrarea. Și ce urmează, dacă vrei mai departe.',
-    text: 'Sesiunea e mai jos, întreagă. După ea găsești singurul pas care mai există: cum intri în masterclass și cum îți ții locul.',
-  },
-};
-
-/**
- * Videoul. `url` e null până îl înregistrează owner-ul.
- *
- * Cât timp e null pagina nu are ce livra — nu există VSL, deci nu există
- * funnel. Zona arată locul gol, explicit, ca să fie imposibil de ratat.
- * Aceeași regulă ca la cele 9 carduri de recenzie de pe /mentorat: nu
- * inventăm și nu pretindem ce nu avem.
- */
-export const VIDEO: { url: string | null; durata: string } = {
+export const VIDEO: {
+  provider: 'vimeo' | 'embed';
+  url: string | null;
+  dezvaluieLaSecunda: number | null;
+  durata: string;
+} = {
+  provider: 'vimeo',
   url: null,
+  dezvaluieLaSecunda: null,
   durata: '20 – 30 de minute',
 };
 
 /**
- * Oferta cu termen limită.
+ * Rezervarea locului. Cifra owner-ului, 2026-11-02: 99 €, care SE SCADE din
+ * suma finală. Nu e un avans pierdut și nu e o taxă — pagina o spune explicit,
+ * fiindcă e singura întrebare pe care și-o pune omul când vede un buton de
+ * plată după un lucru gratuit.
  *
- * `avans` e singura cifră pe care trebuie s-o confirmi — am pus 290 € ca să
- * poți vedea pagina întreagă, nu e o cifră discutată cu tine. Schimb-o aici și
- * se schimbă peste tot, inclusiv în emailuri.
- *
- * `total` vine din OFERTA.pret, ca să nu existe două surse de adevăr pentru
- * preț. Restul de plată se calculează, nu se scrie de mână.
+ * ⚠️ În același mesaj apare și cifra „49$". Am mers pe 99 €, care e afirmația
+ * detaliată („de 99 de euro care se va scade din suma finala"). Dacă 49 era un
+ * preț mai mic pentru secvența de emailuri, întreabă-te întâi dacă vrei să-ți
+ * înveți publicul că prețul scade dacă aștepți.
  */
-export const AVANS = 290;
+export const REZERVARE = 99;
 
-export const OFERTA_AVANS = {
+export const OFERTA_REZERVARE = {
   eticheta: 'Ofertă cu termen limită',
-  titlu: 'Îți ții locul cu un avans.',
-  avans: AVANS,
+  titlu: 'Îți rezervi locul cu 99 €.',
+  rezervare: REZERVARE,
   total: OFERTA.pret,
-  get rest() { return OFERTA.pret - AVANS; },
-  text: 'Plătești acum doar avansul și locul e al tău, scos din cele zece. Restul îl plătești înainte de zi, după apelul cu echipa.',
+  get rest() { return OFERTA.pret - REZERVARE; },
+  text: 'Plătești acum 99 € și locul e al tău, scos din cele zece. Suma se scade din total — nu e o taxă în plus și nu o pierzi. Restul îl plătești înainte de zi, după ce vorbim.',
   /** Rândul care ține termenul limită pe partea bună a legii. Nu-l scoate. */
-  onest: 'Masterclass-ul nu dispare când ajunge ceasul la zero și prețul rămâne același. Ce expiră e posibilitatea de a-ți ține locul cu avans — după termen, locul se ia plătind integral, dacă mai e liber.',
-  expirat: 'Fereastra de avans s-a închis.',
-  expiratText: 'Locul și prețul rămân neschimbate. Vorbește cu echipa la apel și vezi ce mai e liber.',
+  onest: 'Masterclass-ul nu dispare când ajunge ceasul la zero și prețul rămâne același. Ce se închide e videoul și posibilitatea de a-ți ține locul cu 99 €. După termen, locul se ia plătind integral, dacă mai e liber.',
+  expirat: 'Fereastra s-a închis.',
+  expiratText: 'Videoul și rezervarea de 99 € nu mai sunt disponibile. Masterclass-ul și prețul rămân neschimbate — scrie-mi și vedem ce mai e liber.',
 } as const;
 
 /**
- * Linkul de plată a avansului. Null până îl pune owner-ul.
+ * Bonusul din ofertă. Cerut de owner („cu un bonus"), dar nespus care.
+ *
+ * ⚠️ Al DOILEA bonus nedefinit din funnel — primul e „bonusul surpriză" de pe
+ * fereastra de 10 minute din /mentorat. Cât timp e `null`, oferta nu pretinde
+ * niciun bonus: mai bine o ofertă fără bonus decât un bonus pe care nu-l poți
+ * livra. Pune aici ceva real și apare singur.
+ */
+export const BONUS: { titlu: string; text: string } | null = null;
+
+/**
+ * Linkul de plată a rezervării. Null până îl pune owner-ul.
  *
  * ⚠️ Când îl pui: linkul trebuie să EXPIRE și pe partea de procesator, nu doar
  * să dispară butonul din pagină. Un buton ascuns în timp ce linkul rămâne

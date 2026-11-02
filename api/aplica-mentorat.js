@@ -16,12 +16,9 @@ const EXPEDITOR = process.env.MENTORAT_FROM || 'VANDY <noreply@vandy.ro>';
 // dar numai către adresa proprietarului contului — exact ce ne trebuie ca
 // notificarea să ajungă chiar dacă vandy.ro nu e (încă) verificat pe cheia din producție.
 const EXPEDITOR_REZERVA = 'ATELIER AI <onboarding@resend.dev>';
-/* Unde trimitem omul din emailul de confirmare.
-   ⚠️ NU pe /prezentare. De pe 2026-11-02, aia e pagina sesiunii live gratuite,
-   iar cine cere detalii despre masterclass nu s-a înscris la ea — ar primi un
-   email despre un lucru la care nu s-a dus. Îl trimitem înapoi la pagina
-   programului, unde poate reciti ce urmează. */
-const PAGINA_PROGRAM = process.env.MENTORAT_URL || 'https://vandy.ro/mentorat';
+/** Pasul 2: pagina cu videoul educativ. Aceeași destinație ca redirectul din
+ *  Formular.tsx — emailul e plasa pentru cine închide fila înainte să-l vadă. */
+const PREZENTARE = process.env.PREZENTARE_URL || 'https://vandy.ro/prezentare';
 
 const DIRECTII = {
   software: 'SOFTWARE — site-uri, aplicații, software la comandă',
@@ -197,7 +194,8 @@ function emailCatreAplicant(nume) {
     <tr><td style="height:1px;background:#333;font-size:1px;line-height:1px">&nbsp;</td></tr>
     <tr><td style="padding-top:28px">
       <p style="margin:0 0 16px;color:#fff;font-size:22px;font-weight:700;line-height:1.35;font-family:Arial,sans-serif">${prenume}, ești înăuntru.</p>
-      <p style="margin:0 0 14px;color:#a3a3a3;font-size:15px;line-height:1.7;font-family:Arial,sans-serif">Te contactează echipa în maximum 48 de ore, de pe un număr din România. Apelul durează 20 de minute.</p>
+      <p style="margin:0 0 14px;color:#a3a3a3;font-size:15px;line-height:1.7;font-family:Arial,sans-serif">Videoul te așteaptă. Îți arăt pas cu pas tot procesul, și la final cum îți ții locul. Butonul de mai jos îl deschide — iar dacă nu ajungi acum la el, emailul ăsta rămâne linkul tău.</p>
+      <p style="margin:0 0 14px;color:#a3a3a3;font-size:15px;line-height:1.7;font-family:Arial,sans-serif"><strong style="color:#fff">Stă deschis 48 de ore.</strong> Nu e un truc de vânzare: îl țin închis ca să fie văzut de oameni care chiar vor, nu salvat într-un tab pentru cândva.</p>
       <p style="margin:0 0 14px;color:#a3a3a3;font-size:15px;line-height:1.7;font-family:Arial,sans-serif">Te întrebăm ce vrei să construiești, îți spunem cinstit dacă se poate într-o zi, stabilim pe care din cele trei masterclass-uri intri — unul, două sau toate — și primești toate detaliile: datele exacte, prețul și condițiile. Dacă nu ne potrivim, ți-o spunem la telefon și nu ai pierdut nimic.</p>
     </td></tr>
     <tr><td style="padding:8px 0 20px">
@@ -208,7 +206,7 @@ function emailCatreAplicant(nume) {
     </td></tr>
     <tr><td align="center" style="padding-bottom:24px">
       <table cellpadding="0" cellspacing="0" border="0"><tr><td align="center" bgcolor="#39ff14" style="background:#39ff14;border-radius:50px">
-        <a href="${esc(PAGINA_PROGRAM)}" style="display:inline-block;background:#39ff14;color:#000;font-size:15px;font-weight:800;padding:15px 36px;border-radius:50px;text-decoration:none;font-family:Arial,sans-serif">Recitesc ce pleci cu</a>
+        <a href="${esc(PREZENTARE)}" style="display:inline-block;background:#39ff14;color:#000;font-size:15px;font-weight:800;padding:15px 36px;border-radius:50px;text-decoration:none;font-family:Arial,sans-serif">Deschide videoul</a>
       </td></tr></table>
     </td></tr>
     <tr><td style="height:1px;background:#333;font-size:1px;line-height:1px">&nbsp;</td></tr>

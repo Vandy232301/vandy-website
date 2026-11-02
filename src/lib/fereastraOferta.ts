@@ -1,5 +1,10 @@
 /**
- * Fereastra ofertei de pe /prezentare: termenul limită al avansului.
+ * Fereastra de pe /prezentare: 48 de ore, UN SINGUR ceas pentru două lucruri.
+ *
+ * Owner, 2026-11-02: „as pune video disponibil doar 48 de ore". Deci fereastra
+ * acoperă acum și videoul, și rezervarea de 99 €, nu doar oferta. Un singur
+ * ceas, o singură promisiune — două ceasuri diferite pe aceeași pagină ar fi
+ * fost imposibil de explicat și ușor de contrazis.
  *
  * ⚠️ Aceleași reguli ca la fereastraBonus.ts, din același motiv. Un termen
  * limită e pe lista neagră din Directiva 2005/29/CE, preluată în Legea
@@ -7,10 +12,12 @@
  * perioadă scurtă. Cuvântul care decide totul e „fals". Varianta de aici e
  * construită să fie adevărată și rămâne adevărată doar dacă:
  *
- *   1. MASTERCLASS-ul nu dispare la zero. Ce expiră e CONDIȚIA DE AVANS —
- *      posibilitatea de a-ți ține locul plătind doar o parte. După termen,
- *      locul se ia plătind integral, dacă mai e liber. Pagina spune asta
- *      explicit, lângă ceas. Nu scoate rândul.
+ *   1. MASTERCLASS-ul nu dispare la zero, și nici prețul nu se schimbă. Ce se
+ *      închide e VIDEOUL și posibilitatea de a-ți ține locul cu 99 €. După
+ *      termen, locul se ia plătind integral, dacă mai e liber. Pagina spune
+ *      asta explicit, lângă ceas. Nu scoate rândul.
+ *      ⚠️ Iar videoul chiar trebuie să se închidă. Dacă rămâne accesibil pe
+ *      alt link după 48 de ore, afirmația e falsă indiferent ce face pagina.
  *   2. Ceasul pornește o singură dată per om și se ține minte. Un reload NU
  *      dă alte 48 de ore. Varianta care se resetează la fiecare reîncărcare e
  *      exact minciuna pe care o interzice legea.

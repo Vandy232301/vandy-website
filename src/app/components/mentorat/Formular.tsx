@@ -7,20 +7,18 @@ import {
   curataNume, curataEmail, curataTelefon,
 } from '../../../lib/validare';
 import { secundeRamase } from '../../../lib/fereastraBonus';
+import { trimite as pixel } from '../../../lib/pixel';
 
-/*
- * ⚠️ Formularul ăsta NU mai redirectează.
+/**
+ * Pasul 2: pagina cu videoul educativ. Ruta e în vercel.json.
  *
- * Până pe 2026-11-02 ducea pe `/prezentare`. Nu mai poate: odată ce funnelul a
- * trecut pe sesiune live gratuită, `/prezentare` e pagina de confirmare a
- * ÎNSCRIERII LA SESIUNE. Cineva care cere detalii despre masterclass de aici ar
- * fi aterizat pe „ești înscris la sesiunea gratuită" — un mesaj despre un lucru
- * la care nu s-a înscris.
- *
- * Două funnele, două destinații:
- *   · trafic rece din reclame → `/gratuit` → `/prezentare` (sesiunea)
- *   · trafic cald, de aici    → rămâne pe loc, și îl caută echipa
+ * Pagina asta E landing page-ul funnelului — owner, 2026-11-02: „website
+ * complet cu elemente de trust tot ce trebuie cum e acum si formularul cu
+ * titlul mare". Reclamele aduc oameni aici, ei își lasă datele, și pleacă
+ * direct la video. De aia redirectul, nu un mesaj de mulțumire: videoul e ce
+ * li s-a promis în reclamă, iar o pagină între ei și el pierde oameni.
  */
+const DESTINATIE = '/prezentare';
 
 type Camp = 'nume' | 'email' | 'telefon' | 'directie' | 'stadiu' | 'ceVreiSaConstruiesti' | 'buget';
 type Stare = 'formular' | 'trimis';
@@ -128,7 +126,16 @@ export function Formular() {
       });
       const date = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(date?.error || 'Trimiterea a eșuat.');
+
+      // Conversia, raportată DOAR după ce serverul a confirmat. Trimisă la
+      // apăsarea butonului, campania ar învăța din înscrieri care n-au existat.
+      pixel('Lead');
+
+      // Starea „trimis" rămâne desenată pentru fracțiunea de secundă până se
+      // schimbă pagina — și ca plasă, dacă navigarea e blocată de browser,
+      // omul vede un drum mai departe în loc de un formular gol.
       setStare('trimis');
+      window.location.href = DESTINATIE;
     } catch (err) {
       setEroareGenerala(
         err instanceof Error && err.message !== 'Failed to fetch'
@@ -148,16 +155,16 @@ export function Formular() {
           className="text-neon drop-shadow-[0_0_18px_rgba(57,255,20,0.55)]"
           strokeWidth={1.5}
         />
-        <h3 className="text-2xl font-bold text-white tracking-tight">Am primit datele.</h3>
+        <h3 className="text-2xl font-bold text-white tracking-tight">Ești înăuntru.</h3>
         <p className="text-neutral-400 text-sm leading-relaxed masura-text">
-          Te caută echipa în maximum 48 de ore, de pe un număr din România. Douăzeci de minute: ce
-          vrei să construiești, dacă se poate într-o zi, și toate detaliile — datele, prețul și
-          condițiile. Ți-a plecat și un email cu ce urmează.
+          Te duc la video. Dacă nu se deschide singur în câteva secunde, apasă aici.
         </p>
-        <p className="text-neutral-600 text-xs leading-relaxed masura-text">
-          Până atunci, gândește-te la un singur lucru concret pe care ai vrea să-l ai gata la
-          finalul zilei. Cu cât e mai precis, cu atât apelul e mai scurt și mai util.
-        </p>
+        <a
+          href={DESTINATIE}
+          className="text-neon text-sm font-bold hover:underline inline-flex items-center gap-1.5"
+        >
+          Deschide videoul <ArrowRight size={15} />
+        </a>
       </div>
     );
   }
