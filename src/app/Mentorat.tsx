@@ -159,7 +159,11 @@ function BaraFixa() {
       }`}
     >
       <div
-        className={`relative w-full max-w-xl overflow-hidden flex items-center gap-3 rounded-2xl border border-neutral-700/70 ring-1 ring-neon/15 bg-black/75 backdrop-blur-xl shadow-2xl shadow-black/70 py-2.5 pl-4 pr-2 sm:py-3 sm:pl-5 sm:pr-2.5 ${
+        /* Sub 360 bara își strânge marginile și distanța dintre coloane, iar
+           butonul rămâne doar „Detalii" (mai jos). Cele trei la un loc dau
+           coloanei de text 47px în plus — de la 118 la 165 — fără de care
+           primul rând, „MASTERCLASS · 7 locuri" (151px), nu încape. */
+        className={`relative w-full max-w-xl overflow-hidden flex items-center gap-2 min-[360px]:gap-3 rounded-2xl border border-neutral-700/70 ring-1 ring-neon/15 bg-black/75 backdrop-blur-xl shadow-2xl shadow-black/70 py-2.5 pl-3 pr-1.5 min-[360px]:pl-4 min-[360px]:pr-2 sm:py-3 sm:pl-5 sm:pr-2.5 ${
           vizibila ? 'pointer-events-auto' : 'pointer-events-none'
         }`}
       >
@@ -186,7 +190,15 @@ function BaraFixa() {
           className="shrink-0"
           padding="px-4 py-2.5 text-[13px] sm:px-5 sm:py-3 sm:text-sm"
         >
-          Vreau detalii <ArrowRight size={15} />
+          {/* Sub 360 butonul pierde „Vreau", nu rândul de text de lângă el.
+              Invers ar fi fost greșit: bara există ca să existe butonul, iar
+              „Detalii →" rămâne limpede când e singurul buton de pe ecran.
+              Două `<span>`-uri, nu unul restilizat, ca fiecare variantă să-și
+              păstreze display-ul implicit — una e mereu `display:none`, deci
+              cititoarele de ecran aud un singur text, nu două. */}
+          <span className="max-[360px]:hidden">Vreau detalii</span>
+          <span className="min-[360px]:hidden">Detalii</span>
+          <ArrowRight size={15} />
         </Buton>
       </div>
     </div>

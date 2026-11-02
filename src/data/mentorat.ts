@@ -92,9 +92,26 @@ export const OFERTA = {
 
 export const locuriLibere = OFERTA.locuriTotal - OFERTA.locuriLuate;
 
-/** Rândul al doilea din bara flotantă, scris din cifra de mai sus. */
-export const notaLocuri =
-  `Au mai rămas ${locuriLibere} locuri din ${OFERTA.locuriTotal}. Când se ocupă, se închide.`;
+/**
+ * Rândul al doilea din bara flotantă.
+ *
+ * ⚠️ SCURT, și trebuie să rămână scurt. Rândul e `truncate` într-o coloană
+ * care are 118px la 320 de lățime și 188px la 390 — deci nu încap în el
+ * decât ~25 de caractere, pe cel mai lat telefon. Varianta de dinainte,
+ * „Au mai rămas 7 locuri din 10. Când se ocupă, se închide.", cerea 295px
+ * și era tăiată pe ABSOLUT orice telefon, de când a fost scrisă (măsurat
+ * 02.11.2026 la 320, 360, 375 și 390 — se citea întreagă abia de la ~500).
+ *
+ * Prima jumătate a plecat fiindcă rândul de DEASUPRA o spune deja:
+ * „MASTERCLASS · 7 locuri". Ce a rămas e consecința, care nu e scrisă
+ * nicăieri altundeva în bară. Formularea e tot a ei, cuvânt cu cuvânt —
+ * nicio afirmație nouă, deci rămâne valabil și motivul legal din
+ * comentariul de la `locuriLuate`: e adevărată cu orice număr de locuri
+ * vândute, spre deosebire de „se ocupă rapid".
+ *
+ * Dacă o schimbi, măsoară: la 12px fără tracking, bugetul e ~155px.
+ */
+export const notaLocuri = 'Când se ocupă, se închide.';
 
 /* ────────────────────────────────────────────────────────────────────────
    FEREASTRA DE BONUS
