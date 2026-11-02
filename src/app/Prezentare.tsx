@@ -186,23 +186,43 @@ function Video({ onDeblocare }: { onDeblocare: () => void }) {
   );
 }
 
-/** Ce stă în locul ofertei până când omul ajunge la capătul videoului. */
+/**
+ * Ce stă în locul ofertei până când omul ajunge la capătul videoului.
+ *
+ * Compus pe centru, nu pe stânga. Owner, 2026-11-02: „aci textele sunt prea in
+ * stanga si vreau un design mai super". Motivul pentru care arăta rupt: titlul
+ * de deasupra videoului e centrat, iar caseta asta avea iconiță în stânga și
+ * text aliniat stânga cu măsură îngustă — într-o pagină lată, asta citește ca
+ * o notă lipită de margine, nu ca un obiect pus acolo intenționat.
+ *
+ * Lacătul e singurul element aprins, ca să se vadă că e o ușă închisă, nu un
+ * avertisment. Firul de lumină de deasupra lui împrumută limbajul lui
+ * `TitluSecvenca` — e cum începe orice secțiune pe site-ul ăsta.
+ */
 function OfertaBlocata() {
   return (
     <Caseta radius="rounded-3xl" className="overflow-hidden">
-      <div className="relative flex items-start gap-3.5 p-6 md:p-7">
-        <span className="shrink-0 w-9 h-9 rounded-full border border-neutral-800 bg-white/[0.03] flex items-center justify-center mt-0.5">
-          <Lock size={16} className="text-neutral-500" />
+      <span aria-hidden className="lumina-hero pointer-events-none absolute inset-0" />
+      <div className="relative flex flex-col items-center text-center px-6 py-10 md:py-14 gap-4">
+        <span
+          aria-hidden
+          className="block h-px w-20 bg-gradient-to-r from-transparent via-neon/40 to-transparent"
+        />
+
+        <span className="relative shrink-0 w-16 h-16 rounded-full border border-neon/25 bg-neon/[0.05] flex items-center justify-center">
+          <span aria-hidden className="absolute inset-0 rounded-full bg-neon/15 blur-2xl" />
+          <Lock size={22} strokeWidth={1.7} className="relative text-neon/85" />
         </span>
-        <div className="min-w-0">
-          <p className="text-white text-base md:text-lg font-bold leading-snug">
-            La finalul videoului urmează un singur pas.
-          </p>
-          <p className="mt-1.5 text-neutral-400 text-sm leading-relaxed masura-text">
-            Nu-l pun aici sus, pentru că fără ce e în video n-ar însemna nimic. Uită-te până la
-            capăt și apare singur, pe pagina asta.
-          </p>
-        </div>
+
+        <Eticheta ton="neon">Se deschide la final</Eticheta>
+
+        <p className="text-white text-xl md:text-[1.75rem] font-bold leading-snug tracking-tight echilibrat masura-titlu">
+          La finalul videoului urmează un singur pas.
+        </p>
+        <p className="text-neutral-400 text-sm md:text-base leading-relaxed masura-text">
+          Nu-l pun aici sus, pentru că fără ce e în video n-ar însemna nimic. Uită-te până la
+          capăt și apare singur, pe pagina asta.
+        </p>
       </div>
     </Caseta>
   );
@@ -438,7 +458,11 @@ export default function Prezentare() {
             începutul unui articol. `masura-titlu` ține rândurile la 34ch: fără
             el, pe desktop fraza s-ar întinde pe toată lățimea și s-ar citi în
             două rânduri lungi, nu ca un titlu. */}
-        <div className="px-1 md:px-2 flex flex-col items-center text-center gap-3">
+        {/* `pt`/`pb` generoase, cerute de owner pe 2026-11-02: „sub headline pe
+            acesta pagina vreau mai mult spatiu". Titlul e singurul lucru de
+            deasupra videoului — are nevoie de aer ca să citească a scenă, nu a
+            etichetă lipită de player. */}
+        <div className="px-1 md:px-2 pt-2 md:pt-6 pb-6 md:pb-10 flex flex-col items-center text-center gap-3">
           <Eticheta ton="neon">{ANTET.eticheta}</Eticheta>
           <h2 className="text-[1.75rem] md:text-[2.4rem] font-bold text-white tracking-tight leading-[1.12] echilibrat masura-titlu">
             {ANTET.titlu}
@@ -506,7 +530,9 @@ export default function Prezentare() {
           </>
         )}
 
-        <p className="px-2 pt-2 text-neutral-600 text-[11px] leading-relaxed masura-mic">
+        {/* Centrat ca restul paginii. Pe lat, un paragraf de 64ch aliniat
+            stânga sub un conținut centrat arată ca o scăpare, nu ca subsol. */}
+        <p className="px-2 pt-6 text-neutral-600 text-[11px] leading-relaxed masura-mic mx-auto text-center">
           {DISCLAIMER}
         </p>
       </div>
