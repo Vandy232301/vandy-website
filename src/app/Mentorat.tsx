@@ -332,12 +332,19 @@ export default function Mentorat() {
                   13,06px de lățime pentru fiecare px de corp. De aici clamp-ul:
                   30px → 45px, exact panta coloanei, deci rândul încape la orice
                   lățime de la md în sus și rămân trei rânduri.
-                  Sub md pagina e pe o coloană de ~335px: acolo trei rânduri ar
-                  cere 25px, prea mic pentru un titlu, așa că lăsăm 36px și
-                  acceptăm să curgă pe mai multe rânduri.
+                  Sub md, trei rânduri cerute de owner („pune si pe telefon pe
+                  3 randuri"). Acolo pagina e pe o coloană care măsoară exact
+                  `viewport − 82px`, deci încape mult mai puțin: 18px la 320,
+                  22px la 375, 27px la 430. `5.6vw` stă sub plafon pe tot
+                  intervalul, iar constrângerea care îl fixează e capătul mic —
+                  la 320px. De aici și titlul mai mic pe telefon: ăsta e prețul
+                  celor trei rânduri, nu o scăpare.
+                  ⚠️ La `md` coloana SCADE de la ~685px la 394px, fiindcă hero-ul
+                  se desface în două coloane. De aia sunt două formule, nu una:
+                  o singură curbă n-ar putea trece peste saltul ăla.
                   `text-balance` a ieșit: cu rândurile rupte de mână n-are ce
                   echilibra, dar rearanja rupturile pe care le-am pus noi. */}
-              <h2 className="text-4xl md:text-[clamp(1.875rem,3.9vw,2.8125rem)] font-bold leading-[1.06] text-white tracking-tight mb-8">
+              <h2 className="text-[clamp(1.0625rem,5.6vw,2.8125rem)] md:text-[clamp(1.875rem,3.9vw,2.8125rem)] font-bold leading-[1.06] text-white tracking-tight mb-8">
                 Nu te învăț tool-uri.<br />
                 <span className="text-neutral-400">
                   {/* Rândurile sunt rupte de mână, nu lăsate să curgă: owner,
