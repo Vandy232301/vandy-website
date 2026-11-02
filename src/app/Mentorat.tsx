@@ -327,16 +327,18 @@ export default function Mentorat() {
                   Owner: „pune sa fie astea pe 3 randuri doar", apoi „pune si pe
                   telefon pe 3 randuri", apoi „vreau sa fie mare si pe telefon".
 
-                  Ce face titlul mare nu e corpul, e UNDE se rupe. Rândul cel mai
-                  lung fixează tot, fiindcă el trebuie să încapă:
+                  Ce face titlul mare nu e corpul, e UNDE se rupe. Rândul cel
+                  mai lung fixează tot, fiindcă el trebuie să încapă:
 
-                    desktop  „Te învăț să construiești exact"  → 13,06 px/px corp
-                    telefon  „Te învăț să construiești"        → 10,34 px/px corp
+                    „Te învăț să construiești exact"  → 13,06 px pe px de corp
+                    „Te învăț să construiești"        → 10,34 px pe px de corp
 
-                  De aia pe telefon „exact" coboară lângă fraza verde: rândul
-                  limitator se scurtează cu un sfert, deci corpul crește cu un
-                  sfert — de la 22px la 28px la 375, la aceleași trei rânduri.
-                  Rupturile se schimbă cu cele două `<br>` de mai jos.
+                  De aia „exact" stă jos, lângă fraza verde, la ORICE lățime —
+                  owner, 02.11.2026: „si pe desktop exact ce se plateste pe al
+                  treilea rand". Rândul limitator se scurtează cu un sfert, deci
+                  corpul crește cu un sfert peste tot: 45px → 56px pe desktop,
+                  21px → 28px pe telefon, la aceleași trei rânduri.
+                  Un singur `<br>`, deci, nu o pereche care se schimbă la md.
 
                   Coloanele, măsurate: sub md e `viewport − 82px`; la md SCADE
                   brusc la 394px, fiindcă hero-ul se desface în două coloane, și
@@ -345,7 +347,7 @@ export default function Mentorat() {
                   nu-l poate traversa.
                   `text-balance` a ieșit: cu rândurile rupte de mână n-are ce
                   echilibra, dar rearanja rupturile pe care le-am pus noi. */}
-              <h2 className="text-[clamp(1.375rem,calc(9.4vw_-_8px),2.8125rem)] md:text-[clamp(1.875rem,3.9vw,2.8125rem)] font-bold leading-[1.06] text-white tracking-tight mb-8">
+              <h2 className="text-[clamp(1.375rem,calc(9.4vw_-_8px),3.5rem)] md:text-[clamp(2.25rem,4.9vw,3.5rem)] font-bold leading-[1.06] text-white tracking-tight mb-8">
                 Nu te învăț tool-uri.<br />
                 <span className="text-neutral-400">
                   {/* Rândurile sunt rupte de mână, nu lăsate să curgă: owner,
@@ -360,15 +362,8 @@ export default function Mentorat() {
                       telefon, iar `whitespace-nowrap` l-ar fi lăsat să iasă din
                       pagină în loc să-l rupă. Rândul al treilea rămâne cum l-a
                       cerut. */}
-                  Te învăț să construiești{' '}
-                  {/* Rupe pe telefon: „exact" coboară pe rândul al treilea. */}
-                  <br className="md:hidden" />
+                  Te învăț să construiești<br />
                   exact{' '}
-                  {/* Rupe de la md în sus: „exact" rămâne pe rândul al doilea.
-                      `max-md:hidden` îl stinge sub md fără să-i atingă display-ul
-                      la md în sus — un `<br>` căruia îi impui `display:block`
-                      nu mai rupe rândul în toate browserele. */}
-                  <br className="max-md:hidden" />
                   <span className="serif-italic text-neon lumina-text text-[1.1em] whitespace-nowrap">
                     ce se plătește
                   </span>
