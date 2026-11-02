@@ -46,6 +46,30 @@ efort/investiție minimă. Combinația e problema, nu fiecare bucată separat.
 | **pagina `/gratuit`** | titlul tău, cu disclaimer | verificată, dar mult mai permisiv; aici l-ai cerut |
 | **VSL (video, după opt-in)** | cifrele, cu context și dovadă | conținut propriu, pe pagina ta, după email |
 
+### Dovadă: exact așa face și referința pe care ai dat-o
+
+Owner, 2026-11-02: *„iman gadhzi are acum o camapnie prin care prezint ca poti face 387$ /
+zi"*. Cifra reală e **373 $**, și e instructiv UNDE stă. Verificat în Meta Ad Library și pe
+pagina campaniei:
+
+| suprafață | ce conține |
+|---|---|
+| `incomechallenge.ai`, titlu | *„I Challenge YOU To Build A $373/Day AI Income Stream In Just 5 Days"* |
+| creativele lui de pe Meta (~190 active) | **nicio cifră de venit** |
+
+Creativul lui vinde prin **contrast** — *„why would you start dropshipping, Amazon, or
+crypto in 2026? … Every single one asks you to pay before you know"* — și are
+**anti-promisiunea chiar în corpul reclamei**: *„To be clear, this isn't a shortcut. It
+takes discipline, hard work and persistence, and results vary from person to person."* Se
+descrie ca *„entrepreneur and co-owner of an online education platform"*, nu ca milionar.
+
+**Patru asimetrii, înainte de a copia 1:1:**
+1. El citează rezultatele altora (155 M$ de la participanți, auto-raportat). VANDY are
+   **zero absolvenți** — nu are ce cita, deci nu poate folosi același tip de dovadă.
+2. ~190 de reclame active: o respingere e cost de operare. VANDY are **un cont**.
+3. Entități US/UK cu avocați, regim FTC — vs. **PFA/SRL românesc sub ANPC**.
+4. Pagina lui **n-are disclaimer**. Al nostru are, cerut de owner pe 2026-11-02.
+
 ### Și o recomandare care e marketing mai bun, nu doar mai sigur
 
 „**200–300 $ pe zi**" e slabă din două motive, independent de politici: e abstractă și e
@@ -68,55 +92,57 @@ din §2. Funnelul funcționează în ambele variante.
 
 ## 1. Harta funnelului
 
+**Decizia din 2026-11-02: lucrul gratuit e o SESIUNE LIVE, nu un VSL înregistrat.**
+Funnelul stătea pe un video care nu exista, deci `/prezentare` ducea într-o cameră goală. O
+sesiune live n-are nimic de înregistrat și montat, se potrivește cu omul care vinde deja
+zile live, dă cronometrului o dată adevărată spre care să numere — și **produce chiar
+înregistrarea care devine VSL pentru runda următoare.** VSL-ul se naște din primul
+eveniment, nu înaintea lui.
+
 ```
 RECLAMĂ (Meta / TikTok)
    obiectiv: Conversii → Lead    NU Trafic
-   creativ: 4 unghiuri × 3 formate, fără cifre de venit
-        │
+   4 unghiuri, FĂRĂ cifre de venit (§2)
         │  CTR țintă 1,2–2%
         ▼
-/gratuit  ── PAGINA DE CAPTARE ────────────────────────
-   titlul owner-ului
-   teaser video 45–90 s  (dovadă înainte de cerere)
-   5 beneficii concrete
+/gratuit  ── ÎNSCRIERE LA SESIUNE ─────────────────────── ✅ CONSTRUIT
+   titlul owner-ului, cu cifra + disclaimer
    formular 2 CÂMPURI: prenume + email
-   zero navigație, zero linkuri în subsol
-        │
+   clip scurt opțional, deasupra formularului
+   zero navigație · noindex
         │  opt-in țintă 20–30%
         ▼
-/prezentare  ── VSL + OFERTĂ ──────────────────────────
-   VSL 20–30 min, pornit la click (nu autoplay)
-   butonul de ofertă apare după minutul N
-   pas de calificare DUPĂ video, nu înainte
-   avans → fereastră 48h (localStorage, deja construit)
+   ── 6 emailuri până la sesiune ── meseria lor: PREZENȚA ──
+        │  prezență tipică 30–50% din înscriși
+        ▼
+   ⚡ SESIUNEA LIVE (~90 min) — vinzi la final, live
         │
-        ├─── plătește avansul ──→ CONFIRMARE → onboarding Seria 1
+        ▼
+/prezentare  ── TREI STĂRI, dintr-o singură dată ───────── ✅ CONSTRUIT
+   nestabilit → „îți scriu data"
+   viitor     → ești înscris · cronometru REAL · calendar · zero vânzare
+   trecut     → înregistrarea + oferta cu avans + fereastra de 48h
         │
-        ├─── n-a plătit ─────────→ secvență B (5 emailuri, există)
-        │                          + a doua cale: apel programat
-        │
-        └─── n-a deschis VSL-ul ─→ secvență C (3 emailuri, de scris)
-
-TOT TIMPUL: retargeting pe fiecare punct de pierdere
-LA FINAL:   locurile se termină → secvență D, listă pentru Seria 2
+        ├─ a participat  → înregistrare + ofertă → 5 mailuri (secventa-avans.md)
+        ├─ n-a participat → 3 mailuri care-l duc la înregistrare
+        └─ locuri epuizate → listă de așteptare, Seria 2
 ```
 
 ### Trei decizii structurale, și de ce
 
-**1. Poarta de email e înainte de VSL, nu după.** Un produs de 990 € nu se vinde dintr-o
-singură vizită de la trafic rece. Lista e activul; fără ea plătești pentru oameni pe care
-nu-i mai vezi niciodată.
+**1. Poarta de email e înainte de sesiune.** Un produs de 990 € nu se vinde dintr-o singură
+vizită de la trafic rece. Lista e activul; fără ea plătești pentru oameni pe care nu-i mai
+vezi niciodată.
 
-**2. Teaser video pe pagina de captare, deasupra formularului.** Costă un video în plus de
-înregistrat, dar pe trafic rece diferența e mare: omul primește o dovadă că ești real
-înainte să-i ceri adresa. Fără el, pagina cere încredere pe baza unui titlu.
+**2. Nu se vinde nimic înainte de sesiune.** Omul s-a înscris la un lucru gratuit. O ofertă
+de 990 € pusă în fața lui a doua zi îl învață că „gratuit" era un pretext — și nu mai vine
+nici la sesiune. De aia `/prezentare` în starea `viitor` n-are preț, n-are avans, n-are
+buton de plată.
 
 **3. Formularul de pe `/gratuit` are DOUĂ câmpuri, nu șapte.** Cele șapte de pe `/mentorat`
-sunt corecte acolo — trafic cald, care caută masterclass-ul. Pe trafic rece, șapte câmpuri
-taie opt-in-ul la fracțiune. **Calificarea se mută după VSL**, unde omul a investit 20 de
-minute și răspunde. Asta e o schimbare față de ce e construit acum.
-
----
+sunt corecte acolo — trafic cald, care caută programul, și răspunsurile pregătesc un apel.
+Pe trafic rece, șapte câmpuri taie opt-in-ul la o fracțiune. **Calificarea se mută după
+sesiune**, unde omul a stat 90 de minute cu tine.
 
 ## 2. Reclamele
 
@@ -198,110 +224,72 @@ CTA: **Vezi procesul**
 
 ---
 
-## 3. Pagina `/gratuit`
+## 3. Pagina `/gratuit` — ✅ construită
 
 Un singur lucru de făcut pe pagină. Fără meniu, fără linkuri în subsol, fără „citește și".
+Tot ce poate fi apăsat duce în formular.
 
-### Structura, de sus în jos
+**Structura, de sus în jos:** titlul owner-ului · sub-titlu · textul care spune ce e
+sesiunea · *(clip scurt, dacă există)* · panoul „când e" · cele cinci lucruri acoperite ·
+blocul de dovadă · disclaimer. Formularul stă în dreapta pe desktop, lipit sus; **pe telefon
+vine imediat sub titlu**, nu sub tot argumentul — pe trafic plătit, fiecare derulare în plus
+e o parte din oameni care nu mai ajung la el.
 
-1. **Titlul owner-ului**, mare, pe maximum trei rânduri
-2. **Un rând de sub-titlu** care spune ce e lucrul: *„Procesul complet, pe video. Nu
-   plătești nimic și nu-ți cer cardul."*
-3. **Teaser video, 45–90 s** — pornit la click. Conținut: arăți un site real, spui cât s-a
-   facturat, spui ce urmează în videoul lung. Nimic altceva.
-4. **Formularul**, imediat sub video: prenume + email + buton
-5. **Cele cinci beneficii** (mai jos)
-6. **Un rând de dovadă**: 16 ani, cele 11 aplicații live — ce e deja pe `/mentorat`
-7. **Disclaimer + linkurile legale.** Nimic altceva clicabil.
+Textele sunt în `src/data/gratuit.ts`, lista de subiecte în `src/data/eveniment.ts`
+(`ACOPERA`) — aceeași listă pe ambele pagini, ca să nu existe două versiuni.
 
-### Cele cinci beneficii
+**`noindex, nofollow`**, din două motive: o pagină care primește trafic plătit n-are nevoie
+de SEO, iar cifra n-are ce căuta în indexul Google, unde ar rămâne și după ce campania se
+oprește. ⚠️ `noindex` **nu** o ascunde de Meta — pagina e verificată la aprobarea reclamei
+oricum.
 
-Alese ca să mapeze 1:1 pe `MOTOR` + `DISTRIBUTIE` din masterclass — adică lucrul gratuit e
-o felie adevărată din cel plătit, nu o momeală care duce altundeva:
+### Clipul scurt de deasupra formularului
 
-1. **Cum arată un site pentru care o firmă plătește 1.500 €** — și prin ce diferă, concret,
-   de unul de 300 €
-2. **Caietul de sarcini** — ce îi ceri AI-ului ca să iasă corect din prima, nu din a
-   douăzecea
-3. **Unde sunt clienții** — zece tipuri de firme din România care au nevoie acum și încă nu
-   caută
-4. **Primul mesaj** — ce scrii, exact, ca să ți se răspundă
-5. **Cum ceri prețul** — cum se formează cifra și cum o spui fără să te scuzi
-
-### Disclaimer, în subsol, mic dar lizibil
-
-> Rezultatele depind de munca, piața și timpul fiecăruia. Cifrele din această pagină sunt
-> prețuri pe care le-am încasat eu pentru lucrări proprii și nu reprezintă un venit promis
-> sau garantat. Nu vinzi nimic aici și nu ți se cere nicio plată.
+Opțional, și tratat ca opțional în cod: dacă `TEASER.url` e null, blocul nu se randează
+deloc. Dar e cel mai ieftin câștig din tot funnelul — 45–90 de secunde în care omul vede un
+lucru real construit de tine mută înscrierea de la „cred un titlu" la „am văzut ceva".
 
 ---
 
-## 4. Pagina VSL (`/prezentare`) — ce se schimbă
+## 4. Pagina `/prezentare` — ✅ trei stări, dintr-o singură dată
 
-Pagina există. Patru lucruri de adăugat:
+Aceeași adresă toată viața funnelului, ca linkul din emailuri să nu expire niciodată.
+Starea vine din `EVENIMENT.data` (`src/data/eveniment.ts`), singura sursă de adevăr:
 
-1. **Butonul de ofertă apare progresiv** — după minutul în care, în video, spui oferta. Nu
-   de la început. Motivul nu e trucul, e că oferta înainte de argument scade conversia.
-2. **Pasul de calificare, DUPĂ video** — trei întrebări: ce faci acum, ce vrei să
-   construiești, până când. Aici omul răspunde; la poarta de intrare, nu.
-3. **A doua cale: apel programat.** Pentru 990 € de la trafic rece, plata automată prinde
-   o parte, apelul prinde restul. Apare după ce trece fereastra de 48h, sau pentru cine a
-   dat click pe plată și n-a terminat.
-4. **Ceasul de 48h e deja construit** (`src/lib/fereastraOferta.ts`, `localStorage`). Regula
-   din header rămâne: masterclass-ul și prețul nu dispar, doar condiția de avans — și
-   **linkul trebuie să expire la procesator**, nu doar să se ascundă butonul.
+| stare | când | ce arată |
+|---|---|---|
+| `nestabilit` | nu există dată | „ești pe listă, îți scriu data" |
+| `viitor` | data e în față | cronometru **real**, data scrisă, buton de calendar, ce se acoperă · **zero vânzare** |
+| `trecut` | data a trecut | înregistrarea + oferta cu avans + fereastra de 48h |
+
+**Cronometrul din starea `viitor` e singurul din tot funnelul adevărat prin construcție:** nu
+ține minte nimic, nu pornește la vizită, nu se poate reseta. Numără spre o dată fixă. Dacă
+sesiunea e joi la 19:00, atât arată — pentru toată lumea, pe orice dispozitiv. Comparat cu
+fereastra de 48h din `localStorage`, e o altă categorie de onestitate.
+
+Butonul „adaugă în calendar" nu e un moft: la un eveniment live gratuit cea mai mare
+pierdere nu e la înscriere, e la prezență.
+
+Rămân valabile, pentru starea `trecut`: oferta apare **doar** dacă există `PLATA.url`
+(altfel `FaraPlata`), iar linkul de plată trebuie să **expire la procesator**, nu doar să
+dispară butonul — regula 4 din `src/lib/fereastraOferta.ts`.
 
 ---
 
 ## 5. Emailurile
 
-Patru brațe, cu patru meserii diferite. Nu unul lung.
+Patru brațe, patru meserii. Scrise cap-coadă în **`ops/secventa-funnel.md`**:
 
-### A — livrare și valoare (nu vinde nimic)
+1. **De la înscriere la sesiune** (6 emailuri) — meseria lui e **prezența**, nu vânzarea.
+   Niciunul nu vinde masterclass-ul. Între 50% și 70% dintre înscriși nu ajung la un
+   eveniment live, și aproape toți sunt oameni care chiar voiau să vină.
+2. **A participat** — înregistrarea + oferta, apoi cele 5 din `ops/secventa-avans.md`.
+3. **N-a participat** (3 emailuri) — nu vinzi, îl duci la înregistrare.
+4. **Locuri epuizate** — listă de așteptare pentru Seria 2.
 
-**A0 — instant.** Subiect: *„Uite linkul"*
-Un singur lucru: linkul către `/prezentare`. Fără pitch, fără PS, fără „și dacă vrei mai
-mult". Dacă emailul de livrare vinde, omul învață că ești vânzător, nu meșter.
-
-**A1 — +1 zi.** Subiect: *„Greșeala care te lasă cu un tab deschis"*
-Valoare pură. Explici de ce un demo nu e un produs — e punctul 2 din `MOTOR`. Niciun link
-de vânzare. La final, doar: *„dacă n-ai văzut încă videoul, e aici."*
-
-**A2 — +2 zile.** Subiect: *„1.500 € pentru două zile de lucru"*
-Artefactul. Un site real, ce a cerut clientul, ce i-ai livrat, cât a plătit. Factura, dacă
-o poți arăta. Asta e dovada care face restul credibil.
-
-**A3 — +3 zile.** Subiect: *„«Nu știu să programez»"*
-Obiecția, dezarmată. Și prima menționare a masterclass-ului, într-un rând, la final.
-
-### B — vânzarea (există deja)
-
-5 emailuri în **`ops/secventa-avans.md`**: +1h, +20h, +40h, +50h, +5 zile.
-Se declanșează când omul ajunge la ofertă în VSL, nu de la opt-in.
-
-### C — n-a deschis VSL-ul niciodată (de scris)
-
-Braț separat, meserie complet diferită: nu vinzi, îl duci să se uite.
-
-**C1 — +1 zi.** *„Nu l-ai deschis"* — un rând, linkul, nimic altceva.
-**C2 — +3 zile.** *„Partea de la minutul 12"* — numești un lucru concret din video, ca să
-existe un motiv să-l pornească de acolo.
-**C3 — +6 zile.** *„Îl închid săptămâna viitoare"* — doar dacă e adevărat. Dacă nu-l
-închizi, nu scrie asta.
-
-### D — lista de așteptare (de scris)
-
-Se declanșează când `locuriLuate` ajunge la 10. **Nu-i hărțuiești cu o ofertă care nu
-există.** Un email: locurile s-au terminat, Seria 2 e în [lună], ești primul pe listă,
-iar între timp primești [ceva real].
-
-### Blocajul tehnic, nerezolvat
-
-Niciun braț nu poate segmenta fără **webhook de la procesator care marchează contactul în
-Resend**. Fără el, „ți-au mai rămas 8 ore" ajunge la cineva care a plătit acum o oră. Asta
-e cel mai urât bug posibil în tot funnelul, și e singurul care nu se vede la testare.
-
----
+⚠️ Segmentarea cere două lucruri care nu există: **lista de participanți** (export din Zoom,
+manual pentru prima serie — acceptabil) și **webhook-ul de plată** (nu e acceptabil manual;
+fără el „ți-au mai rămas 8 ore" ajunge la cine a plătit acum o oră).
 
 ## 6. Matematica, și de ce 10 locuri schimbă totul
 
@@ -347,34 +335,49 @@ Seria 2", brațul D nu e opțional — e jumătate din valoarea funnelului.
 
 ---
 
-## 7. Ce e de construit
+## 7. Ce s-a construit (commit `57c86a1`)
 
 | # | lucru | unde | stare |
 |---|---|---|---|
-| 1 | pagina `/gratuit` + intrare în `vite.config.ts` + rewrite în `vercel.json` | nou | de făcut |
-| 2 | formular cu 2 câmpuri (variantă a lui `Formular.tsx`) | `src/app/components/mentorat/` | de făcut |
-| 3 | slot de teaser video pe `/gratuit` | nou | de făcut |
-| 4 | evenimente de pixel Meta + TikTok, toate 5 | nou, `src/lib/pixel.ts` | de făcut |
-| 5 | buton de ofertă progresiv pe `/prezentare` | `src/app/Prezentare.tsx` | de făcut |
-| 6 | pas de calificare după VSL | `src/app/Prezentare.tsx` | de făcut |
-| 7 | cale de apel programat | `src/app/Prezentare.tsx` | de făcut |
-| 8 | brațele A, C, D de emailuri | `ops/secventa-funnel.md` | de scris |
-| 9 | webhook de plată → marcaj în Resend | `api/` | **blocat**: nu există procesator |
+| 1 | pagina `/gratuit` + intrare în build + rewrite | `src/app/Gratuit.tsx`, `gratuit/` | ✅ |
+| 2 | formular cu 2 câmpuri + `validPrenume` | `components/mentorat/FormularScurt.tsx` | ✅ |
+| 3 | configurația sesiunii, cu trei stări și calendar | `src/data/eveniment.ts` | ✅ |
+| 4 | `/prezentare` pe trei stări | `src/app/Prezentare.tsx` | ✅ |
+| 5 | endpoint de înscriere + email de confirmare | `api/inscriere-gratuit.js` | ✅ |
+| 6 | evenimente de pixel Meta + TikTok | `src/lib/pixel.ts` | ✅ inert până la ID-uri |
+| 7 | slot de clip scurt pe `/gratuit` | `TEASER` în `src/data/gratuit.ts` | ✅ gol |
+| 8 | cele patru brațe de emailuri | `ops/secventa-funnel.md` | ✅ scrise |
+| 9 | reparat: `/mentorat` nu mai trimite pe `/prezentare` | `Formular.tsx`, `api/aplica-mentorat.js` | ✅ |
+| 10 | webhook de plată → marcaj în Resend | `api/` | ⛔ **blocat**: nu există procesator |
+| 11 | banner de cookie-uri pentru pixel (GDPR) | — | ⚠️ **datorie deschisă**, vezi `src/lib/pixel.ts` |
 
 ## 8. Ce e blocat la owner
 
-1. **Teaser video 45–90 s** — fără el, `/gratuit` cere încredere pe baza unui titlu
-2. **VSL 20–30 min** — `VIDEO.url` e `null`; fără el funnelul duce într-o cameră goală
-3. **Linkul de plată** — `PLATA.url` e `null`; trebuie să **expire la procesator**
-4. **Suma avansului** — 290 € e pusă de mine ca să se vadă pagina; n-a fost discutată
-5. **Procesator + webhook** — altfel emailurile mint
-6. **Cont de reclame + pixel ID** — Meta și/sau TikTok
-7. **Bugetul primului test** — recomandarea mea: 1.000 €, tratat ca date
-8. **Decizia Seria 2** — vezi §6; schimbă dacă funnelul merită construit
-9. **O factură reală de arătat** — dovada pe care stă tot unghiul A
-10. **Titlul: al tău, sau prețul încasat** — vezi §0; funcționează în ambele variante
+**Ca să pornească funnelul:**
+1. **Data și ora sesiunii** → `EVENIMENT.data` în `src/data/eveniment.ts`, plus platforma și
+   linkul de intrare. Fără ea, ambele pagini spun cinstit „îți scriu data".
+2. **Cont de reclame + pixel ID** → `VITE_META_PIXEL_ID`, `VITE_TIKTOK_PIXEL_ID`.
+3. **Bugetul primului test** — recomandarea mea: 1.000 €, tratat ca date, nu ca investiție.
+4. **O factură reală de arătat** — dovada pe care stau și unghiul A din reclame, și
+   emailul E2. Fără ea, scrie altceva; nu inventa un caz.
+5. **`RESEND_AUDIENCE_GRATUIT_ID`** — listă separată de cea de masterclass, altfel
+   secvențele se amestecă.
 
----
+**Ca să se poată vinde la final:**
+6. **Linkul de plată** → `PLATA.url`; trebuie să **expire la procesator**.
+7. **Suma avansului** — 290 € e pusă de mine ca să se vadă pagina, n-a fost discutată.
+8. **Procesator + webhook** — altfel emailurile mint.
+
+**Decizii:**
+9. **Există Seria 2?** Vezi §6. Schimbă dacă funnelul merită construit sau nu, și brațul 4
+   de emailuri depinde de răspuns.
+10. **Titlul rămâne pe `/mentorat`?** Acum e în două locuri: pe `/gratuit` (unde îi e locul,
+    pentru trafic rece) și pe formularul din `/mentorat` (unde l-ai cerut pe 31.10, înainte
+    să existe `/gratuit`). `/mentorat` e **public și indexat**, deci acolo cifra e expunerea
+    cea mai mare, fără să mai aducă nimic — treaba de trafic rece s-a mutat. Recomandarea
+    mea: scoate-o de pe `/mentorat`. Decizia e a ta.
+11. **Banner de cookie-uri** — pixelul scrie cookie-uri de terți; în UE asta cere
+    consimțământ. Modulul e construit să poată fi pornit la „accept" (`activeaza()`).
 
 ## Surse
 
