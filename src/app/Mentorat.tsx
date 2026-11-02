@@ -316,8 +316,22 @@ export default function Mentorat() {
                 </span>
                 {/* Punctul verde spune „numărul de alături e starea de acum",
                     nu „grăbește-te". Static, nu pulsant: zece locuri chiar sunt
-                    libere, dar o animație ar vinde o urgență inexistentă. */}
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase tabular-nums">
+                    libere, dar o animație ar vinde o urgență inexistentă.
+
+                    `max-[360px]:hidden` — owner, 02.11.2026: „Scoate pastila cu
+                    locurile sub 360px". Sub 360 pastila nu mai încape lângă
+                    „MASTERCLASS" și trece pe rândul ei, ceea ce coboară tot
+                    heroul cu 56px și scoate butonul sub pliu: la 320×812
+                    ajungea la 832, acum la 776. Numărul de locuri nu se pierde
+                    — cardul „Locuri libere" de mai jos îl arată, verificat la
+                    320. (Bara flotantă NU contează ca al doilea loc: rândul ei
+                    e `truncate` și sub ~360 taie „MASTERCLASS · 7 locuri" la
+                    „MASTERCLASS ·". E de dinainte, nu de la pastilă.)
+                    Pragul e lățimea, nu telefonul anume: 360
+                    e chiar sub cel mai îngust telefon curent (iPhone SE 2/3 și
+                    Androidul mic au 375 și 360), deci taie numai iPhone SE gen.
+                    1 și ferestrele înguste de desktop. */}
+                <span className="max-[360px]:hidden inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-neutral-300 text-xs font-bold tracking-[0.18em] uppercase tabular-nums">
                   <span aria-hidden className="w-1.5 h-1.5 rounded-full bg-neon lumina-linie" />
                   Au mai rămas {locuriLibere} locuri
                 </span>
