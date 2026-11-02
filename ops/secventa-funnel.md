@@ -1,219 +1,124 @@
-# Secvența de emailuri — de la reclamă la masterclass
+# Secvența de emailuri — de la înscriere la masterclass
 
-Funnelul e: reclamă → `/gratuit` (înscriere) → **sesiune live gratuită** → `/prezentare`
-(înregistrare + ofertă) → masterclass. Decizia de a trece de la VSL înregistrat la sesiune
-live e a owner-ului, 2026-11-02. Harta întreagă: `ops/funnel.md`.
+Funnelul: conținut organic / reclame → **`/mentorat`** (landing complet, cu formularul care
+poartă titlul mare) → **`/prezentare`** (mini-cursul video, 48 de ore) → ofertă cu rezervare de
+99 € → pentru cine nu cumpără, **secvență educațională** cu vânzare ulterioară.
 
-Emailurile de vânzare propriu-zise (după ce omul a văzut oferta) sunt în
-**`ops/secventa-avans.md`** — cele cinci, la +1h, +20h, +40h, +50h și +5 zile. Documentul
-de față acoperă tot restul, adică patru brațe cu patru meserii diferite.
+Owner, 2026-11-02: *„Pentru cei care nu cumpara sa urmeze o secventa educationala si valoaroasa
+de email cu vanzare ulterioara."* Brațul C de mai jos e exact asta, și e cea mai importantă
+parte a documentului — acolo stau 90% dintre oameni.
 
-> **Variabile folosite peste tot**
-> `{{prenume}}` · `{{data_sesiune}}` (ex. „joi, 20 noiembrie, ora 19:00") ·
-> `{{link_intrare}}` · `{{link_inregistrare}}` · `{{link_oferta}}`
->
-> Expeditor: `VANDY <noreply@vandy.ro>`. Subsolul legal de la finalul fișierului intră în
-> **toate**.
+> **Variabile:** `{{prenume}}` · `{{link_video}}` (= `/prezentare`) · `{{ore_ramase}}` ·
+> `{{link_plata}}`
+> Expeditor: `VANDY <noreply@vandy.ro>`. Subsolul de la final intră în **toate**.
 
 ---
 
-## ⚠️ Ce blochează segmentarea (citește înainte de a programa orice)
+## ⚠️ Ce blochează segmentarea
 
-Trei brațe din patru au nevoie să știe ceva ce acum nu se știe:
-
-| ca să trimiți… | trebuie să știi… | cum afli | stare |
+| ca să trimiți… | trebuie să știi… | cum | stare |
 |---|---|---|---|
-| brațul 2 (a participat) | cine a intrat în sesiune | export de participanți din Zoom → import în Resend | **manual, de făcut după sesiune** |
-| brațul 3 (n-a participat) | aceeași listă, inversată | idem | **manual** |
-| `secventa-avans.md` | cine a plătit avansul | webhook de la procesator care marchează contactul | ⛔ **nu există procesator** |
-| brațul 4 (listă de așteptare) | când s-au ocupat locurile | `OFERTA.locuriLuate` ajunge la 10 | manual |
+| brațul B | cine a deschis videoul | pixel `ViewContent` → Resend | de legat |
+| brațul B avansat | cine a ajuns la final | deblocarea → Resend | de legat |
+| **oprirea vânzării** | **cine a plătit** | **webhook de la procesator** | ⛔ **nu există** |
+| brațul D | când s-au ocupat locurile | `OFERTA.locuriLuate` = 10 | manual |
 
-Fără webhook, emailul „ți-au mai rămas 8 ore" ajunge la cineva care a plătit acum o oră.
-Ăsta e cel mai urât bug din tot funnelul fiindcă nu se vede la testare — se vede abia când
-un om care tocmai ți-a dat 290 € primește o somație. **Nu porni brațul de vânzare fără el.**
-
-Pentru prima serie, exportul manual din Zoom după sesiune e acceptabil: sunt câteva sute de
-oameni și o faci o dată. Plata nu e: aia trebuie automată de la primul leu încasat.
+**Fără webhook de plată nu porni brațul B.** Emailul „ți-au mai rămas 8 ore" care ajunge la
+cineva care tocmai a plătit 99 € e cel mai scump email din funnel — și nu se vede la testare.
 
 ---
 
-## Brațul 1 — de la înscriere la sesiune
+## Brațul A — livrarea (primele 48 de ore)
 
-**Meseria lui: PREZENȚA.** Nu vânzarea. La un eveniment live gratuit, cea mai mare pierdere
-nu e la înscriere, e între înscriere și ziua sesiunii — oamenii se înscriu și uită. Fiecare
-email de aici există ca să mute prezența în sus, nimic altceva.
+Meseria lui: **omul să se uite la video.** Nu să cumpere. Dacă nu se uită, nu există vânzare.
 
-⛔ **Niciun email din brațul ăsta nu vinde masterclass-ul.** Omul s-a înscris la un lucru
-gratuit; dacă primul lucru care vine e o ofertă de 990 €, învață că „gratuit" era un
-pretext, și nu mai vine nici la sesiune.
+### A0 — instant · „Ești înăuntru"
+**Deja construit**, în `api/aplica-mentorat.js`. Linkul către video, plus un singur rând despre
+cele 48 de ore. Fără pitch.
 
-### E0 — instant · „Ești pe listă"
+### A1 — +3 ore, DOAR dacă n-a deschis · Subiect: *N-ai deschis încă*
+Două rânduri și linkul. Cel mai ieftin email din tot funnelul și cel care recuperează cel mai
+mult: jumătate dintre oameni își lasă datele și pleacă la altceva în aceeași secundă.
 
-**Deja construit**, în `api/inscriere-gratuit.js`. Livrează și atât: confirmarea, data
-dacă e stabilită, butonul către `/prezentare`. Fără pitch, fără PS.
-
-### E1 — +1 zi · Subiect: *Greșeala care te lasă cu un tab deschis*
-
+### A2 — +24 ore, dacă n-a terminat · Subiect: *Mai ai 24 de ore*
 > {{prenume}},
 >
-> Înainte de sesiune, un lucru care o să te ajute să înțelegi restul.
+> Mâine pe vremea asta videoul se închide. Nu e un truc — îl țin deschis 48 de ore ca să-l
+> vadă oameni care chiar vor, nu să fie salvat într-un tab pentru cândva.
 >
-> Aproape toată lumea care „învață AI" face același drum: deschide ChatGPT, cere ceva,
-> primește ceva aproape bun. Și acolo se oprește. Rămâne cu un tab deschis, nu cu un
-> proces.
->
-> Diferența nu e în unealtă. Toți avem aceleași unelte. Diferența e că un demo impresionează
-> pe cine îl vede, iar un produs e ceva pentru care cineva scoate bani. Între ele e o
-> distanță pe care n-o trece aproape nimeni, și nu pentru că e grea tehnic.
->
-> E grea pentru că nimeni nu-ți spune ce lipsește. Asta îți arăt live.
->
-> VANDY
+> Dacă ai început și te-ai oprit, reia de unde ai rămas: {{link_video}}
 
-*Fără link de vânzare. La final, doar: „Sesiunea e {{data_sesiune}}. Dacă n-ai pus-o în
-calendar, [o pui de aici]({{link_calendar}})."*
+### A3 — la −3 ore · Subiect: *Se închide în seara asta*
+Un rând, linkul. Atât.
 
-### E2 — +2 zile · Subiect: *Două zile de lucru, 1.500 €*
-
-> {{prenume}},
->
-> Îți arăt un lucru concret, ca să nu vorbim în general.
->
-> [aici: un site real, ce a cerut clientul, ce i-ai livrat, în cât timp, cât a plătit]
->
-> Nu e cel mai spectaculos lucru pe care l-am construit. L-am ales pentru că e cel mai
-> banal: o firmă obișnuită, o nevoie obișnuită, un preț pe care îl plătesc sute de firme din
-> România în fiecare lună fără să stea pe gânduri.
->
-> Partea interesantă nu e site-ul. E că firma aia căuta pe cineva de trei luni și nu găsea.
->
-> Despre asta e sesiunea.
->
-> VANDY
-
-⚠️ **Emailul ăsta are nevoie de un caz real cu factură.** Dacă nu există, nu-l trimite —
-scrie altul. Un exemplu inventat aici strică exact lucrul pe care îl construiește.
-
-### E3 — cu 24 de ore înainte · Subiect: *Mâine, {{data_sesiune}}*
-
-Scurt. Data, ora, linkul, cât durează. Și o propoziție: *„Vino cu un caz concret al tău — o
-firmă pe care o cunoști, ceva ce ai vrea să vinzi. Dacă îl pui în întrebări, lucrez pe el."*
-
-### E4 — cu o oră înainte · Subiect: *Într-o oră*
-
-Trei rânduri. Linkul, mare. Nimic de citit.
-
-### E5 — la start · Subiect: *Suntem live. Intră.*
-
-Un rând și butonul. Trimis la minutul 0.
-
-> **De ce patru mementouri și nu unul.** Par multe. Nu sunt: la evenimente live, între 50%
-> și 70% dintre înscriși nu ajung, iar aproape toți sunt oameni care chiar voiau să vină.
-> Mementoul nu-i convinge, le amintește. Dacă ți se pare agresiv, taie E4, nu E5.
+⚠️ **Toate trei afirmă că videoul se închide. Deci chiar trebuie să se închidă** — vezi regula
+1 din `src/lib/fereastraOferta.ts`. Dacă rămâne accesibil pe alt link, toate emailurile astea
+sunt minciuni, și una verificabilă.
 
 ---
 
-## Brațul 2 — a participat
+## Brațul B — a văzut tot, n-a plătit
 
-Se declanșează după sesiune, pentru cine a fost în sală. **Aici începe vânzarea**, și e
-primul moment în care are voie să înceapă: omul a primit ce i-ai promis.
-
-### E6 — +1 oră după sesiune · Subiect: *Înregistrarea, și ce urmează*
-
-> {{prenume}},
->
-> Mulțumesc că ai stat. Înregistrarea e aici, întreagă: {{link_inregistrare}}
->
-> Ce ai văzut azi e metoda. E completă și o poți aplica singur — chiar poți, și unii o s-o
-> facă.
->
-> Ce n-am putut face în 90 de minute e să mă uit pe lucrul tău. Despre asta e MASTERCLASS
-> ATELIER AI: o zi întreagă, zece oameni, și pleci cu lucrul tău construit și publicat, nu
-> cu notițe. La mijlocul zilei mă uit pe ecranul fiecăruia și repar pe loc. De asta sunt
-> zece locuri și nu o sută.
->
-> Detaliile și condițiile: {{link_oferta}}
->
-> VANDY
-
-*Emailul ăsta pornește fereastra de 48 de ore. De aici încolo preia `secventa-avans.md`.*
+Fereastra de 48h curge. Cele cinci emailuri există deja în **`ops/secventa-avans.md`** (+1h,
++20h, +40h, +50h, +5 zile) — de actualizat doar cifra: **99 €, nu 290 €**, și formularea
+„rezervare care se scade din total", nu „avans".
 
 ---
 
-## Brațul 3 — s-a înscris și n-a venit
+## Brațul C — secvența educațională ⭐
 
-Meserie complet diferită: **nu vinzi, îl duci la înregistrare.** Omul ăsta nu te-a refuzat,
-a avut altceva de făcut. Tratat ca un refuz, se pierde definitiv.
+**Aici stau aproape toți.** Din zece oameni care văd videoul, unul cumpără acum. Ceilalți nouă
+nu sunt pierduți — sunt oameni care n-au bani luna asta, care vor să vadă dacă ești real, sau
+care au nevoie de trei săptămâni ca să se decidă. Secvența asta e pentru ei, și pe termen de
+șase luni aduce mai mult decât fereastra de 48 de ore.
 
-### E7 — +2 ore · Subiect: *N-ai ajuns — uite înregistrarea*
+**Regula care o face să funcționeze: primele patru emailuri NU vând nimic.** Fiecare e un lucru
+pe care îl poate folosi singur, azi. Vânzarea revine în al cincilea, și după aia o dată pe
+lună, nu mai des.
 
-> {{prenume}},
->
-> Te-am căutat în listă și nu te-am găsit. Se întâmplă.
->
-> Înregistrarea e aici, întreagă, fără condiții: {{link_inregistrare}}
->
-> VANDY
+| # | când | subiect | ce livrează |
+|---|---|---|---|
+| **C1** | +2 zile | *Caietul de sarcini pe care îl folosesc eu* | Șablonul real, de copiat. Nu o descriere a lui — șablonul. |
+| **C2** | +5 zile | *Cum arată un site de 300 € față de unul de 3.000 €* | Două exemple, punct cu punct. Ce vede clientul și ce nu. |
+| **C3** | +9 zile | *Zece tipuri de firme care au nevoie acum* | Lista, cu motivul pentru fiecare. Utilizabilă în aceeași zi. |
+| **C4** | +14 zile | *Mesajul la care mi se răspunde* | Textul exact, plus de ce funcționează și ce să nu scrii. |
+| **C5** | +18 zile | *Unde te blochezi, și ce fac eu cu asta* | Prima revenire la ofertă. Onest: ce se învață din emailuri și ce are nevoie de cineva care se uită peste umărul tău. |
+| **C6+** | lunar | știri, cazuri, rezultate | Un lucru util + o linie despre seria următoare. |
 
-Atât. Fără reproș, fără ofertă.
+**De ce funcționează:** fiecare email de valoare pe care îl trimiți fără să ceri nimic ridică
+probabilitatea ca al cincilea să fie citit. Invers — cinci emailuri de vânzare la rând — îți
+antrenează lista să nu te mai deschidă, și o pierzi definitiv pentru câteva sute de euro.
 
-### E8 — +1 zi · Subiect: *Partea de la minutul [X]*
-
-Numești **un lucru concret** din sesiune și spui la ce minut e. Un om care n-a deschis o
-înregistrare de 90 de minute o deschide pentru 4 minute dintr-un punct anume.
-
-### E9 — +3 zile · Subiect: *Închid înregistrarea [zi]*
-
-⚠️ **Doar dacă e adevărat.** Dacă n-o închizi, nu scrie asta — un termen limită care trece
-fără să se întâmple nimic te învață publicul că nu te cred data viitoare. Dacă o închizi,
-închide-o.
-
-*Cine deschide înregistrarea din brațul ăsta trece în brațul 2.*
+**De unde vine materialul:** din mini-curs. Fiecare parte a videoului ([[mini-curs.md]] §2)
+devine un email. Nu scrii conținut nou — îl rescrii.
 
 ---
 
-## Brațul 4 — locurile s-au terminat
+## Brațul D — locurile s-au terminat
 
-Se declanșează când `OFERTA.locuriLuate` ajunge la 10. **Nu-i hărțui cu o ofertă care nu mai
-există** — e cel mai rapid mod de a pierde o listă pentru care ai plătit.
+Se declanșează la `OFERTA.locuriLuate` = 10. **Nu-i hărțui cu o ofertă care nu există.** Un
+email: s-au ocupat, Seria 2 e în [lună], ești primul pe listă dacă răspunzi cu „da".
 
-### E10 — Subiect: *S-au ocupat. Ce urmează.*
-
-> {{prenume}},
->
-> Cele zece locuri din Seria 1 s-au ocupat.
->
-> Nu-ți vând nimic cu emailul ăsta. Îți spun doar că Seria 2 e în [lună] și că ești primul
-> pe listă dacă vrei — răspunde cu „da" și te trec.
->
-> Până atunci [ceva real: înregistrarea rămâne, un lucru pe care îl trimiți, o sesiune de
-> întrebări].
->
-> VANDY
-
-⚠️ **Depinde de o decizie care nu e luată: există Seria 2?** Vezi `ops/funnel.md` §6. Dacă
-nu există, brațul ăsta n-are ce promite și trebuie rescris cinstit.
+⚠️ Depinde de o decizie încă neluată: **există Seria 2?** Vezi `ops/funnel.md` §6.
 
 ---
 
-## Subsolul legal — în toate emailurile
+## Subsolul — în toate emailurile
 
-> Primești acest email pentru că te-ai înscris la sesiunea live gratuită pe vandy.ro.
-> [Dezabonare]({{unsubscribe}}).
+> Primești acest email pentru că ți-ai lăsat datele pe vandy.ro. [Dezabonare]({{unsubscribe}}).
 >
-> Rezultatele depind de munca, priceperea, piața și timpul fiecăruia, iar unii nu obțin
-> niciun venit. Cifrele menționate sunt prețuri încasate pentru lucrări proprii sau
-> obiective, nu venituri promise sau garantate. Nu este consultanță financiară sau de
-> investiții.
+> Rezultatele depind de munca, priceperea, piața și timpul fiecăruia, iar unii nu obțin niciun
+> venit. Cifrele menționate sunt prețuri încasate pentru lucrări proprii, nu venituri promise
+> sau garantate. Nu este consultanță financiară sau de investiții.
 
-Linkul de dezabonare nu e opțional: fără el, GDPR și regulile Resend sunt ambele încălcate,
-iar rata de spam-report urcă — ceea ce îți strică livrabilitatea pentru toată lista.
+Linkul de dezabonare nu e opțional: fără el încalci și GDPR, și regulile Resend, iar rata de
+spam-report urcă — ceea ce îți strică livrabilitatea pentru toată lista.
 
 ---
 
 ## Ordinea în care le scrii, dacă n-ai timp de toate
 
-1. **E3, E4, E5** (mementourile). Fără ele pierzi jumătate din oameni înainte să te audă.
-2. **E6**. E singurul email care vinde ceva.
-3. **E7**. Recuperează cel mai mare segment pierdut, cu trei rânduri.
+1. **A1** — două rânduri, recuperează cel mai mult.
+2. **B** — există deja, doar schimbi 290 în 99.
+3. **C1–C4** — nu vând nimic și sunt cele care țin lista vie.
 4. Restul.
