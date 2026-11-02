@@ -358,8 +358,10 @@ export default function Mentorat() {
                   nu-l poate traversa.
                   `text-balance` a ieșit: cu rândurile rupte de mână n-are ce
                   echilibra, dar rearanja rupturile pe care le-am pus noi. */}
-              <h2 className="text-[clamp(1.6875rem,calc(11.3vw_-_9px),3.5rem)] md:text-[clamp(2.25rem,4.9vw,3.5rem)] font-bold leading-[1.06] text-white tracking-tight mb-8">
-                Nu te învăț tool-uri.<br />
+              <h2 className="text-[clamp(1.875rem,calc(12.7vw_-_10px),3.5rem)] md:text-[clamp(2.25rem,4.9vw,3.5rem)] font-bold leading-[1.06] text-white tracking-tight mb-8">
+                Nu te învăț{' '}
+                <br className="md:hidden" />
+                tool-uri.<br />
                 <span className="text-neutral-400">
                   {/* Rândurile sunt rupte de mână, nu lăsate să curgă: owner,
                       30.10.2026, „ce se plateste pune-l pe al 3lea rand".
@@ -397,10 +399,21 @@ export default function Mentorat() {
                 </p>
               </div>
 
-              <p className="text-neutral-400 text-base leading-relaxed masura-intro mb-9">
-                Trei masterclass-uri, o zi live fiecare, zece antreprenori. Iei unul sau pe toate
-                trei. Pleci cu lucrul tău construit și publicat, cu prețul scris pe el și cu primii
-                zece clienți pe nume.
+              {/* Scurtat la cererea owner-ului, 02.11.2026: titlul pe cinci
+                  rânduri împingea butonul sub pliu pe telefon (ajunsese la
+                  821px pe un ecran de 812). Paragraful recuperează exact
+                  înălțimea aia.
+
+                  Ce am tăiat — „trei masterclass-uri, o zi live fiecare, iei
+                  unul sau pe toate trei" — nu s-a pierdut: panoul PE SCURT din
+                  dreapta spune deja „Masterclass-uri · 3, separat sau
+                  împreună" și „Durata · 1 zi live fiecare". Era singurul loc
+                  din hero unde se repeta ceva.
+                  Ce a rămas e promisiunea, care nu e scrisă nicăieri altundeva
+                  — și singura propoziție din hero care vinde. */}
+              <p className="text-neutral-400 text-base leading-relaxed masura-intro mb-7 md:mb-9">
+                Pleci cu lucrul tău construit și publicat, cu prețul scris pe el și cu primii zece
+                clienți pe nume.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3">
