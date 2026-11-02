@@ -323,28 +323,29 @@ export default function Mentorat() {
                 </span>
               </div>
 
-              {/* Corpul urmărește lățimea coloanei, nu o treaptă fixă. Owner,
-                  02.11.2026: „pune sa fie astea pe 3 randuri doar".
-                  La 48px, rândul cel mai lung („Te învăț să construiești exact")
-                  măsoară 650px, iar coloana are maximum 595 — deci se rupea în
-                  două și ieșeau patru rânduri. Măsurat: coloana crește de la
-                  394px la 768 și se oprește la 595px pe la 1152; rândul cere
-                  13,06px de lățime pentru fiecare px de corp. De aici clamp-ul:
-                  30px → 45px, exact panta coloanei, deci rândul încape la orice
-                  lățime de la md în sus și rămân trei rânduri.
-                  Sub md, trei rânduri cerute de owner („pune si pe telefon pe
-                  3 randuri"). Acolo pagina e pe o coloană care măsoară exact
-                  `viewport − 82px`, deci încape mult mai puțin: 18px la 320,
-                  22px la 375, 27px la 430. `5.6vw` stă sub plafon pe tot
-                  intervalul, iar constrângerea care îl fixează e capătul mic —
-                  la 320px. De aici și titlul mai mic pe telefon: ăsta e prețul
-                  celor trei rânduri, nu o scăpare.
-                  ⚠️ La `md` coloana SCADE de la ~685px la 394px, fiindcă hero-ul
-                  se desface în două coloane. De aia sunt două formule, nu una:
-                  o singură curbă n-ar putea trece peste saltul ăla.
+              {/* TREI RÂNDURI LA ORICE LĂȚIME, și cât de mare se poate la fiecare.
+                  Owner: „pune sa fie astea pe 3 randuri doar", apoi „pune si pe
+                  telefon pe 3 randuri", apoi „vreau sa fie mare si pe telefon".
+
+                  Ce face titlul mare nu e corpul, e UNDE se rupe. Rândul cel mai
+                  lung fixează tot, fiindcă el trebuie să încapă:
+
+                    desktop  „Te învăț să construiești exact"  → 13,06 px/px corp
+                    telefon  „Te învăț să construiești"        → 10,34 px/px corp
+
+                  De aia pe telefon „exact" coboară lângă fraza verde: rândul
+                  limitator se scurtează cu un sfert, deci corpul crește cu un
+                  sfert — de la 22px la 28px la 375, la aceleași trei rânduri.
+                  Rupturile se schimbă cu cele două `<br>` de mai jos.
+
+                  Coloanele, măsurate: sub md e `viewport − 82px`; la md SCADE
+                  brusc la 394px, fiindcă hero-ul se desface în două coloane, și
+                  urcă la 595px pe la 1152, unde se oprește. Saltul ăla e motivul
+                  pentru care sunt două formule și nu una — nicio curbă continuă
+                  nu-l poate traversa.
                   `text-balance` a ieșit: cu rândurile rupte de mână n-are ce
                   echilibra, dar rearanja rupturile pe care le-am pus noi. */}
-              <h2 className="text-[clamp(1.0625rem,5.6vw,2.8125rem)] md:text-[clamp(1.875rem,3.9vw,2.8125rem)] font-bold leading-[1.06] text-white tracking-tight mb-8">
+              <h2 className="text-[clamp(1.375rem,calc(9.4vw_-_8px),2.8125rem)] md:text-[clamp(1.875rem,3.9vw,2.8125rem)] font-bold leading-[1.06] text-white tracking-tight mb-8">
                 Nu te învăț tool-uri.<br />
                 <span className="text-neutral-400">
                   {/* Rândurile sunt rupte de mână, nu lăsate să curgă: owner,
@@ -359,7 +360,15 @@ export default function Mentorat() {
                       telefon, iar `whitespace-nowrap` l-ar fi lăsat să iasă din
                       pagină în loc să-l rupă. Rândul al treilea rămâne cum l-a
                       cerut. */}
-                  Te învăț să construiești exact<br />
+                  Te învăț să construiești{' '}
+                  {/* Rupe pe telefon: „exact" coboară pe rândul al treilea. */}
+                  <br className="md:hidden" />
+                  exact{' '}
+                  {/* Rupe de la md în sus: „exact" rămâne pe rândul al doilea.
+                      `max-md:hidden` îl stinge sub md fără să-i atingă display-ul
+                      la md în sus — un `<br>` căruia îi impui `display:block`
+                      nu mai rupe rândul în toate browserele. */}
+                  <br className="max-md:hidden" />
                   <span className="serif-italic text-neon lumina-text text-[1.1em] whitespace-nowrap">
                     ce se plătește
                   </span>
