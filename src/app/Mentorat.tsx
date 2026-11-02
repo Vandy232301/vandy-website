@@ -323,7 +323,21 @@ export default function Mentorat() {
                 </span>
               </div>
 
-              <h2 className="text-4xl md:text-[3rem] font-bold leading-[1.06] text-white tracking-tight mb-8 text-balance">
+              {/* Corpul urmărește lățimea coloanei, nu o treaptă fixă. Owner,
+                  02.11.2026: „pune sa fie astea pe 3 randuri doar".
+                  La 48px, rândul cel mai lung („Te învăț să construiești exact")
+                  măsoară 650px, iar coloana are maximum 595 — deci se rupea în
+                  două și ieșeau patru rânduri. Măsurat: coloana crește de la
+                  394px la 768 și se oprește la 595px pe la 1152; rândul cere
+                  13,06px de lățime pentru fiecare px de corp. De aici clamp-ul:
+                  30px → 45px, exact panta coloanei, deci rândul încape la orice
+                  lățime de la md în sus și rămân trei rânduri.
+                  Sub md pagina e pe o coloană de ~335px: acolo trei rânduri ar
+                  cere 25px, prea mic pentru un titlu, așa că lăsăm 36px și
+                  acceptăm să curgă pe mai multe rânduri.
+                  `text-balance` a ieșit: cu rândurile rupte de mână n-are ce
+                  echilibra, dar rearanja rupturile pe care le-am pus noi. */}
+              <h2 className="text-4xl md:text-[clamp(1.875rem,3.9vw,2.8125rem)] font-bold leading-[1.06] text-white tracking-tight mb-8">
                 Nu te învăț tool-uri.<br />
                 <span className="text-neutral-400">
                   {/* Rândurile sunt rupte de mână, nu lăsate să curgă: owner,
