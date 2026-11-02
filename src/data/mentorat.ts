@@ -577,7 +577,14 @@ export const MEMBRI: { src: string; nume: string }[] = [];
  */
 export const FORMULAR = {
   pas: 'Pasul 1 din 2',
-  titlu: 'Învață 100% gratuit cum poți face 200–300 $ pe zi creând website-uri performante pentru clienți din țară sau chiar din toată lumea.',
+  /* `‑` e CRATIMA CARE NU SE RUPE (non-breaking hyphen), nu una obișnuită.
+     Cerută de owner pe 02.11.2026. Pe telefon, „website-uri" se rupea între
+     rânduri la cratimă — corect gramatical în română, dar urât într-un titlu
+     centrat, unde rămânea „website-" singur pe un rând.
+     Scrisă ca secvență de escape, nu ca semn lipit în text: altfel e un
+     caracter invizibil în cod, pe care următorul om îl șterge din greșeală
+     crezând că e o cratimă normală. Arată identic pe ecran. */
+  titlu: 'Învață 100% gratuit cum poți face 200–300 $ pe zi creând website‑uri performante pentru clienți din țară sau chiar din toată lumea.',
   subtitlu: 'Îți arăt pas cu pas tot procesul, pe video.',
   text: 'Durează 30 de secunde. Imediat ce trimiți, intri pe pagina cu mini-cursul. Nu îți cer cardul și nu plătești nimic ca să intri.',
 } as const;
