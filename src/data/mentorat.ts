@@ -563,15 +563,23 @@ export const MEMBRI: { src: string; nume: string }[] = [];
  * Nu-l rescrie fără el. Contextul complet e în memoria proiectului, la
  * vandy-lead-magnet.
  *
+ * Varianta curentă e cea din 02.11.2026 („Da, pune titlul nou"), tot a lui.
+ * Diferența care contează față de prima: **„100% gratuit"**. Formularul duce
+ * la un mini-curs care chiar e gratuit, iar fără cuvântul ăla pagina cerea o
+ * adresă de email fără să spună ce dă în schimb. E și partea cea mai sigură
+ * legal din tot titlul: Legea 363/2007, Anexa 1 pct. 20, interzice să numești
+ * „gratuit" ceva ce se plătește — aici nu se plătește nimic, deci afirmația e
+ * curată. Cifra de venit rămâne partea discutabilă, și rămâne decizia lui.
+ *
  * ⚠️ `text` descrie ce se întâmplă DUPĂ trimitere, iar acum omul ajunge
  * direct pe /prezentare, la video. Dacă schimbi redirectul din Formular.tsx,
  * schimbă și rândul ăsta — altfel pagina promite un lucru și face altul.
  */
 export const FORMULAR = {
   pas: 'Pasul 1 din 2',
-  titlu: 'Învață cum poți face 200–300 $ pe zi creând și vânzând site-uri simple.',
-  subtitlu: 'Pentru clienți care ar plăti chiar și mai mult pentru asta.',
-  text: 'Durează 30 de secunde. Imediat ce trimiți, intri pe pagina unde îți arăt pas cu pas tot conceptul, pe video. Nu plătești nimic ca să intri.',
+  titlu: 'Învață 100% gratuit cum poți face 200–300 $ pe zi creând website-uri performante pentru clienți din țară sau chiar din toată lumea.',
+  subtitlu: 'Îți arăt pas cu pas tot procesul, pe video.',
+  text: 'Durează 30 de secunde. Imediat ce trimiți, intri pe pagina cu mini-cursul. Nu îți cer cardul și nu plătești nimic ca să intri.',
 } as const;
 
 /**
