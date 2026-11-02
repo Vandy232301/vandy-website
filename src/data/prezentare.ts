@@ -23,12 +23,25 @@
  * publică, regula se aplică din nou și pagina trebuie regândită.
  */
 
-import { OFERTA } from './mentorat';
+import { OFERTA, FORMULAR } from './mentorat';
 
+/**
+ * Antetul de deasupra videoului. Owner, 2026-11-02: „Pe pagina prezentare
+ * deasupra de video vreau acest headline centrat in locul textelor actuale".
+ *
+ * E **același titlu** ca pe formularul din /mentorat, și e corect să fie:
+ * omul a dat click pe promisiunea aia, iar regăsind-o cuvânt cu cuvânt pe
+ * pagina care o livrează primește confirmarea că e unde trebuie. Un titlu
+ * diferit aici l-ar face să se întrebe dacă a nimerit altceva.
+ *
+ * ⚠️ De aceea e IMPORTAT, nu copiat. Dacă ar fi scris a doua oară, cele două
+ * pagini ar începe să difere la prima modificare, și tocmai potrivirea e
+ * lucrul care funcționează. Se schimbă într-un singur loc: `FORMULAR.titlu`
+ * din `src/data/mentorat.ts`.
+ */
 export const ANTET = {
-  eticheta: 'Pasul 2 din 2 · acces deschis 48 de ore',
-  titlu: 'Ești înăuntru. Uită-te la asta înainte de orice.',
-  text: 'Îți arăt pas cu pas tot procesul: ce construiești, cum ajunge la clienți și cum se plătește. Uită-te la el cap-coadă — la final îți spun și singurul pas care mai există după.',
+  eticheta: 'Acces deschis 48 de ore',
+  titlu: FORMULAR.titlu,
 } as const;
 
 /**

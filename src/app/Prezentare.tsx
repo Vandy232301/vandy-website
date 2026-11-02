@@ -432,14 +432,17 @@ export default function Prezentare() {
           <Eticheta ton="mov">{OFERTA.tip} · {OFERTA.numeProgram}</Eticheta>
         </header>
 
-        <div className="px-1 md:px-2">
+        {/* Centrat, cerut de owner pe 2026-11-02. Pe o pagină de VSL antetul
+            n-are de făcut decât un lucru — să confirme că omul e unde trebuie —
+            iar un titlu centrat deasupra videoului citește ca o scenă, nu ca
+            începutul unui articol. `masura-titlu` ține rândurile la 34ch: fără
+            el, pe desktop fraza s-ar întinde pe toată lățimea și s-ar citi în
+            două rânduri lungi, nu ca un titlu. */}
+        <div className="px-1 md:px-2 flex flex-col items-center text-center gap-3">
           <Eticheta ton="neon">{ANTET.eticheta}</Eticheta>
-          <h2 className="mt-3 text-[1.9rem] md:text-[2.6rem] font-bold text-white tracking-tight leading-[1.1] echilibrat">
+          <h2 className="text-[1.75rem] md:text-[2.4rem] font-bold text-white tracking-tight leading-[1.12] echilibrat masura-titlu">
             {ANTET.titlu}
           </h2>
-          <p className="mt-4 text-neutral-400 text-base md:text-lg leading-relaxed masura-text">
-            {ANTET.text}
-          </p>
         </div>
 
         {inchisa ? (
